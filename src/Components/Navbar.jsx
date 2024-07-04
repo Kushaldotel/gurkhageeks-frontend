@@ -6,7 +6,7 @@ const Navbar = () => {
 
   return (
     <div className="">
-      <header className="bg-opacity-80 backdrop-blur-md relative h-16 bg-transparent z-50 transition-colors duration-300 mx-auto flex items-center px-8">
+      <header className="bg-opacity-80 backdrop-blur-lg relative h-16 bg-transparent z-50 transition-colors duration-300 mx-auto flex items-center px-8">
         <div className="container max-w-7xl mx-auto flex items-center justify-between text-white">
           <Link to="/" className="flex items-center gap-2 text-primary">
             <h1 className="font-semibold">GurkhaGeeks ✓</h1>
@@ -35,6 +35,12 @@ const Navbar = () => {
               className="text-sm font-medium hover:text-primary"
             >
               Contact
+            </Link>
+            <Link
+              to="/AddBlog"
+              className="text-sm font-medium hover:text-primary"
+            >
+              Add Blog
             </Link>
           </nav>
           <div className="relative">
