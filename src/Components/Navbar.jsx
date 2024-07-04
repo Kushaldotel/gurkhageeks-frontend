@@ -3,63 +3,46 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 const Navbar = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+
   return (
-    <div>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-transparent transition-colors duration-300 max-w-6xl mx-auto h-16 flex items-center">
-        <div className="container max-w-7xl mx-auto flex items-center justify-between">
-          <Link
-            href="#"
-            className="flex items-center gap-2 text-primary"
-            prefetch={false}
-          >
-            <h1 className="font-semibold">GurkhaGeeks</h1>
+    <div className="">
+      <header className="bg-opacity-80 backdrop-blur-md relative h-16 bg-transparent z-50 transition-colors duration-300 mx-auto flex items-center px-8">
+        <div className="container max-w-7xl mx-auto flex items-center justify-between text-white">
+          <Link to="/" className="flex items-center gap-2 text-primary">
+            <h1 className="font-semibold">GurkhaGeeks ✓</h1>
           </Link>
           <nav className="hidden md:flex items-center gap-6">
-            <Link
-              href="#"
-              className="text-sm font-medium hover:text-primary"
-              prefetch={false}
-            >
+            <Link to="/" className="text-sm font-medium hover:text-primary">
               Home
             </Link>
+            <Link to="/" className="text-sm font-medium hover:text-primary">
+              Blog
+            </Link>
             <Link
-              href="#"
+              to="/about"
               className="text-sm font-medium hover:text-primary"
-              prefetch={false}
             >
               About
             </Link>
             <Link
-              href="#"
+              to="/categories"
               className="text-sm font-medium hover:text-primary"
-              prefetch={false}
             >
               Categories
             </Link>
             <Link
-              href="#"
+              to="/contact"
               className="text-sm font-medium hover:text-primary"
-              prefetch={false}
             >
               Contact
             </Link>
           </nav>
           <div className="relative">
             <button
-              onClick={() => setIsSearchOpen(!isSearchOpen)}
-              className="bg-transparent hover:bg-gray-200 rounded-full p-2"
+              className="rounded-md py-2 px-4 bg-white text-gray-800 font-semibold"
             >
-              <SearchIcon className="h-5 w-5" />
+              Login
             </button>
-            {isSearchOpen && (
-              <div className="absolute right-0 top-full mt-2 w-64 rounded-md border bg-white shadow-lg">
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  className="w-full rounded-none border-0 focus:ring-0 p-2"
-                />
-              </div>
-            )}
           </div>
         </div>
       </header>
