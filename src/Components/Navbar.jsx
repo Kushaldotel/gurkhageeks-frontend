@@ -9,7 +9,7 @@ const Navbar = () => {
 
   return (
     <div className="sticky">
-      <header className=" text-gray-900 bg-opacity-90 backdrop-blur-2xl h-16 bg-transparent z-50 transition-colors duration-300 mx-auto flex items-center px-8 shadow-sm">
+      <header className=" text-gray-900 bg-opacity-90 backdrop-blur-2xl h-16 bg-transparent z-50 transition-colors duration-300 mx-auto flex items-center px-8 shadow-sm ">
         <div className="sticky container max-w-7xl mx-auto flex items-center justify-between ">
           <Link to="/" className="flex items-center gap-2 text-primary">
             <h1 className="font-semibold">GurkhaGeeks ✓</h1>
@@ -25,8 +25,15 @@ const Navbar = () => {
             >
               Home
             </Link>
-            <Link to="/" className="text-sm font-medium hover:text-primary">
-              Blog
+            <Link
+              to="/Blogs"
+              className={
+                location.pathname === "/Blogs"
+                  ? "font-semibold text-sm underline rounded-full"
+                  : "text-sm font-medium"
+              }
+            >
+              Blogs
             </Link>
             <Link
               to="/about"

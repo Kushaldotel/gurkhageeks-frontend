@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 const AllArticles = () => {
   const [allArticles, setAllArticles] = useState([]);
 
+  
   useEffect(() => {
     setAllArticles(recentArticles);
   }, []);
