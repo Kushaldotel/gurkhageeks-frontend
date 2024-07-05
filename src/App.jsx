@@ -5,7 +5,7 @@ import Navbar from "./Components/Navbar";
 import Home from "./Components/Home";
 import Footer from "./Components/Footer";
 import AddArticle from "./Articles/AddArticle";
-
+import Login from "./Login/login"
 function App() {
   return (
     <>
@@ -32,7 +32,11 @@ function App() {
               </>
             }
           />
+          <Route path="/Login"
+          element={<Login/>}
+          />
         </Routes>
+
       </Router>
     </>
   );

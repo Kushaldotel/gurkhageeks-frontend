@@ -1,0 +1,20 @@
+[
+    {
+        "id": "1",
+        "src": "/img/ai_blog.webp",
+        "title": "Revolutionizing Industries with AI",
+        "description": "Discover how artificial intelligence is transforming various sectors, from healthcare to finance. Explore the latest advancements and applications of AI technologies that are shaping the future. From machine learning algorithms that predict patient outcomes to AI-driven chatbots enhancing customer service, AI is making significant strides in improving efficiency and innovation. Learn about the ethical considerations, the impact on employment, and the future prospects of AI in different industries."
+    },
+    {
+        "id": "2",
+        "src": "/img/mern_blog.jpg",
+        "title": "Mastering MERN Stack Development",
+        "description": "Dive into the world of MERN stack development. Learn about the powerful combination of MongoDB, Express.js, React, and Node.js, and how they work together to create dynamic, responsive web applications. This blog covers everything from setting up your development environment to deploying your application in the cloud. Understand how to manage databases with MongoDB, build robust back-end servers with Express.js, create interactive user interfaces with React, and handle server-side logic with Node.js. Whether you're a beginner or an experienced developer, this comprehensive guide will help you master the MERN stack."
+    },
+    {
+        "id": "3",
+        "src": "/img/fullstack_blog.png",
+        "title": "Becoming a Full Stack Developer",
+        "description": "Unlock the potential of full stack development. Gain insights into the skills and knowledge needed to become a proficient full stack developer, capable of building comprehensive web solutions from front-end to back-end. This blog covers essential technologies and tools, such as HTML, CSS, JavaScript, databases, server management, and API development. Learn about best practices for designing user-friendly interfaces, optimizing performance, ensuring security, and maintaining scalability. Discover tips for effective problem-solving, staying updated with the latest trends, and building a strong portfolio to showcase your skills."
+    }
+]

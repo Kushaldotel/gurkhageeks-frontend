@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import articlesData from "./articles.json";  // Adjust the import path accordingly
+import articlesData from "./articles.json"; // Adjust the import path accordingly
 
 const ArticlesType = () => {
   const [articles, setArticles] = useState([]);
@@ -11,11 +11,14 @@ const ArticlesType = () => {
 
   return (
     <div>
-      <section className="bg-background py-12 md:py-16 lg:py-20 max-w-6xl mx-auto">
+      <section className="bg-background py-12 md:py-16 lg:py-20 max-w-7xl mx-auto">
         <div className="container grid gap-12">
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {articles.map(article => (
-              <div key={article.id} className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+            {articles.map((article) => (
+              <div
+                key={article.id}
+                className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1"
+              >
                 <Link
                   to="#"
                   className="group relative overflow-hidden rounded-lg shadow-lg transition-all hover:shadow-xl"

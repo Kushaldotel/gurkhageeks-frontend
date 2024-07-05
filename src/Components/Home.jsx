@@ -3,15 +3,16 @@ import { Link } from "react-router-dom";
 import AllArticles from "../Articles/AllArticles";
 import { motion } from "framer-motion";
 import ArticlesType from "../Articles/ArticlesType";
+import RecentArticle from "../Articles/RecentArticle";
 
 export default function Home() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   return (
-    <div className="flex flex-col top-0 absolute w-full">
+    <div className="flex flex-col w-full">
       <main className="w-full">
         <section
-          className="relative h-[60vh] w-full bg-cover bg-center rounded-b-3xl"
+          className="relative h-[50vh] w-full bg-cover bg-center rounded-2xl max-w-7xl mx-auto"
           style={{
             backgroundImage: "url('/img/bglaptop.jpg')",
             backgroundSize: "cover",
@@ -31,31 +32,20 @@ export default function Home() {
             <p className="mt-4 max-w-3xl text-gray-300 sm:text-lg">
               The more you learn the more you earn
             </p>
+            <button className="mt-4 text-gray-50 hover:bg-gray-50 hover:text-gray-900 px-4 py-2 rounded-md">
+              Learn More →
+            </button>
           </div>
         </section>
         <section>
           <ArticlesType/>
         </section>
 
-        <section className="py-12 md:py-16 lg:py-20">
-          <div className="container max-w-7xl mx-auto px-4 md:px-6">
-            <h2 className="text-2xl font-bold mb-8">Recent Blogs</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              <AllArticles />
-              <AllArticles />
-              <AllArticles />
-            </div>
-          </div>
+        <section>
+          <AllArticles/>
         </section>
-        <section className="py-12 md:py-16 lg:py-20 bg-gray-100">
-          <div className="container max-w-7xl mx-auto px-4 md:px-6">
-            <h2 className="text-2xl font-bold mb-8">Recent Posts</h2>
-            <div className="grid grid-cols-1 gap-6">
-              <RecentPostCard />
-              <RecentPostCard />
-              <RecentPostCard />
-            </div>
-          </div>
+        <section>
+          <RecentArticle/>
         </section>
       </main>
     </div>
@@ -101,24 +91,3 @@ function SearchIcon(props) {
   );
 }
 
-function RecentPostCard() {
-  return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col md:flex-row">
-      <img
-        src="/placeholder.svg"
-        width={400}
-        height={250}
-        alt="Article Image"
-        className="w-full md:w-48 h-48 object-cover"
-      />
-      <div className="p-4 flex-1">
-        <h3 className="text-xl font-bold mb-2">Article Title</h3>
-        <p className="text-gray-600 line-clamp-3">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod,
-          nisl nec ultricies lacinia, nisl nisl aliquam nisl, eget aliquam nisl
-          nisl sit amet nisl.
-        </p>
-      </div>
-    </div>
-  );
-}
