@@ -34,7 +34,7 @@ const Login = () => {
         </Link>
       </div>
 
-      <div className="min-h-full md:bg-white md:rounded-lg md:p-10 md:shadow-md md:border md:border-gray-100 md:max-w-lg w-full sm:max-w-sm">
+      <div className="min-h-full md:bg-white border border-gray-300 md:rounded-lg md:p-10 md:shadow-md md:border md:border-gray-100 md:max-w-lg w-full sm:max-w-sm">
         <div className="sm:mx-auto sm:w-full">
           <form className="space-y-5" onSubmit={handleSubmit}>
             <div>
@@ -93,7 +93,7 @@ const Login = () => {
                 <div className="text-sm mt-2">
                   <Link
                     to="/ForgotPass"
-                    class="font-semibold text-indigo-600 hover:text-indigo-500"
+                    class="font-semibold text-red-500"
                   >
                     Forgot Password?
                   </Link>
@@ -104,7 +104,7 @@ const Login = () => {
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="flex w-full justify-center rounded-sm bg-gray-700 px-3 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Sign in
               </button>
@@ -121,7 +121,7 @@ const Login = () => {
                 className="flex flex-1 border border-gray-400 space-x-2 py-2 px-4 rounded-xl items-center justify-center w-full "
                 onClick={handleGoogleSignIn}
               >
-                <img src="/img/google.png" alt="" className="h-8 w-8" />
+                <img src="/img/Google150.png" alt="" className="h-6 w-6" />
                 <p className="font-semibold">Sign In with Google</p>
               </button>
             </div>
@@ -131,7 +131,7 @@ const Login = () => {
       <p className="mt-10 text-center text-md text-gray-500">
         New Member?{" "}
         <a className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-          <Link to="/Register">Register</Link>
+          <Link to="/Signup">Register</Link>
         </a>
       </p>
     </motion.div>

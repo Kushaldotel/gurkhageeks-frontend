@@ -7,6 +7,7 @@ import Footer from "./Components/Footer";
 import AddArticle from "./Articles/AddArticle";
 import Login from "./Login/login";
 import AllBlogs from "./Blogs/AllBlogs";
+import Signup from "./Signup/Signup";
 function App() {
   return (
     <>
@@ -44,6 +45,7 @@ function App() {
             }
           />
           <Route path="/Login" element={<Login />} />
+          <Route path="/Signup" element={<Signup />} />
         </Routes>
       </Router>
     </>
