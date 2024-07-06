@@ -8,6 +8,10 @@ import AddArticle from "./Articles/AddArticle";
 import Login from "./Login/login";
 import AllBlogs from "./Blogs/AllBlogs";
 import Signup from "./Signup/Signup";
+import Mernstack from "./Categories/Mernstack";
+import Fullstack from "./Categories/Fullstack";
+import Frontend from "./Categories/Frontend";
+import Backend from "./Categories/Backend";
 function App() {
   return (
     <>
@@ -40,6 +44,46 @@ function App() {
               <>
                 <Navbar />
                 <AllBlogs />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/Mernstack"
+            element={
+              <>
+                <Navbar />
+                <Mernstack />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/Fullstack"
+            element={
+              <>
+                <Navbar />
+                <Fullstack />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/Frontend"
+            element={
+              <>
+                <Navbar />
+                <Frontend />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/Backend"
+            element={
+              <>
+                <Navbar />
+                <Backend />
                 <Footer />
               </>
             }

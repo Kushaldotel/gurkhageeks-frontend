@@ -1,15 +1,37 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import { useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { pathname } = useLocation();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("click", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+  const closeDropdown = () => {
+    setIsDropdownOpen(false);
+  };
 
   return (
-    <div className="sticky">
-      <header className=" text-gray-900 bg-opacity-90 backdrop-blur-2xl h-16 bg-transparent z-50 transition-colors duration-300 mx-auto flex items-center px-8 shadow-sm ">
+    <div className="sticky z-50">
+      <header className=" text-gray-900 bg-opacity-90 backdrop-blur-2xl h-16 bg-transparent z-50 transition-colors duration-300 mx-auto flex items-center px-8 shadow-sm">
         <div className="sticky container max-w-7xl mx-auto flex items-center justify-between ">
           <Link to="/" className="flex items-center gap-2 text-primary">
             <h1 className="font-semibold">GurkhaGeeks ✓</h1>
@@ -41,12 +63,62 @@ const Navbar = () => {
             >
               About
             </Link>
-            <Link
-              to="/categories"
-              className="text-sm font-medium hover:text-primary"
-            >
-              Categories
-            </Link>
+            <div className="relative group">
+              <button
+                onClick={toggleDropdown}
+                className="text-sm font-medium hover:text-primary"
+                ref={dropdownRef}
+              >
+                Categories
+              </button>
+              {isDropdownOpen && (
+                <div className="absolute mt-6 w-96 border-t-4 border-t-purple-600 bg-gray-50 border border-gray-200 rounded-md shadow-lg z-20 opacity-100 transition-opacity duration-200 ease-in-out">
+                  <div className="flex flex-col p-2">
+                    <div className="grid grid-cols-2 gap-2">
+                      <Link
+                        to="/Fullstack"
+                        className={
+                          location.pathname === "/Fullstack"
+                            ? "px-4 py-2 text-sm font-medium rounded-md underline"
+                            : "text-sm block px-4 py-2 text-gray-700 hover:bg-gray-200 hover:text-primary rounded-md"
+                        }
+                        onClick={closeDropdown}
+                      >
+                        Full Stack
+                      </Link>
+                      <Link
+                        to="/Mernstack"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 hover:text-primary rounded-md"
+                        onClick={closeDropdown}
+                      >
+                        MERN Stack
+                      </Link>
+                      <Link
+                        to="/AIML"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 hover:text-primary rounded-md"
+                        onClick={closeDropdown}
+                      >
+                        AI & ML
+                      </Link>
+                      <Link
+                        to="/Frontend"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 hover:text-primary rounded-md"
+                        onClick={closeDropdown}
+                      >
+                        Front-end Dev
+                      </Link>
+                      <Link
+                        to="/Backend"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 hover:text-primary rounded-md"
+                        onClick={closeDropdown}
+                      >
+                        Back-end Dev
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
             <Link
               to="/contact"
               className="text-sm font-medium hover:text-primary"
