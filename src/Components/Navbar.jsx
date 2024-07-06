@@ -88,28 +88,44 @@ const Navbar = () => {
                       </Link>
                       <Link
                         to="/Mernstack"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 hover:text-primary rounded-md"
+                        className={
+                          location.pathname === "/Mernstack"
+                            ? "px-4 py-2 text-sm font-medium rounded-md underline"
+                            : "text-sm block px-4 py-2 text-gray-700 hover:bg-gray-200 hover:text-primary rounded-md"
+                        }
                         onClick={closeDropdown}
                       >
                         MERN Stack
                       </Link>
                       <Link
                         to="/AIML"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 hover:text-primary rounded-md"
+                        className={
+                          location.pathname === "/AIML"
+                            ? "px-4 py-2 text-sm font-medium rounded-md underline"
+                            : "text-sm block px-4 py-2 text-gray-700 hover:bg-gray-200 hover:text-primary rounded-md"
+                        }
                         onClick={closeDropdown}
                       >
                         AI & ML
                       </Link>
                       <Link
                         to="/Frontend"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 hover:text-primary rounded-md"
+                        className={
+                          location.pathname === "/Frontend"
+                            ? "px-4 py-2 text-sm font-medium rounded-md underline"
+                            : "text-sm block px-4 py-2 text-gray-700 hover:bg-gray-200 hover:text-primary rounded-md"
+                        }
                         onClick={closeDropdown}
                       >
                         Front-end Dev
                       </Link>
                       <Link
                         to="/Backend"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 hover:text-primary rounded-md"
+                        className={
+                          location.pathname === "/Backend"
+                            ? "px-4 py-2 text-sm font-medium rounded-md underline"
+                            : "text-sm block px-4 py-2 text-gray-700 hover:bg-gray-200 hover:text-primary rounded-md"
+                        }
                         onClick={closeDropdown}
                       >
                         Back-end Dev

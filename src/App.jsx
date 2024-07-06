@@ -12,6 +12,7 @@ import Mernstack from "./Categories/Mernstack";
 import Fullstack from "./Categories/Fullstack";
 import Frontend from "./Categories/Frontend";
 import Backend from "./Categories/Backend";
+import AIML from "./Categories/AIML";
 function App() {
   return (
     <>
@@ -84,6 +85,16 @@ function App() {
               <>
                 <Navbar />
                 <Backend />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/AIML"
+            element={
+              <>
+                <Navbar />
+                <AIML />
                 <Footer />
               </>
             }

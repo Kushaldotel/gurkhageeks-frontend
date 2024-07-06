@@ -1,123 +1,684 @@
-import React from "react";
-
-const Mernstack = () => {
+export default function Mernstack() {
   return (
-    <div>
-      <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="space-y-8">
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-              MERN Stack Application Roadmap
-            </h1>
-            <p className="mt-4 text-lg text-gray-500">
-              A comprehensive guide to building a full-stack web application
-              using the MERN (MongoDB, Express, React, Node.js) stack.
-            </p>
-          </div>
-          <div className="space-y-6">
-            <div>
-              <h2 className="text-2xl font-bold">
-                1. Learning the Fundamentals
-              </h2>
-              <ul className="mt-4 space-y-2 list-disc pl-6 text-gray-500">
-                <li>HTML, CSS, and JavaScript</li>
-                <li>
-                  Basic programming concepts (variables, functions, control
-                  flow, etc.)
-                </li>
-                <li>Git and GitHub for version control</li>
-              </ul>
-            </div>
-            <div>
-              <h2 className="text-2xl font-bold">2. Mastering React.js</h2>
-              <ul className="mt-4 space-y-2 list-disc pl-6 text-gray-500">
-                <li>
-                  React components, state management, and lifecycle methods
-                </li>
-                <li>React Router for client-side routing</li>
-                <li>Styling with Tailwind CSS or styled-components</li>
-                <li>Fetching data with Axios or the Fetch API</li>
-              </ul>
-            </div>
-            <div>
-              <h2 className="text-2xl font-bold">
-                3. Building the Backend with Node.js and Express
-              </h2>
-              <ul className="mt-4 space-y-2 list-disc pl-6 text-gray-500">
-                <li>Setting up a Node.js development environment</li>
-                <li>Creating a RESTful API with Express</li>
-                <li>Connecting to a database (MongoDB) using Mongoose</li>
-                <li>
-                  Implementing CRUD (Create, Read, Update, Delete) operations
-                </li>
-                <li>
-                  Handling authentication and authorization (e.g., JWT, bcrypt)
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h2 className="text-2xl font-bold">
-                4. Integrating the Frontend and Backend
-              </h2>
-              <ul className="mt-4 space-y-2 list-disc pl-6 text-gray-500">
-                <li>Connecting the React.js frontend to the Express backend</li>
-                <li>Handling API requests and responses</li>
-                <li>
-                  Managing state and data flow between the client and server
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h2 className="text-2xl font-bold">
-                5. Deploying the Application
-              </h2>
-              <ul className="mt-4 space-y-2 list-disc pl-6 text-gray-500">
-                <li>
-                  Hosting the frontend on a platform like Vercel or Netlify
-                </li>
-                <li>Deploying the backend on a platform like Heroku or AWS</li>
-              </ul>
-            </div>
-            <div>
-              <h2 className="text-2xl font-bold">
-                6. Enhancing the Application
-              </h2>
-              <ul className="mt-4 space-y-2 list-disc pl-6 text-gray-500">
-                <li>Implementing real-time functionality with Socket.IO</li>
-                <li>Adding state management with Redux or Context API</li>
-                <li>
-                  Incorporating testing (unit, integration, and end-to-end)
-                </li>
-                <li>Improving performance and optimizing the application</li>
-              </ul>
-            </div>
-            <div>
-              <h2 className="text-2xl font-bold">
-                7. Continuous Integration and Deployment
-              </h2>
-              <ul className="mt-4 space-y-2 list-disc pl-6 text-gray-500">
-                <li>
-                  Setting up a CI/CD pipeline with tools like GitHub Actions or
-                  Travis CI
-                </li>
-                <li>Automating the build, test, and deployment process</li>
-              </ul>
-            </div>
-            <div>
-              <h2 className="text-2xl font-bold">
-                8. Monitoring and Maintenance
-              </h2>
-              <ul className="mt-4 space-y-2 list-disc pl-6 text-gray-500">
-                <li>Implementing logging and error handling</li>
-                <li>Setting up monitoring and alerting systems</li>
-                <li>Performing regular updates and security patches</li>
-              </ul>
-            </div>
-          </div>
+    <div className="w-full max-w-7xl mx-auto p-6 md:p-10 xl:p-2 xl:py-8">
+      <h1 className="text-3xl md:text-4xl font-bold mb-8">
+        {" "}
+        <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">MERN Stack</span> Web Developer Roadmap
+      </h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="bg-background rounded-lg shadow-lg p-6">
+          <h2 className="text-xl font-bold mb-4">Foundations</h2>
+          <ul className="space-y-2">
+            <li>
+              <div className="flex items-center gap-2">
+                <CodeIcon className="w-5 h-5 text-primary" />
+                <span>HTML, CSS, JavaScript</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <GitGraphIcon className="w-5 h-5 text-primary" />
+                <span>Git and Version Control</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <TerminalIcon className="w-5 h-5 text-primary" />
+                <span>Command Line Interface</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <CodepenIcon className="w-5 h-5 text-primary" />
+                <span>Node.js and NPM</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div className="bg-background rounded-lg shadow-lg p-6">
+          <h2 className="text-xl font-bold mb-4">MERN Stack Development</h2>
+          <ul className="space-y-2">
+            <li>
+              <div className="flex items-center gap-2">
+                <CodepenIcon className="w-5 h-5 text-primary" />
+                <span>React.js</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <XIcon className="w-5 h-5 text-primary" />
+                <span>Express.js</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <DatabaseIcon className="w-5 h-5 text-primary" />
+                <span>MongoDB</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <MouseIcon className="w-5 h-5 text-primary" />
+                <span>Mongoose</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <AccessibilityIcon className="w-5 h-5 text-primary" />
+                <span>Responsive Design</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <FlagIcon className="w-5 h-5 text-primary" />
+                <span>State Management</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div className="bg-background rounded-lg shadow-lg p-6">
+          <h2 className="text-xl font-bold mb-4">Advanced MERN Topics</h2>
+          <ul className="space-y-2">
+            <li>
+              <div className="flex items-center gap-2">
+                <TypeIcon className="w-5 h-5 text-primary" />
+                <span>TypeScript</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <CodepenIcon className="w-5 h-5 text-primary" />
+                <span>Next.js</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <VibrateIcon className="w-5 h-5 text-primary" />
+                <span>Vite</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <TestTubesIcon className="w-5 h-5 text-primary" />
+                <span>Testing (Jest, Cypress)</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <PowerIcon className="w-5 h-5 text-primary" />
+                <span>Performance Optimization</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <LogInIcon className="w-5 h-5 text-primary" />
+                <span>Authentication and Authorization</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div className="bg-background rounded-lg shadow-lg p-6">
+          <h2 className="text-xl font-bold mb-4">Workflow</h2>
+          <ul className="space-y-2">
+            <li>
+              <div className="flex items-center gap-2">
+                <LightbulbIcon className="w-5 h-5 text-primary" />
+                <span>Ideation and Planning</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <TypeIcon className="w-5 h-5 text-primary" />
+                <span>Design and Prototyping</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <CodeIcon className="w-5 h-5 text-primary" />
+                <span>MERN Stack Development</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <PlugIcon className="w-5 h-5 text-primary" />
+                <span>Integration and Testing</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <CloudIcon className="w-5 h-5 text-primary" />
+                <span>Deployment and Maintenance</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div className="bg-background rounded-lg shadow-lg p-6">
+          <h2 className="text-xl font-bold mb-4">Tools and Technologies</h2>
+          <ul className="space-y-2">
+            <li>
+              <div className="flex items-center gap-2">
+                <CodeIcon className="w-5 h-5 text-primary" />
+                <span>Visual Studio Code</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <CodepenIcon className="w-5 h-5 text-primary" />
+                <span>React.js</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <XIcon className="w-5 h-5 text-primary" />
+                <span>Express.js</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <DatabaseIcon className="w-5 h-5 text-primary" />
+                <span>MongoDB</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <MouseIcon className="w-5 h-5 text-primary" />
+                <span>Mongoose</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <TypeIcon className="w-5 h-5 text-primary" />
+                <span>TypeScript</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <CodepenIcon className="w-5 h-5 text-primary" />
+                <span>Next.js</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <VibrateIcon className="w-5 h-5 text-primary" />
+                <span>Vite</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <TestTubeIcon className="w-5 h-5 text-primary" />
+                <span>Jest, Cypress</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <GitGraphIcon className="w-5 h-5 text-primary" />
+                <span>Git</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <TrelloIcon className="w-5 h-5 text-primary" />
+                <span>Trello, Jira</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <CloudIcon className="w-5 h-5 text-primary" />
+                <span>Vercel, Netlify, AWS</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div className="bg-background rounded-lg shadow-lg p-6">
+          <h2 className="text-xl font-bold mb-4">Project Ideas</h2>
+          <ul className="space-y-2">
+            <li>
+              <div className="flex items-center gap-2">
+                <LightbulbIcon className="w-5 h-5 text-primary" />
+                <span>E-commerce website</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <LightbulbIcon className="w-5 h-5 text-primary" />
+                <span>Social media app</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <LightbulbIcon className="w-5 h-5 text-primary" />
+                <span>Task management tool</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <LightbulbIcon className="w-5 h-5 text-primary" />
+                <span>Recipe sharing platform</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <LightbulbIcon className="w-5 h-5 text-primary" />
+                <span>Personal portfolio website</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <LightbulbIcon className="w-5 h-5 text-primary" />
+                <span>MERN-based blog platform</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center gap-2">
+                <LightbulbIcon className="w-5 h-5 text-primary" />
+                <span>MERN-based real estate app</span>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
   );
-};
+}
 
-export default Mernstack;
+function AccessibilityIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="16" cy="4" r="1" />
+      <path d="m18 19 1-7-6 1" />
+      <path d="m5 8 3-3 5.5 3-2.36 3.5" />
+      <path d="M4.24 14.5a5 5 0 0 0 6.88 6" />
+      <path d="M13.76 17.5a5 5 0 0 0-6.88-6" />
+    </svg>
+  );
+}
+
+function CloudIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />
+    </svg>
+  );
+}
+
+function CodeIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <polyline points="16 18 22 12 16 6" />
+      <polyline points="8 6 2 12 8 18" />
+    </svg>
+  );
+}
+
+function CodepenIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2" />
+      <line x1="12" x2="12" y1="22" y2="15.5" />
+      <polyline points="22 8.5 12 15.5 2 8.5" />
+      <polyline points="2 15.5 12 8.5 22 15.5" />
+      <line x1="12" x2="12" y1="2" y2="8.5" />
+    </svg>
+  );
+}
+
+function DatabaseIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <ellipse cx="12" cy="5" rx="9" ry="3" />
+      <path d="M3 5V19A9 3 0 0 0 21 19V5" />
+      <path d="M3 12A9 3 0 0 0 21 12" />
+    </svg>
+  );
+}
+
+function FlagIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
+      <line x1="4" x2="4" y1="22" y2="15" />
+    </svg>
+  );
+}
+
+function GitGraphIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="5" cy="6" r="3" />
+      <path d="M5 9v6" />
+      <circle cx="5" cy="18" r="3" />
+      <path d="M12 3v18" />
+      <circle cx="19" cy="6" r="3" />
+      <path d="M16 15.7A9 9 0 0 0 19 9" />
+    </svg>
+  );
+}
+
+function LightbulbIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
+      <path d="M9 18h6" />
+      <path d="M10 22h4" />
+    </svg>
+  );
+}
+
+function LogInIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+      <polyline points="10 17 15 12 10 7" />
+      <line x1="15" x2="3" y1="12" y2="12" />
+    </svg>
+  );
+}
+
+function MouseIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect x="5" y="2" width="14" height="20" rx="7" />
+      <path d="M12 6v4" />
+    </svg>
+  );
+}
+
+function PlugIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M12 22v-5" />
+      <path d="M9 8V2" />
+      <path d="M15 8V2" />
+      <path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z" />
+    </svg>
+  );
+}
+
+function PowerIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M12 2v10" />
+      <path d="M18.4 6.6a9 9 0 1 1-12.77.04" />
+    </svg>
+  );
+}
+
+function TerminalIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <polyline points="4 17 10 11 4 5" />
+      <line x1="12" x2="20" y1="19" y2="19" />
+    </svg>
+  );
+}
+
+function TestTubeIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M14.5 2v17.5c0 1.4-1.1 2.5-2.5 2.5h0c-1.4 0-2.5-1.1-2.5-2.5V2" />
+      <path d="M8.5 2h7" />
+      <path d="M14.5 16h-5" />
+    </svg>
+  );
+}
+
+function TestTubesIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M9 2v17.5A2.5 2.5 0 0 1 6.5 22v0A2.5 2.5 0 0 1 4 19.5V2" />
+      <path d="M20 2v17.5a2.5 2.5 0 0 1-2.5 2.5v0a2.5 2.5 0 0 1-2.5-2.5V2" />
+      <path d="M3 2h7" />
+      <path d="M14 2h7" />
+      <path d="M9 16H4" />
+      <path d="M20 16h-5" />
+    </svg>
+  );
+}
+
+function TrelloIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+      <rect width="3" height="9" x="7" y="7" />
+      <rect width="3" height="5" x="14" y="7" />
+    </svg>
+  );
+}
+
+function TypeIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <polyline points="4 7 4 4 20 4 20 7" />
+      <line x1="9" x2="15" y1="20" y2="20" />
+      <line x1="12" x2="12" y1="4" y2="20" />
+    </svg>
+  );
+}
+
+function VibrateIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="m2 8 2 2-2 2 2 2-2 2" />
+      <path d="m22 8-2 2 2 2-2 2 2 2" />
+      <rect width="8" height="14" x="8" y="5" rx="1" />
+    </svg>
+  );
+}
+
+function XIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M18 6 6 18" />
+      <path d="m6 6 12 12" />
+    </svg>
+  );
+}

@@ -1,9 +1,11 @@
-
 export default function Fullstack() {
   return (
     <div className="w-full max-w-7xl mx-auto p-4 md:p-10 xl:p-2 xl:py-8">
       <h1 className="text-3xl md:text-4xl font-bold mb-8">
-        Full-Stack Web Developer Roadmap
+        <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+          Full-stack
+        </span>{" "}
+        Web Developer Roadmap
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div className="bg-background rounded-lg shadow-lg p-6">
