@@ -1,153 +1,66 @@
 import { Link } from "react-router-dom";
+import projectData from "./Projects.json";
+import { useEffect, useState } from "react";
 
 const ProjectShowcase = () => {
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    setProjects(projectData);
+  }, []);
+
   return (
-    <section className="w-full py-12 md:py-12 lg:py-12 mx-auto max-w-7xl">
+    <section className="w-full py-12 md:py-12 lg:py-8 min-h-screen mx-auto max-w-7xl">
       <div className="container grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="border rounded-lg overflow-hidden shadow">
-          <div className="flex flex-col gap-4 p-6 border-b">
-            <div className="flex items-center gap-4">
-              <LaptopIcon className="w-10 h-10 text-primary" />
-              <h2 className="text-2xl font-bold">Project 1</h2>
+        {projects.map((project) => (
+          <div className="border rounded-lg overflow-hidden shadow">
+            <div className="flex flex-col gap-4 p-6 border-b">
+              <div className="flex items-center gap-4">
+                <LaptopIcon className="w-10 h-10 text-primary" />
+                <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-500 to-blue-500 text-transparent bg-clip-text">
+                  {project.title}
+                </h2>
+              </div>
             </div>
-            <p className="text-muted-foreground">
-              A beautifully designed project showcase card to highlight your
-              work.
-            </p>
-          </div>
-          <div className="grid gap-8 p-6">
-            <div className="grid gap-2">
-              <h3 className="text-lg font-semibold">Project Description</h3>
-              <p className="text-muted-foreground">
-                This is a unique project that showcases my skills in web
-                development. It features a modern and responsive design, with a
-                focus on user-friendliness and attention to detail.
-              </p>
-            </div>
-            <div className="grid gap-2">
-              <h3 className="text-lg font-semibold">Screenshots</h3>
-              <img
-                src="/placeholder.svg"
-                width="600"
-                height="400"
-                alt="Screenshot 1"
-                className="rounded-lg object-cover"
-              />
-            </div>
-            <div className="flex gap-4">
-              <Link
-                href="#"
-                className="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-                prefetch={false}
-              >
-                View Live
-              </Link>
-              <Link
-                href="#"
-                className="inline-flex h-9 items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-                prefetch={false}
-              >
-                View Repo
-              </Link>
-            </div>
-          </div>
-        </div>
-        <div className="border rounded-lg overflow-hidden shadow">
-          <div className="flex flex-col gap-4 p-6 border-b">
-            <div className="flex items-center gap-4">
-              <LaptopIcon className="w-10 h-10 text-primary" />
-              <h2 className="text-2xl font-bold">Project 2</h2>
-            </div>
-            <p className="text-muted-foreground">
-              A beautifully designed project showcase card to highlight your
-              work.
-            </p>
-          </div>
-          <div className="grid gap-8 p-6">
-            <div className="grid gap-2">
-              <h3 className="text-lg font-semibold">Project Description</h3>
-              <p className="text-muted-foreground">
-                This is a unique project that showcases my skills in web
-                development. It features a modern and responsive design, with a
-                focus on user-friendliness and attention to detail.
-              </p>
-            </div>
-            <div className="grid gap-2">
-              <h3 className="text-lg font-semibold">Screenshots</h3>
-              <img
-                src="/placeholder.svg"
-                width="600"
-                height="400"
-                alt="Screenshot 1"
-                className="rounded-lg object-cover"
-              />
-            </div>
-            <div className="flex gap-4">
-              <Link
-                href="#"
-                className="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-                prefetch={false}
-              >
-                View Live
-              </Link>
-              <Link
-                href="#"
-                className="inline-flex h-9 items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-                prefetch={false}
-              >
-                View Repo
-              </Link>
+            <div className="flex-col gap-4 p-4">
+              <div className="grid gap-2">
+                <h3 className="text-lg font-semibold ">Project Description</h3>
+                <p className="text-justify line-clamp-3">
+                  {project.description}
+                </p>
+              </div>
+              <div className="grid gap-2 my-4">
+                <img
+                  src={project.screenshots}
+                  width="600"
+                  height="280"
+                  alt="Screenshot 1"
+                  className="rounded-lg object-cover border border-gray-300"
+                />
+              </div>
+              <div className="flex gap-4">
+                <Link
+                  to={project.demoLinks[0]}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-9 bg-gray-800 text-gray-50 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-md transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 "
+                  prefetch={false}
+                >
+                  View Live
+                </Link>
+                <Link
+                  to={project.repoLinks}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-9 items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-300"
+                  prefetch={false}
+                >
+                  View Repo
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="border rounded-lg overflow-hidden shadow">
-          <div className="flex flex-col gap-4 p-6 border-b">
-            <div className="flex items-center gap-4">
-              <LaptopIcon className="w-10 h-10 text-primary" />
-              <h2 className="text-2xl font-bold">Project 3</h2>
-            </div>
-            <p className="text-muted-foreground">
-              A beautifully designed project showcase card to highlight your
-              work.
-            </p>
-          </div>
-          <div className="grid gap-8 p-6">
-            <div className="grid gap-2">
-              <h3 className="text-lg font-semibold">Project Description</h3>
-              <p className="text-muted-foreground">
-                This is a unique project that showcases my skills in web
-                development. It features a modern and responsive design, with a
-                focus on user-friendliness and attention to detail.
-              </p>
-            </div>
-            <div className="grid gap-2">
-              <h3 className="text-lg font-semibold">Screenshots</h3>
-              <img
-                src="/placeholder.svg"
-                width="600"
-                height="400"
-                alt="Screenshot 1"
-                className="rounded-lg object-cover"
-              />
-            </div>
-            <div className="flex gap-4">
-              <Link
-                href="#"
-                className="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-                prefetch={false}
-              >
-                View Live
-              </Link>
-              <Link
-                href="#"
-                className="inline-flex h-9 items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-                prefetch={false}
-              >
-                View Repo
-              </Link>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
     </section>
   );

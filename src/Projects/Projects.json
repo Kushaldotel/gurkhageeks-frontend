@@ -1,5 +1,4 @@
-{
-    "projects": [
+ [
       {
         "title": "Furniture Website",
         "description": "A website for showcasing and selling furniture. Includes features like multiple image uploads, zoomed image view, and animations.",
@@ -10,18 +9,17 @@
           "Tailwind CSS"
         ],
         "screenshots": [
-          "link_to_screenshot1.jpg",
-          "link_to_screenshot2.jpg"
+          "/img/room.png"
         ],
         "demoLinks": [
-          "http://example.com/furniture-demo"
+          "https://adarshthapa.vercel.app"
         ],
         "repositoryLinks": [
           "http://github.com/username/furniture-website"
         ]
       },
       {
-        "title": "Blog Website",
+        "title": "Book My Room",
         "description": "A platform where users can upload blogs, learn web development, and view roadmaps. It also includes the latest tech news from multiple APIs.",
         "technologiesUsed": [
           "React",
@@ -30,18 +28,17 @@
           "Tailwind CSS"
         ],
         "screenshots": [
-          "link_to_screenshot1.jpg",
-          "link_to_screenshot2.jpg"
+          "/img/portfolio.png"
         ],
         "demoLinks": [
-          "http://example.com/blog-demo"
+          "https://showmeroom.vercel.app/"
         ],
         "repositoryLinks": [
           "http://github.com/username/blog-website"
         ]
       },
       {
-        "title": "Honeycomb Loader Page",
+        "title": "Khana Aau",
         "description": "A loader page featuring a honeycomb animation to enhance the user experience during page load times.",
         "technologiesUsed": [
           "HTML",
@@ -49,11 +46,10 @@
           "JavaScript"
         ],
         "screenshots": [
-          "link_to_screenshot1.jpg",
-          "link_to_screenshot2.jpg"
+          "/img/Kana.png"
         ],
         "demoLinks": [
-          "http://example.com/honeycomb-loader-demo"
+          "https://khanaaau.vercel.app/"
         ],
         "repositoryLinks": [
           "http://github.com/username/honeycomb-loader"
@@ -67,8 +63,7 @@
           "JavaScript"
         ],
         "screenshots": [
-          "link_to_screenshot1.jpg",
-          "link_to_screenshot2.jpg"
+          "link_to_screenshot1.jpg"
         ],
         "demoLinks": [
           "http://example.com/image-zoom-demo"
@@ -87,8 +82,7 @@
           "Tailwind CSS"
         ],
         "screenshots": [
-          "link_to_screenshot1.jpg",
-          "link_to_screenshot2.jpg"
+          "link_to_screenshot1.jpg"
         ],
         "demoLinks": [
           "http://example.com/dropdown-menu-demo"
@@ -106,8 +100,7 @@
           "Tailwind CSS"
         ],
         "screenshots": [
-          "link_to_screenshot1.jpg",
-          "link_to_screenshot2.jpg"
+          "link_to_screenshot1.jpg"
         ],
         "demoLinks": [
           "http://example.com/study-in-sydney-demo"
@@ -117,5 +110,5 @@
         ]
       }
     ]
-  }
+  
   
