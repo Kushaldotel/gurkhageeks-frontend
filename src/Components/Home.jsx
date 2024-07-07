@@ -27,7 +27,7 @@ export default function Home() {
             </h1>
             <p className="mt-4 max-w-3xl text-gray-300 sm:text-lg">
               Explore a wide range of topics and insights from our talented
-              writers.
+              coders.
             </p>
             <p className="mt-4 max-w-3xl text-gray-300 sm:text-lg">
               The more you learn the more you earn

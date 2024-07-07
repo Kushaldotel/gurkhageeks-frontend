@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 const AllBlogs = () => {
   return (
-    <div className="bg-background text-foreground max-w-7xl">
-      <header className="container mx-auto py-8 px-4 lg:py-12">
+    <div className="bg-background text-foreground max-w-7xl mx-auto">
+      <header className="container mx-auto py-8 px-2 lg:py-12">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           <div className="col-span-2 rounded-lg overflow-hidden">
             <Link
@@ -46,15 +46,15 @@ const AllBlogs = () => {
                   alt="Post 2"
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-800 to-background/0 p-4 md:p-6 lg:p-8">
-                  <div className="space-y-2">
+                <div className="absolute inset-0 bg-gradient-to-b from-gray-800 to-transparent p-4 md:p-6 lg:p-8">
+                  <div className="space-y-2 bottom-0">
                     <div className="inline-block rounded-full bg-white px-3 py-1 text-xs font-medium text-gray-800">
                       Design
                     </div>
-                    <h3 className="text-lg font-bold tracking-tight md:text-xl lg:text-2xl">
+                    <h3 className="text-sm text-gray-50 font-semibold tracking-tight md:text-xl lg:text-md">
                       Designing for the Modern Web
                     </h3>
-                    <p className="text-muted-foreground line-clamp-2">
+                    <p className="text-muted-foreground line-clamp-2 text-gray-50 text-justify">
                       Explore the latest design trends and techniques for
                       creating visually stunning websites that captivate your
                       audience.
@@ -66,7 +66,7 @@ const AllBlogs = () => {
             <Link href="#" className="group" prefetch={false}>
               <div className="relative h-48 overflow-hidden rounded-lg md:h-56 lg:h-64">
                 <img
-                  src="/placeholder.svg"
+                  src="/img/bglaptop.jpg"
                   width={400}
                   height={300}
                   alt="Post 3"

@@ -32,7 +32,7 @@ const Signup = () => {
             </h1>
           </Link>
         </div>
-        <h2 className="text-center font-bold leading-9 tracking-tight text-gray-900 font-david-libre text-3xl p-4">
+        <h2 className="text-center font-medium leading-9 tracking-tight text-gray-900 font-david-libre p-4">
           <span className="text-orange-500">Create</span> Your New{" "}
           <span className="text-orange-500">Account</span>
         </h2>

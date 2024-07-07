@@ -69,7 +69,7 @@ const Navbar = () => {
                 className="text-sm font-medium hover:text-primary"
                 ref={dropdownRef}
               >
-                Categories
+                Categories ▾
               </button>
               {isDropdownOpen && (
                 <div className="absolute mt-6 w-96 border-t-4 border-t-purple-600 bg-gray-50 border border-gray-200 rounded-md shadow-lg z-20 opacity-100 transition-opacity duration-200 ease-in-out">
@@ -130,6 +130,17 @@ const Navbar = () => {
                       >
                         Back-end Dev
                       </Link>
+                      <Link
+                        to="/Cybersecurity"
+                        className={
+                          location.pathname === "/Cybersecurity"
+                            ? "px-4 py-2 text-sm font-medium rounded-md underline"
+                            : "text-sm block px-4 py-2 text-gray-700 hover:bg-gray-200 hover:text-primary rounded-md"
+                        }
+                        onClick={closeDropdown}
+                      >
+                        Cybersecurity
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -158,10 +169,16 @@ const Navbar = () => {
               Add Blog
             </Link>
             <Link
-              to="/LatestNews"
+              to="/ProjectShowcase"
               className="text-sm font-medium hover:text-primary"
             >
-              Latest News
+              Project Showcase
+            </Link>
+            <Link
+              to="/AddProject"
+              className="text-sm font-medium hover:text-primary"
+            >
+             Add Project
             </Link>
           </nav>
           <div className="relative">

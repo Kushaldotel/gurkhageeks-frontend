@@ -13,6 +13,9 @@ import Fullstack from "./Categories/Fullstack";
 import Frontend from "./Categories/Frontend";
 import Backend from "./Categories/Backend";
 import AIML from "./Categories/AIML";
+import Cybersecurity from "./Categories/Cybersecurity";
+import AddProject from "./Projects/AddProject";
+import ProjectShowcase from "./Projects/ProjectShowcase";
 function App() {
   return (
     <>
@@ -95,6 +98,36 @@ function App() {
               <>
                 <Navbar />
                 <AIML />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/Cybersecurity"
+            element={
+              <>
+                <Navbar />
+                <Cybersecurity />
+                <Footer />
+              </>
+            }
+          />{" "}
+          <Route
+            path="/ProjectShowcase"
+            element={
+              <>
+                <Navbar />
+                <ProjectShowcase/>
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/AddProject"
+            element={
+              <>
+                <Navbar />
+                <AddProject />
                 <Footer />
               </>
             }

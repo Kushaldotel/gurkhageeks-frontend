@@ -1,3 +1,4 @@
+
 export default function Fullstack() {
   return (
     <div className="w-full max-w-7xl mx-auto p-4 md:p-10 xl:p-2 xl:py-8">

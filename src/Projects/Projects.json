@@ -1,0 +1,121 @@
+{
+    "projects": [
+      {
+        "title": "Furniture Website",
+        "description": "A website for showcasing and selling furniture. Includes features like multiple image uploads, zoomed image view, and animations.",
+        "technologiesUsed": [
+          "React",
+          "React Router",
+          "Framer Motion",
+          "Tailwind CSS"
+        ],
+        "screenshots": [
+          "link_to_screenshot1.jpg",
+          "link_to_screenshot2.jpg"
+        ],
+        "demoLinks": [
+          "http://example.com/furniture-demo"
+        ],
+        "repositoryLinks": [
+          "http://github.com/username/furniture-website"
+        ]
+      },
+      {
+        "title": "Blog Website",
+        "description": "A platform where users can upload blogs, learn web development, and view roadmaps. It also includes the latest tech news from multiple APIs.",
+        "technologiesUsed": [
+          "React",
+          "React Router",
+          "Framer Motion",
+          "Tailwind CSS"
+        ],
+        "screenshots": [
+          "link_to_screenshot1.jpg",
+          "link_to_screenshot2.jpg"
+        ],
+        "demoLinks": [
+          "http://example.com/blog-demo"
+        ],
+        "repositoryLinks": [
+          "http://github.com/username/blog-website"
+        ]
+      },
+      {
+        "title": "Honeycomb Loader Page",
+        "description": "A loader page featuring a honeycomb animation to enhance the user experience during page load times.",
+        "technologiesUsed": [
+          "HTML",
+          "CSS",
+          "JavaScript"
+        ],
+        "screenshots": [
+          "link_to_screenshot1.jpg",
+          "link_to_screenshot2.jpg"
+        ],
+        "demoLinks": [
+          "http://example.com/honeycomb-loader-demo"
+        ],
+        "repositoryLinks": [
+          "http://github.com/username/honeycomb-loader"
+        ]
+      },
+      {
+        "title": "Image Zoom Feature",
+        "description": "An advanced image zoom feature that displays the zoomed image separate from the original image.",
+        "technologiesUsed": [
+          "React",
+          "JavaScript"
+        ],
+        "screenshots": [
+          "link_to_screenshot1.jpg",
+          "link_to_screenshot2.jpg"
+        ],
+        "demoLinks": [
+          "http://example.com/image-zoom-demo"
+        ],
+        "repositoryLinks": [
+          "http://github.com/username/image-zoom"
+        ]
+      },
+      {
+        "title": "Dropdown Menu",
+        "description": "A responsive dropdown menu that covers the whole width and appears on hover, with customizable elements inside the dropdown.",
+        "technologiesUsed": [
+          "HTML",
+          "CSS",
+          "JavaScript",
+          "Tailwind CSS"
+        ],
+        "screenshots": [
+          "link_to_screenshot1.jpg",
+          "link_to_screenshot2.jpg"
+        ],
+        "demoLinks": [
+          "http://example.com/dropdown-menu-demo"
+        ],
+        "repositoryLinks": [
+          "http://github.com/username/dropdown-menu"
+        ]
+      },
+      {
+        "title": "Study in Sydney",
+        "description": "A project providing comprehensive information and resources for students planning to study in Sydney.",
+        "technologiesUsed": [
+          "React",
+          "React Router",
+          "Tailwind CSS"
+        ],
+        "screenshots": [
+          "link_to_screenshot1.jpg",
+          "link_to_screenshot2.jpg"
+        ],
+        "demoLinks": [
+          "http://example.com/study-in-sydney-demo"
+        ],
+        "repositoryLinks": [
+          "http://github.com/username/study-in-sydney"
+        ]
+      }
+    ]
+  }
+  
