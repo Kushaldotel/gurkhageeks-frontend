@@ -14,6 +14,27 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const response = await fetch(
+        "https://gorkhageeks-backend.onrender.com/auth/login/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        }
+      );
+      const result = response.json();
+      if(response.ok){
+        
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleGoogleSignIn = async (e) => {
@@ -30,7 +51,9 @@ const Login = () => {
     >
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <Link to="/">
-          <h1 className="font-semibold text-2xl text-center mb-4">Gurkha Geeks ✓</h1>
+          <h1 className="font-semibold text-2xl text-center mb-4">
+            Gurkha Geeks ✓
+          </h1>
         </Link>
       </div>
 
@@ -91,10 +114,7 @@ const Login = () => {
                   <p className="text-sm">Show password</p>
                 </div>
                 <div className="text-sm mt-2">
-                  <Link
-                    to="/ForgotPass"
-                    class="font-semibold text-red-500"
-                  >
+                  <Link to="/ForgotPass" class="font-semibold text-red-500">
                     Forgot Password?
                   </Link>
                 </div>
@@ -139,5 +159,3 @@ const Login = () => {
 };
 
 export default Login;
-
-

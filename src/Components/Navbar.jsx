@@ -69,7 +69,7 @@ const Navbar = () => {
                 className="text-sm font-medium hover:text-primary"
                 ref={dropdownRef}
               >
-                Categories ▾
+                Roadmaps ▾
               </button>
               {isDropdownOpen && (
                 <div className="absolute mt-6 w-96 border-t-4 border-t-purple-600 bg-gray-50 border border-gray-200 rounded-md shadow-lg z-20 opacity-100 transition-opacity duration-200 ease-in-out">
@@ -156,7 +156,7 @@ const Navbar = () => {
               to="/Roadmaps"
               className="text-sm font-medium hover:text-primary"
             >
-              Roadmaps
+              Categories
             </Link>
             <Link
               to="/AddBlog"

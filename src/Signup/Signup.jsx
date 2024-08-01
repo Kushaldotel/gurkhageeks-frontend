@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { motion } from "framer-motion";
-
+import Toast from "../Components/Toast";
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -10,10 +10,50 @@ const Signup = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showToast, setShowToast] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      setError("Passwords does not match");
+      setShowToast(true); // Show the toast
+      setTimeout(() => setShowToast(false), 5000);
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        "https://gorkhageeks-backend.onrender.com/auth/register/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            first_name: firstName,
+            last_name: lastName,
+            email,
+            password,
+          }),
+        }
+      );
+
+      // parsing the respose
+      const result = await response.json();
+      if (response.ok) {
+        navigate("/Login");
+      } else {
+        setError(result.message || "Signup Failed");
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 3000);
+      }
+    } catch (error) {
+      setError("An error occurred, please try again");
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
+      console.log(error);
+    }
   };
 
   return (
@@ -24,6 +64,11 @@ const Signup = () => {
       exit={{ opacity: 0, x: -50 }}
       transition={{ duration: 0.6 }}
     >
+      <Toast
+        message={error}
+        isVisible={showToast}
+        onClose={() => setShowToast(false)}
+      />
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <Link to="/">
