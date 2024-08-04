@@ -16,6 +16,9 @@ import AIML from "./Categories/AIML";
 import Cybersecurity from "./Categories/Cybersecurity";
 import AddProject from "./Projects/AddProject";
 import ProjectShowcase from "./Projects/ProjectShowcase";
+import Profile from "./Components/Profile";
+import Contact from "./Contactus/contact";
+
 function App() {
   return (
     <>
@@ -38,6 +41,26 @@ function App() {
               <>
                 <Navbar />
                 <AddArticle />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/Profile"
+            element={
+              <>
+                <Navbar />
+                <Profile />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/Contactus"
+            element={
+              <>
+                <Navbar />
+                <Contact />
                 <Footer />
               </>
             }
@@ -117,7 +140,7 @@ function App() {
             element={
               <>
                 <Navbar />
-                <ProjectShowcase/>
+                <ProjectShowcase />
                 <Footer />
               </>
             }

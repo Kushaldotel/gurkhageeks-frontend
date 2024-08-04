@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import Toast from "../Components/Toast";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -10,7 +10,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
+  const [showToast, setShowToast] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,12 +28,22 @@ const Login = () => {
           }),
         }
       );
-      const result = response.json();
-      if(response.ok){
-        
+
+      const result = await response.json();
+      if (response.ok) {
+        //Store the tokens in local storage
+        localStorage.setItem("accessToken", result.access);
+        localStorage.setItem("refreshToken", result.refresh);
+        navigate("/");
+      } else {
+        setError(result.message || "Incorrect username or password!");
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 3000);
       }
     } catch (error) {
       console.log(error);
+      setShowToast("An error occured. Please try again!");
+      setTimeout(() => setShowToast(false), 3000);
     }
   };
 
@@ -49,6 +59,11 @@ const Login = () => {
       exit={{ opacity: 0, x: -50 }}
       transition={{ duration: 0.6 }}
     >
+      <Toast
+        message={error}
+        isVisible={showToast}
+        onClose={() => setShowToast(false)}
+      />
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <Link to="/">
           <h1 className="font-semibold text-2xl text-center mb-4">

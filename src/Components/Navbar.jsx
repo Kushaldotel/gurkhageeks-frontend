@@ -1,12 +1,21 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import ProfileDropdown from "./ProfileDropdown";
 
 const Navbar = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { pathname } = useLocation();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  useEffect(() => {
+    //Check if the user is athenticated by checking if the access token is present in the
+    const accessToken = localStorage.getItem("accessToken");
+    setIsAuthenticated(!!accessToken);
+  }, []);
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -22,9 +31,15 @@ const Navbar = () => {
     };
   }, []);
 
+  const handleLogout = async () => {
+    e.preventDeafult();
+  };
+
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
+    setShowDropdown(!showDropdown);
   };
+
   const closeDropdown = () => {
     setIsDropdownOpen(false);
   };
@@ -147,7 +162,7 @@ const Navbar = () => {
               )}
             </div>
             <Link
-              to="/contact"
+              to="/Contactus"
               className="text-sm font-medium hover:text-primary"
             >
               Contact
@@ -168,25 +183,46 @@ const Navbar = () => {
             >
               Add Blog
             </Link>
-            <Link
+            {/* <Link
               to="/ProjectShowcase"
               className="text-sm font-medium hover:text-primary"
             >
               Project Showcase
-            </Link>
-            <Link
+            </Link> */}
+            {/* <Link
               to="/AddProject"
               className="text-sm font-medium hover:text-primary"
             >
-             Add Project
-            </Link>
+              Add Project
+            </Link> */}
           </nav>
           <div className="relative">
-            <Link to="/Login">
-              <button className="rounded-md py-1.5 px-4 text-sm bg-gray-800 text-gray-50 font-light">
-                Login
-              </button>
-            </Link>
+            {!isAuthenticated ? (
+              <Link to="/Login">
+                <button className="rounded-md py-1.5 px-4 text-sm bg-gray-800 text-gray-50 font-light">
+                  Login
+                </button>
+              </Link>
+            ) : (
+              <div className="relative">
+                <div
+                  onClick={toggleDropdown}
+                  className="cursor-pointer flex items-center space-x-2"
+                >
+                  <img
+                    src="/img/icons.png"
+                    alt="Profile"
+                    className="h-8 w-8 rounded-full"
+                  />
+                </div>
+                {showDropdown && (
+                  <ProfileDropdown
+                    setShowDropdown={setShowDropdown}
+                    toggleDropdown={toggleDropdown}
+                  />
+                )}
+              </div>
+            )}
           </div>
         </div>
       </header>

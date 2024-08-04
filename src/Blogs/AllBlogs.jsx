@@ -1,345 +1,190 @@
-import React from "react";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import Loader from "../Components/Loader";
+import DOMPurify from "dompurify";
 
-const AllBlogs = () => {
+export default function AllBlogs() {
+  const [showCategories, setShowCategories] = useState(false);
+  const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      setLoading(true);
+      try {
+        const cachedBlogs = sessionStorage.getItem("blogs");
+        if (cachedBlogs) {
+          setBlogs(JSON.parse(cachedBlogs));
+          setLoading(false);
+          return;
+        }
+
+        const response = await fetch(
+          "https://gorkhageeks-backend.onrender.com/blog/"
+        );
+        const data = await response.json();
+        setBlogs(data);
+
+        // Cache the blogs for future use
+        sessionStorage.setItem("blogs", JSON.stringify(data));
+
+        setLoading(false);
+      } catch (error) {
+        console.log("Error fetching data", error);
+        setLoading(false);
+      }
+    };
+
+    fetchBlogs();
+  }, []);
+
+  const toggleCategories = () => {
+    setShowCategories(!showCategories);
+  };
+
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
-    <div className="bg-background text-foreground max-w-7xl mx-auto">
-      <header className="container mx-auto py-8 px-2 lg:py-12">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          <div className="col-span-2 rounded-lg overflow-hidden">
-            <Link
-              href="#"
-              className="group relative h-full w-full overflow-hidden rounded-lg"
-              prefetch={false}
-            >
-              <img
-                src="/img/FullStack.png"
-                width={800}
-                height={500}
-                alt="Featured Post"
-                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-background/0 p-6 md:p-8 lg:p-12 flex flex-col justify-end">
-                <div className="space-y-2">
-                  <div className="inline-block rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground">
-                    Featured
-                  </div>
-                  <h2 className="text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
-                    Discover the Secrets to Building a Successful Blog
-                  </h2>
-                  <p className="text-muted-foreground line-clamp-2">
-                    Learn from the experts and start your journey to blogging
-                    success. Attract readers, generate leads, and drive revenue
-                    with our comprehensive guide.
-                  </p>
-                </div>
-              </div>
-            </Link>
-          </div>
-          <div className="space-y-4 md:space-y-6 lg:space-y-8">
-            <Link href="#" className="group" prefetch={false}>
-              <div className="relative h-48 overflow-hidden rounded-lg md:h-56 lg:h-64">
-                <img
-                  src="/img/FullStack.png"
-                  width={400}
-                  height={300}
-                  alt="Post 2"
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-b from-gray-800 to-transparent p-4 md:p-6 lg:p-8">
-                  <div className="space-y-2 bottom-0">
-                    <div className="inline-block rounded-full bg-white px-3 py-1 text-xs font-medium text-gray-800">
-                      Design
-                    </div>
-                    <h3 className="text-sm text-gray-50 font-semibold tracking-tight md:text-xl lg:text-md">
-                      Designing for the Modern Web
-                    </h3>
-                    <p className="text-muted-foreground line-clamp-2 text-gray-50 text-justify">
-                      Explore the latest design trends and techniques for
-                      creating visually stunning websites that captivate your
-                      audience.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </Link>
-            <Link href="#" className="group" prefetch={false}>
-              <div className="relative h-48 overflow-hidden rounded-lg md:h-56 lg:h-64">
-                <img
-                  src="/img/bglaptop.jpg"
-                  width={400}
-                  height={300}
-                  alt="Post 3"
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-background/0 p-4 md:p-6 lg:p-8">
-                  <div className="space-y-2">
-                    <div className="inline-block rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground">
-                      Development
-                    </div>
-                    <h3 className="text-lg font-bold tracking-tight md:text-xl lg:text-2xl">
-                      Mastering React: A Step-by-Step Guide
-                    </h3>
-                    <p className="text-muted-foreground line-clamp-2">
-                      Learn how to build powerful, scalable web applications
-                      with React, the popular JavaScript library for building
-                      user interfaces.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </Link>
-          </div>
-        </div>
-      </header>
-      <main className="container mx-auto py-8 px-4 md:px-6 lg:py-12">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          <Link href="#" className="group" prefetch={false}>
-            <div className="relative h-48 overflow-hidden rounded-lg md:h-56 lg:h-64">
-              <img
-                src="/placeholder.svg"
-                width={400}
-                height={300}
-                alt="Post 4"
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-background/0 p-4 md:p-6 lg:p-8">
-                <div className="space-y-2">
-                  <div className="inline-block rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground">
-                    Marketing
-                  </div>
-                  <h3 className="text-lg font-bold tracking-tight md:text-xl lg:text-2xl">
-                    Effective Content Marketing Strategies
-                  </h3>
-                  <p className="text-muted-foreground line-clamp-2">
-                    Discover proven tactics to create and distribute content
-                    that attracts and engages your target audience.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </Link>
-          <Link href="#" className="group" prefetch={false}>
-            <div className="relative h-48 overflow-hidden rounded-lg md:h-56 lg:h-64">
-              <img
-                src="/placeholder.svg"
-                width={400}
-                height={300}
-                alt="Post 5"
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-background/0 p-4 md:p-6 lg:p-8">
-                <div className="space-y-2">
-                  <div className="inline-block rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground">
-                    Productivity
-                  </div>
-                  <h3 className="text-lg font-bold tracking-tight md:text-xl lg:text-2xl">
-                    Boost Your Productivity with These Proven Techniques
-                  </h3>
-                  <p className="text-muted-foreground line-clamp-2">
-                    Learn how to optimize your workflow, eliminate distractions,
-                    and get more done in less time.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </Link>
-          <Link href="#" className="group" prefetch={false}>
-            <div className="relative h-48 overflow-hidden rounded-lg md:h-56 lg:h-64">
-              <img
-                src="/placeholder.svg"
-                width={400}
-                height={300}
-                alt="Post 6"
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-background/0 p-4 md:p-6 lg:p-8">
-                <div className="space-y-2">
-                  <div className="inline-block rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground">
-                    Entrepreneurship
-                  </div>
-                  <h3 className="text-lg font-bold tracking-tight md:text-xl lg:text-2xl">
-                    The Secrets to Building a Successful Startup
-                  </h3>
-                  <p className="text-muted-foreground line-clamp-2">
-                    Discover the essential strategies and insights to turn your
-                    business idea into a thriving venture.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </Link>
-          <Link href="#" className="group" prefetch={false}>
-            <div className="relative h-48 overflow-hidden rounded-lg md:h-56 lg:h-64">
-              <img
-                src="/placeholder.svg"
-                width={400}
-                height={300}
-                alt="Post 7"
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-background/0 p-4 md:p-6 lg:p-8">
-                <div className="space-y-2">
-                  <div className="inline-block rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground">
-                    Technology
-                  </div>
-                  <h3 className="text-lg font-bold tracking-tight md:text-xl lg:text-2xl">
-                    The Future of AI: Exploring the Latest Advancements
-                  </h3>
-                  <p className="text-muted-foreground line-clamp-2">
-                    Stay ahead of the curve and learn about the transformative
-                    potential of artificial intelligence in various industries.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </Link>
-          <Link href="#" className="group" prefetch={false}>
-            <div className="relative h-48 overflow-hidden rounded-lg md:h-56 lg:h-64">
-              <img
-                src="/placeholder.svg"
-                width={400}
-                height={300}
-                alt="Post 8"
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-background/0 p-4 md:p-6 lg:p-8">
-                <div className="space-y-2">
-                  <div className="inline-block rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground">
-                    Personal Growth
-                  </div>
-                  <h3 className="text-lg font-bold tracking-tight md:text-xl lg:text-2xl">
-                    Unlocking Your Full Potential: Proven Strategies for
-                    Self-Improvement
-                  </h3>
-                  <p className="text-muted-foreground line-clamp-2">
-                    Discover practical tips and techniques to enhance your
-                    personal and professional development.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </Link>
-          <Link href="#" className="group" prefetch={false}>
-            <div className="relative h-48 overflow-hidden rounded-lg md:h-56 lg:h-64">
-              <img
-                src="/placeholder.svg"
-                width={400}
-                height={300}
-                alt="Post 9"
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-background/0 p-4 md:p-6 lg:p-8">
-                <div className="space-y-2">
-                  <div className="inline-block rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground">
-                    Lifestyle
-                  </div>
-                  <h3 className="text-lg font-bold tracking-tight md:text-xl lg:text-2xl">
-                    The Art of Living a Balanced Life
-                  </h3>
-                  <p className="text-muted-foreground line-clamp-2">
-                    Explore practical strategies to achieve a harmonious
-                    work-life balance and live a more fulfilling life.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </Link>
-        </div>
-      </main>
-      <aside className="bg-muted py-8 px-4 md:px-6 lg:py-12">
-        <div className="container mx-auto grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          <div className="space-y-4 md:space-y-6 lg:space-y-8">
-            <h2 className="text-2xl font-bold tracking-tight md:text-3xl lg:text-4xl">
-              Categories
+    <div className="max-w-7xl mx-auto min-h-screen">
+      <div className="flex h-full w-full">
+        <aside className="hidden w-40 flex-col bg-white p-6 pl-0 md:flex">
+          <div className="mb-6">
+            <h2 className="text-xl font-medium text-gray-700 border-b pb-2">
+              ✢ View all
             </h2>
-            <ul className="space-y-2">
-              <li>
+          </div>
+          <nav className="flex flex-col space-y-2">
+            {[
+              "Technology of the world ",
+              "Design",
+              "Lifestyle",
+              "Travel",
+              "Business",
+            ].map((category) => (
+              <Link
+                to="/"
+                key={category}
+                className="rounded-md px-4 py-3 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200 hover:text-gray-800"
+              >
+                {category}
+              </Link>
+            ))}
+          </nav>
+        </aside>
+        <div className="flex-1 p-6 md:p-8">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 ">
+            {blogs.map((post) => (
+              <div
+                key={post.id}
+                className="group relative overflow-hidden rounded-sm bg-white"
+              >
                 <Link
-                  href="#"
-                  className="inline-flex items-center gap-2 text-lg font-medium hover:underline"
-                  prefetch={false}
+                  to={`/blog/${post.id}`} // Assuming there's a detail page for each blog post
+                  className="absolute inset-0 z-10 "
                 >
-                  <div className="h-5 w-5" />
-                  Design
+                  <span className="sr-only">Read more</span>
                 </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="inline-flex items-center gap-2 text-lg font-medium hover:underline"
-                  prefetch={false}
-                >
-                  <div className="h-5 w-5" />
-                  Development
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="inline-flex items-center gap-2 text-lg font-medium hover:underline"
-                  prefetch={false}
-                >
-                  <div className="h-5 w-5" />
-                  Marketing
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="inline-flex items-center gap-2 text-lg font-medium hover:underline"
-                  prefetch={false}
-                >
-                  <div className="h-5 w-5" />
-                  Productivity
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="inline-flex items-center gap-2 text-lg font-medium hover:underline"
-                  prefetch={false}
-                >
-                  <div className="h-5 w-5" />
-                  Entrepreneurship
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="inline-flex items-center gap-2 text-lg font-medium hover:underline"
-                  prefetch={false}
-                >
-                  <div className="h-5 w-5" />
-                  Technology
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="inline-flex items-center gap-2 text-lg font-medium hover:underline"
-                  prefetch={false}
-                >
-                  <div className="h-5 w-5" />
-                  Personal Growth
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="inline-flex items-center gap-2 text-lg font-medium hover:underline"
-                  prefetch={false}
-                >
-                  <div className="h-5 w-5" />
-                  Lifestyle
-                </Link>
-              </li>
-            </ul>
+                <img
+                  src={post.imageUrl || "/img/FullStack.png"} // Fallback image if not provided
+                  alt="Blog post"
+                  width={400}
+                  height={250}
+                  className="h-48 w-full object-cover transition-all duration-300 group-hover:scale-105"
+                  style={{ aspectRatio: "400/250", objectFit: "cover" }}
+                  loading="lazy" // Add lazy loading
+                />
+                <div className="pt-3">
+                  <h3 className="text-md font-semibold text-gray-800 transition-colors duration-300 group-hover:text-indigo-600 first-letter:uppercase line-clamp-3">
+                    {post.title}
+                  </h3>
+
+                  <p className="mt-2 line-clamp-3 text-sm text-gray-600 first-letter:uppercase">
+                    {DOMPurify.sanitize(post.content)}
+                  </p>
+                  <div className="mt-2 flex items-center space-x-2 text-sm text-gray-500">
+                    {/* <div>{post.author.email}</div> */}
+                    <img
+                      src="/img/icons.png"
+                      alt=""
+                      className="h-6 w-6 border rounded-full p-0.5"
+                    />
+                    <div>Adarsh Thapa</div>
+                    <div>•</div>
+                    <div>
+                      {new Date(post.created_at).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                    </div>
+                  </div>
+                  <div className="mt-4">
+                    <button className="text-sm font-medium text-indigo-600 hover:underline  p-2 rounded-sm">
+                      Read More →
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-      </aside>
+        <div className="fixed inset-x-0 bottom-0 z-10 bg-white p-4 shadow-md md:hidden">
+          <button
+            className="flex items-center justify-center w-full rounded-full bg-blue-600 p-2 text-white shadow-md"
+            onClick={toggleCategories}
+          >
+            <MenuIcon className="h-6 w-6" />
+            <span className="ml-2 text-sm font-medium">Toggle categories</span>
+          </button>
+          {showCategories && (
+            <div className="absolute left-0 top-full w-full bg-white p-6 shadow-md">
+              <div className="mb-6">
+                <h2 className="text-lg font-bold text-gray-700">Categories</h2>
+              </div>
+              <nav className="flex flex-col space-y-2">
+                {[
+                  "Technology",
+                  "Design",
+                  "Lifestyle",
+                  "Travel",
+                  "Business",
+                ].map((category) => (
+                  <Link
+                    key={category}
+                    to="/"
+                    className="rounded-md px-4 py-3 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200 hover:text-gray-800"
+                  >
+                    {category}
+                  </Link>
+                ))}
+              </nav>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
-};
+}
 
-export default AllBlogs;
+function MenuIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <line x1="4" x2="20" y1="12" y2="12" />
+      <line x1="4" x2="20" y1="6" y2="6" />
+      <line x1="4" x2="20" y1="18" y2="18" />
+    </svg>
+  );
+}

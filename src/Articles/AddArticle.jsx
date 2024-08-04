@@ -86,7 +86,7 @@ const AddArticle = () => {
         { indent: "-1" },
         { indent: "+1" },
       ],
-      ["link", "image"],
+      ["link"],
       ["clean"],
     ],
   };
@@ -104,7 +104,6 @@ const AddArticle = () => {
     "bullet",
     "link",
     "color",
-    "image",
     "background",
     "align",
     "size",
@@ -220,8 +219,8 @@ const AddArticle = () => {
               onChange={handleProcedureContentChange}
               modules={modules}
               formats={formats}
-              className="bg-gray-50 h-96"
               placeholder="Enter your Blog Post..........."
+              className="bg-white rounded-lg h-96"
             />
           </div>
           <div className="clearfix p-4"></div>

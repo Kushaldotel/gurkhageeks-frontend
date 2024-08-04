@@ -4,6 +4,51 @@
 @tailwind utilities;
 
 body {
-    font-family: 'Poppins', sans-serif;
-    /* background-color:whitesmoke; */
-  }
+  font-family: 'Poppins', sans-serif;
+  /* background-color:whitesmoke; */
+}
+
+#root .ql-container {
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+  background: #fefcfc;
+}
+
+/* Snow Theme */
+#root .ql-snow.ql-toolbar {
+  display: block;
+  background: #eaecec;
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+}
+
+#root .ql-editor {
+  min-height: 18em;
+  font-size: 20px;
+  /* Change this value to increase/decrease font size */
+  font-family: 'Poppins', sans-serif;
+  /* Ensure Poppins is applied to text */
+  font-style: normal;
+  /* Remove italic style */
+}
+
+/* Customize placeholder styles */
+#root .ql-editor::before {
+  font-family: 'Poppins', sans-serif;
+  /* Apply Poppins font */
+  font-style: normal;
+  /* Remove italic style */
+  color: #ccc;
+  /* Optional: Change the placeholder text color */
+}
+
+.masonry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.masonry-grid-item {
+  break-inside: avoid;
+  margin-bottom: 16px;
+}
