@@ -21,7 +21,7 @@ export default function Home() {
           }}
         >
           <div className="absolute" />
-          <div className="absolute bg-gradient-to-t from-gray-900 to-transparent inset-0 flex flex-col items-center justify-center text-center rounded-2xl">
+          <div className="absolute bg-gradient-to-b from-gray-900 to-transparent inset-0 flex flex-col items-center justify-center text-center rounded-2xl">
             <h1 className="text-4xl font-bold sm:text-5xl md:text-6xl text-gray-50 p-4">
               Welcome to Gurkha Geeks ✓
             </h1>
@@ -38,14 +38,14 @@ export default function Home() {
           </div>
         </section>
         <section>
-          <ArticlesType/>
+          <ArticlesType />
         </section>
 
         <section>
-          <AllArticles/>
+          <AllArticles />
         </section>
         <section>
-          <RecentArticle/>
+          <RecentArticle />
         </section>
       </main>
     </div>
@@ -90,4 +90,3 @@ function SearchIcon(props) {
     </svg>
   );
 }
-
