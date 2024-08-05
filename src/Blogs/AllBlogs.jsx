@@ -157,8 +157,8 @@ export default function AllBlogs() {
                       </div>
                     </div>
                     <div className="mt-6">
-                      <Link className=" ">
-                        <p className="">Learn More →</p>
+                      <Link to={`/BlogDetail/${blog.id}`}>
+                        <button>Learn More →</button>
                       </Link>
                     </div>
                   </div>

@@ -19,11 +19,14 @@ import ProjectShowcase from "./Projects/ProjectShowcase";
 import Profile from "./Components/Profile";
 import Contact from "./Contactus/contact";
 import About from "./Aboutus/About";
+import BlogDetail from "./Blogs/BlogDetail";
+import ScrollToTop from "./Components/ScrollToTop";
 
 function App() {
   return (
     <>
       <Router>
+        <ScrollToTop />
         <Routes>
           <Route
             exact
@@ -31,6 +34,7 @@ function App() {
             element={
               <>
                 <Navbar />
+
                 <Home />
                 <Footer />
               </>
@@ -42,6 +46,18 @@ function App() {
               <>
                 <Navbar />
                 <AddArticle />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/BlogDetail/:id"
+            element={
+              <>
+                <Navbar />
+                <div className="min-h-screen">
+                  <BlogDetail />
+                </div>
                 <Footer />
               </>
             }
@@ -81,7 +97,9 @@ function App() {
             element={
               <>
                 <Navbar />
-                <AllBlogs />
+                <div className="min-h-screen">
+                  <AllBlogs />
+                </div>
                 <Footer />
               </>
             }
