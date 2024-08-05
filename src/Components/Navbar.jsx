@@ -75,12 +75,7 @@ const Navbar = () => {
             >
               Blogs
             </Link>
-            <Link
-              to="/about"
-              className="text-sm font-medium hover:text-primary"
-            >
-              About
-            </Link>
+
             <div className="relative group">
               <button
                 onClick={toggleDropdown}
@@ -165,16 +160,22 @@ const Navbar = () => {
               )}
             </div>
             <Link
-              to="/Contactus"
-              className="text-sm font-medium hover:text-primary"
-            >
-              Contact
-            </Link>
-            <Link
               to="/Roadmaps"
               className="text-sm font-medium hover:text-primary"
             >
               Categories
+            </Link>
+            <Link
+              to="/About"
+              className="text-sm font-medium hover:text-primary"
+            >
+              About
+            </Link>
+            <Link
+              to="/Contactus"
+              className="text-sm font-medium hover:text-primary"
+            >
+              Contact
             </Link>
             <Link
               to="/AddBlog"
@@ -232,7 +233,6 @@ const Navbar = () => {
     </div>
   );
 };
-
 
 function SearchIcon(props) {
   return (

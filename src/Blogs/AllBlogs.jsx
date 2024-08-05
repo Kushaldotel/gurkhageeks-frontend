@@ -5,11 +5,12 @@ import DOMPurify from "dompurify";
 
 export default function AllBlogs() {
   const [showCategories, setShowCategories] = useState(false);
+  const [categories, setCategories] = useState();
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
 
-  const categories = ["Technology", "Design", "Business", "Lifestyle"];
+  // const categories = ["Technology", "Design", "Business", "Lifestyle"];
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -38,6 +39,19 @@ export default function AllBlogs() {
       }
     };
 
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch(
+          "https://gorkhageeks-backend.onrender.com/blog/categories/"
+        );
+        const data = await response.json();
+        setCategories(data);
+      } catch (error) {
+        console.log("Error fetching categories", error);
+      }
+    };
+
+    fetchCategories();
     fetchBlogs();
   }, []);
 
@@ -83,7 +97,7 @@ export default function AllBlogs() {
                 </div>
                 <div className=" border-gray-200 ">
                   {categories.map((category) => (
-                    <DropdownMenuItem key={category} label={category} />
+                    <DropdownMenuItem key={category.id} label={category.name} />
                   ))}
                 </div>
               </div>
@@ -124,11 +138,13 @@ export default function AllBlogs() {
                           className="h-7 w-7 p-0.5 border border-gray-200 rounded-full"
                         />
                       </div>
-                      <div className="font-medium">{blog.authorInitials || "Adarsh Thapa"}</div>
+                      <div className="font-medium">
+                        {blog.authorInitials || "Adarsh Thapa"}
+                      </div>
                       <div>
                         <p className="font-medium">{blog.authorName}</p>
                         <p className="text-muted-foreground text-sm">
-                          Published on : {" "}
+                          Published on :{" "}
                           {new Date(blog.created_at).toLocaleDateString(
                             "en-US",
                             {

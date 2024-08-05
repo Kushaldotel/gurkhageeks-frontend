@@ -18,6 +18,7 @@ import AddProject from "./Projects/AddProject";
 import ProjectShowcase from "./Projects/ProjectShowcase";
 import Profile from "./Components/Profile";
 import Contact from "./Contactus/contact";
+import About from "./Aboutus/About";
 
 function App() {
   return (
@@ -61,6 +62,16 @@ function App() {
               <>
                 <Navbar />
                 <Contact />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/About"
+            element={
+              <>
+                <Navbar />
+                <About />
                 <Footer />
               </>
             }
