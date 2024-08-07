@@ -8,7 +8,9 @@ export default function AllBlogs() {
   const [categories, setCategories] = useState();
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [layoutOpen, setLayoutOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [currentLayout, setCurrentLayout] = useState("horizontal");
 
   // const categories = ["Technology", "Design", "Business", "Lifestyle"];
 
@@ -55,6 +57,11 @@ export default function AllBlogs() {
     fetchBlogs();
   }, []);
 
+  const toggleLayout = (layout) => {
+    setCurrentLayout(layout);
+    setLayoutOpen(false);
+  };
+
   const toggleCategories = () => {
     setShowCategories(!showCategories);
   };
@@ -68,105 +75,208 @@ export default function AllBlogs() {
       <div className="min-h-screen">
         <header className="py-4 p-4 flex items-center justify-between max-w-7xl mx-auto md:p-6 lg:px-8 xl:px-0">
           <h1 className="text-2xl font-bold text-gray-800">All Blogs</h1>
-          <div className="relative">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="flex items-center gap-2 border border-gray-300 rounded-sm px-3 py-2 text-gray-700"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-4 h-4"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
+          <div className="flex space-x-8">
+            <div className="relative">
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="flex items-center gap-2 border border-gray-300 rounded-sm px-3 py-2 text-gray-700"
               >
-                <rect x="3" y="3" width="7" height="7"></rect>
-                <rect x="14" y="3" width="7" height="7"></rect>
-                <rect x="14" y="14" width="7" height="7"></rect>
-                <rect x="3" y="14" width="7" height="7"></rect>
-              </svg>
-              <span>All Categories</span>
-            </button>
-            {isOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white shadow-md rounded-md z-10 border-t-4 border-t-purple-400">
-                <div className="px-4 py-2 text-gray-500 font-semibold">
-                  Categories
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-4 h-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <rect x="3" y="3" width="7" height="7"></rect>
+                  <rect x="14" y="3" width="7" height="7"></rect>
+                  <rect x="14" y="14" width="7" height="7"></rect>
+                  <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+                <span>All Categories</span>
+              </button>
+              {isOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white shadow-md rounded-md z-10 border-t-4 border-t-purple-400">
+                  <div className="px-4 py-2 text-gray-500 font-semibold">
+                    Categories
+                  </div>
+                  <div className=" border-gray-200 ">
+                    {categories.map((category) => (
+                      <DropdownMenuItem
+                        key={category.id}
+                        label={category.name}
+                      />
+                    ))}
+                  </div>
                 </div>
-                <div className=" border-gray-200 ">
-                  {categories.map((category) => (
-                    <DropdownMenuItem key={category.id} label={category.name} />
-                  ))}
+              )}
+            </div>
+
+            <div className="relative">
+              <button
+                onClick={() => setLayoutOpen(!layoutOpen)}
+                className="flex items-center gap-3 border border-gray-300 rounded-sm px-3 py-2 text-gray-700"
+              >
+                <img
+                  src="/img/layout.png"
+                  alt="Layout Options"
+                  className="h-6 w-6"
+                />
+                <span>Layouts</span>
+              </button>
+              {layoutOpen && (
+                <div className="absolute right-0 mt-2 w-40 bg-white shadow-md rounded-md z-10 border-t-4 border-t-purple-400">
+                  <div className="px-4 py-2 text-gray-500 font-semibold">
+                    Layouts
+                  </div>
+                  <div className=" border-gray-200">
+                    <button
+                      onClick={() => toggleLayout("horizontal")}
+                      className={`block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-left ${
+                        currentLayout === "horizontal" ? "bg-gray-100" : ""
+                      }`}
+                    >
+                      Horizontal
+                    </button>
+                    <button
+                      onClick={() => toggleLayout("card")}
+                      className={`block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-left ${
+                        currentLayout === "card" ? "bg-gray-100" : ""
+                      }`}
+                    >
+                      Card
+                    </button>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </header>
         {/* Map over blogs and render each one */}
-        <div className="flex flex-wrap justify-center">
-          {blogs.map((blog) => (
-            <div key={blog.id} className="max-w-7xl p-4 md:p-6 lg:p-8 xl:px-0">
-              <div className="flex flex-col md:flex-row bg-white overflow-hidden">
-                <div className="md:w-1/2">
-                  <img
-                    src={blog.image || "/img/FullStack.png"} // Ensure image fallback
-                    alt="Blog Post Image"
-                    width={800}
-                    height={600}
-                    className="w-full h-full object-cover rounded-sm"
-                    style={{ aspectRatio: "1200/600", objectFit: "cover" }}
-                  />
-                </div>
-                <div className="md:w-1/2 p-6 md:p-8">
-                  <div className="space-y-4">
-                    <h2 className="text-2xl md:text-3xl font-bold leading-tight">
-                      {blog.title}
-                    </h2>
-                    <p
-                      className="text-muted-foreground text-base leading-relaxed line-clamp-5"
-                      dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(blog.content),
-                      }}
-                    ></p>
-                    <div className="flex items-center space-x-3">
-                      <div>
-                        <img
-                          // src={blog.authorImage || "/placeholder-user.jpg"}
-                          src="/img/icons.png"
-                          className="h-7 w-7 p-0.5 border border-gray-200 rounded-full"
-                        />
+        {/* THis is horizental Layout  */}
+        {currentLayout === "horizontal" ? (
+          <div className="flex flex-wrap justify-center">
+            {blogs.map((blog) => (
+              <div
+                key={blog.id}
+                className="max-w-7xl p-4 md:p-6 lg:p-8 xl:px-0"
+              >
+                <div className="flex flex-col md:flex-row bg-white overflow-hidden">
+                  <div className="md:w-1/2">
+                    <img
+                      src={blog.image || "/img/FullStack.png"} // Ensure image fallback
+                      alt="Blog Post Image"
+                      width={800}
+                      height={600}
+                      className="w-full h-full object-cover rounded-sm"
+                      style={{ aspectRatio: "1200/600", objectFit: "cover" }}
+                    />
+                  </div>
+                  <div className="md:w-1/2 p-6 md:p-8">
+                    <div className="space-y-4">
+                      <h2 className="text-2xl md:text-3xl font-bold leading-tight">
+                        {blog.title}
+                      </h2>
+                      <p
+                        className="text-muted-foreground text-base leading-relaxed line-clamp-5"
+                        dangerouslySetInnerHTML={{
+                          __html: DOMPurify.sanitize(blog.content),
+                        }}
+                      ></p>
+                      <div className="flex items-center space-x-3">
+                        <div>
+                          <img
+                            // src={blog.authorImage || "/placeholder-user.jpg"}
+                            src="/img/icons.png"
+                            className="h-7 w-7 p-0.5 border border-gray-200 rounded-full"
+                          />
+                        </div>
+                        <div className="font-medium">
+                          {blog.authorInitials || "Adarsh Thapa"}
+                        </div>
+                        <div>
+                          <p className="font-medium">{blog.authorName}</p>
+                          <p className="text-muted-foreground text-sm">
+                            Published on :{" "}
+                            {new Date(blog.created_at).toLocaleDateString(
+                              "en-US",
+                              {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                              }
+                            )}
+                          </p>
+                        </div>
                       </div>
-                      <div className="font-medium">
-                        {blog.authorInitials || "Adarsh Thapa"}
+                      <div className="mt-6">
+                        <Link to={`/BlogDetail/${blog.id}`}>
+                          <button>Learn More →</button>
+                        </Link>
                       </div>
-                      <div>
-                        <p className="font-medium">{blog.authorName}</p>
-                        <p className="text-muted-foreground text-sm">
-                          Published on :{" "}
-                          {new Date(blog.created_at).toLocaleDateString(
-                            "en-US",
-                            {
-                              year: "numeric",
-                              month: "long",
-                              day: "numeric",
-                            }
-                          )}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="mt-6">
-                      <Link to={`/BlogDetail/${blog.id}`}>
-                        <button>Learn More →</button>
-                      </Link>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto py-6">
+            {blogs.map((blog) => (
+              <div
+                key={blog.id}
+                className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col"
+              >
+                <div className="h-48 overflow-hidden">
+                  <img
+                    src={blog.image || "/img/FullStack.png"}
+                    alt="Blog Post Image"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="p-6 flex-grow flex flex-col">
+                  <h2 className="text-xl font-bold mb-2 line-clamp-2">
+                    {blog.title}
+                  </h2>
+                  <p
+                    className="text-muted-foreground text-sm mb-4 line-clamp-3"
+                    dangerouslySetInnerHTML={{
+                      __html: DOMPurify.sanitize(blog.content),
+                    }}
+                  ></p>
+                  <div className="flex items-center space-x-3 mb-4">
+                    <img
+                      src="/img/icons.png"
+                      className="h-7 w-7 p-0.5 border border-gray-200 rounded-full"
+                      alt="Author"
+                    />
+                    <div>
+                      <p className="font-medium">
+                        {blog.authorName || "Adarsh Thapa"}
+                      </p>
+                      <p className="text-muted-foreground text-xs">
+                        Published on:{" "}
+                        {new Date(blog.created_at).toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}
+                      </p>
+                    </div>
+                  </div>
+                  <Link to={`/BlogDetail/${blog.id}`} className="mt-auto">
+                    <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
+                      Learn More →
+                    </button>
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </>
   );

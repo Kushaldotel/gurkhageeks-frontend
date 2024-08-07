@@ -3,48 +3,18 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import Toast from "../Components/Toast";
+import { useAuth } from "../Auth/AuthContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [showToast, setShowToast] = useState(false);
+  const { login, error, showToast } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch(
-        "https://gorkhageeks-backend.onrender.com/auth/login/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email,
-            password,
-          }),
-        }
-      );
-
-      const result = await response.json();
-      if (response.ok) {
-        //Store the tokens in local storage
-        localStorage.setItem("accessToken", result.access);
-        localStorage.setItem("refreshToken", result.refresh);
-        navigate("/");
-      } else {
-        setError(result.message || "Incorrect username or password!");
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 3000);
-      }
-    } catch (error) {
-      console.log(error);
-      setShowToast("An error occured. Please try again!");
-      setTimeout(() => setShowToast(false), 3000);
-    }
+    login(email, password);
   };
 
   const handleGoogleSignIn = async (e) => {
@@ -62,7 +32,8 @@ const Login = () => {
       <Toast
         message={error}
         isVisible={showToast}
-        onClose={() => setShowToast(false)}
+        // onClose={() => setShowToast(false)}
+        onClose={() => {}}
       />
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <Link to="/">

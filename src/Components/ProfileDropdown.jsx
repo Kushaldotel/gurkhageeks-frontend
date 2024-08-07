@@ -101,7 +101,7 @@ const ProfileDropdown = ({ toggleDropdown }) => {
   const { pathname } = useLocation(); // Destructure pathname from useLocation
   const navigate = useNavigate();
 
-  const handleSignOut = async () => {
+  const handleSignOut = () => {
     Swal.fire({
       title: "Are you sure?",
       text: "You will be logged out of your account.",
@@ -113,37 +113,12 @@ const ProfileDropdown = ({ toggleDropdown }) => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          let accessToken = localStorage.getItem("accessToken");
-          if (!accessToken) {
-            // Try to refresh the token if it's missing
-            accessToken = await refreshAccessToken();
-          }
-
-          const response = await fetch(
-            "https://gorkhageeks-backend.onrender.com/auth/logout/",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${accessToken}`,
-              },
-            }
+          await logout(); // Use the logout function from context
+          Swal.fire(
+            "Logged out!",
+            "You have been logged out successfully.",
+            "success"
           );
-
-          if (response.ok) {
-            localStorage.removeItem("accessToken");
-            localStorage.removeItem("refreshToken");
-
-            Swal.fire(
-              "Logged out!",
-              "You have been logged out successfully.",
-              "success"
-            );
-            navigate("/"); // Redirect to login page or home
-          } else {
-            const { message } = await response.json();
-            Swal.fire("Error!", message || "Failed to log out.", "error");
-          }
         } catch (error) {
           console.error("Error logging out:", error);
           Swal.fire("Error!", "An error occurred. Please try again.", "error");

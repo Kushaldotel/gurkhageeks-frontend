@@ -2,6 +2,7 @@ import { useScroll } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Loader from "../Components/Loader";
+import DOMPurify from "dompurify";
 
 const BlogDetail = () => {
   const { id } = useParams();
@@ -35,25 +36,27 @@ const BlogDetail = () => {
     return <Loader />; // Display a loading indicator
   }
   return (
-    <div className="flex flex-col min-h-screen">
-      <section className="relative max-w-7xl mx-auto mt-6 shadow-md rounded-sm h-[70vh] overflow-hidden">
+    <div className="flex flex-col min-h-screen max-w-7xl mx-auto">
+      <section className="relative  mt-6 shadow-md rounded-sm h-[65vh] overflow-hidden">
+        {/* <button className="bg-gray-800 text-white p-4 rounded-full hidden lg:block   text-xl">
+          ←
+        </button> */}
         <img
           src={blog.image || "/img/FullStack.png"}
           alt="Hero Image"
-          width={1920}
-          height={1080}
-          className="inset-0 max-w-7xl w-full h-full object-cover object-center"
-          style={{ aspectRatio: "1920/1080", objectFit: "cover" }}
+          className="w-full h-full object-cover object-center rounded-xl"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 to-transparent" />
       </section>
-      <article className="prose prose-lg max-w-4xl mx-auto my-12 px-4 md:px-0">
+      <article className="prose prose-lg max-w-6xl mx-auto my-12 px-4 md:px-0">
         <h1 className="text-4xl font-bold tracking-tight sm:text-4xl">
           {blog.title}
         </h1>
-        <p className="first-letter:text-6xl mt-4 first-letter:font-bold first-letter:mr-3 first-letter:float-left">
-          {blog.content}
-        </p>
+        <p
+          className="first-letter:text-6xl mt-4 first-letter:font-bold first-letter:mr-3 first-letter:float-left text-xl tracking-wide leading-relaxed"
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(blog.content),
+          }}
+        ></p>
       </article>
     </div>
   );

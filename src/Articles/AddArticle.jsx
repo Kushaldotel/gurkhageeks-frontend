@@ -57,7 +57,7 @@ const AddArticle = () => {
           method: "POST",
           headers: {
             Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIyNTA2MjY1LCJpYXQiOjE3MjI0OTQyNjUsImp0aSI6ImIyMGE2YTFjMjY5ZTQyMjhiZmEzYjU2NDM5MTIwYzkyIiwidXNlcl9pZCI6MX0.T6tcpyoyiJd5p1nwy1D8HyAci-HoT-A_5jITjywZ8s8",
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIzMDYwMjI0LCJpYXQiOjE3MjMwNDgyMjQsImp0aSI6ImY0MDY3NDA4ZjFhMzRhMDM4ZTAwZjkyYjRlYWJiMjMwIiwidXNlcl9pZCI6MX0.VaNg2AwPXLEuGmfj9JsxKvBNNJmMHOE-cz07P3V_8Kk",
           },
           body: formData,
         }
@@ -205,6 +205,7 @@ const AddArticle = () => {
                   name="featuredImage"
                   className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
                   onChange={handleFileChange}
+                  required
                 />
               </div>
             </div>
@@ -221,6 +222,7 @@ const AddArticle = () => {
               formats={formats}
               placeholder="Enter your Blog Post..........."
               className="bg-white rounded-lg h-96"
+              required
             />
           </div>
           <div className="clearfix p-4"></div>
