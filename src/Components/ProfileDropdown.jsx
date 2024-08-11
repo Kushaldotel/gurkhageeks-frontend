@@ -96,10 +96,12 @@
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useAuth } from "../Auth/AuthContext";
 
 const ProfileDropdown = ({ toggleDropdown }) => {
   const { pathname } = useLocation(); // Destructure pathname from useLocation
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
   const handleSignOut = () => {
     Swal.fire({

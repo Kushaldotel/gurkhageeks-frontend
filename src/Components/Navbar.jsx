@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import ProfileDropdown from "./ProfileDropdown";
+import { useAuth } from "../Auth/AuthContext";
 
 const Navbar = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -10,12 +11,8 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const { user } = useAuth(); // Get the user from the Auth context
 
-  useEffect(() => {
-    //Check if the user is athenticated by checking if the access token is present in the
-    const accessToken = localStorage.getItem("accessToken");
-    setIsAuthenticated(!!accessToken);
-  }, []);
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -201,7 +198,7 @@ const Navbar = () => {
             </Link> */}
           </nav>
           <div className="relative">
-            {!isAuthenticated ? (
+            {!user ? (
               <Link to="/Login">
                 <button className="rounded-md py-1.5 px-4 text-sm bg-gray-800 text-gray-50 font-light">
                   Login

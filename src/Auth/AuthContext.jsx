@@ -7,7 +7,7 @@ export const useAuth = () => {
   return useContext(AuthContext);
 };
 
-export const AuthProvider = ({ children }) => {
+const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState("");
   const [showToast, setShowToast] = useState(false);
@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     const response = await fetch(
-      "https://gorkhageeks-backend.onrender.com/auth/refresh/",
+      "https://gorkhageeks-backend.onrender.com/auth/token/refresh/",
       {
         method: "POST",
         headers: {
@@ -128,7 +128,7 @@ export const AuthProvider = ({ children }) => {
 
       const result = await response.json();
       if (response.ok) {
-        navigate("/login"); // Redirect to login page after successful registration
+        navigate("/Login"); // Redirect to login page after successful registration
       } else {
         showErrorToast(result.message || "Signup failed. Please try again!");
       }
@@ -153,9 +153,10 @@ export const AuthProvider = ({ children }) => {
       );
 
       if (response.ok) {
+        console.log("Logout successful, navigating to login...");
         removeTokens();
         setUser(null);
-        navigate("/login");
+        navigate("/Login");
       } else {
         const { message } = await response.json();
         console.error("Logout error:", message || "Failed to log out.");
@@ -177,3 +178,5 @@ export const AuthProvider = ({ children }) => {
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
+
+export { AuthProvider };

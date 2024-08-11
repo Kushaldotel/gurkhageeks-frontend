@@ -12,8 +12,6 @@ export default function AllBlogs() {
   const [isOpen, setIsOpen] = useState(false);
   const [currentLayout, setCurrentLayout] = useState("horizontal");
 
-  // const categories = ["Technology", "Design", "Business", "Lifestyle"];
-
   useEffect(() => {
     const fetchBlogs = async () => {
       setLoading(true);
@@ -43,11 +41,18 @@ export default function AllBlogs() {
 
     const fetchCategories = async () => {
       try {
+        const cachedCategories = localStorage.getItem("categories");
+        if (cachedCategories) {
+          setCategories(JSON.parse(cachedCategories));
+          setLoading(false);
+          return;
+        }
         const response = await fetch(
           "https://gorkhageeks-backend.onrender.com/blog/categories/"
         );
         const data = await response.json();
         setCategories(data);
+        localStorage.setItem("categories", JSON.stringify(data));
       } catch (error) {
         console.log("Error fetching categories", error);
       }

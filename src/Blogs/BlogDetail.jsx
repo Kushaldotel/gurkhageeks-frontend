@@ -36,21 +36,21 @@ const BlogDetail = () => {
     return <Loader />; // Display a loading indicator
   }
   return (
-    <div className="flex flex-col min-h-screen max-w-7xl mx-auto">
-      <section className="relative  mt-6 shadow-md rounded-sm h-[65vh] overflow-hidden">
+    <div className="flex flex-col min-h-screen max-w-4xl mx-auto">
+      <h1 className="text-3xl pt-10 font-bold tracking-normal sm:text-4xl leading-[6rem]">
+        {blog.title}
+      </h1>
+      <section className="relative  mt-6 shadow-md rounded-sm h-[72vh] overflow-hidden">
         {/* <button className="bg-gray-800 text-white p-4 rounded-full hidden lg:block   text-xl">
           ←
         </button> */}
         <img
           src={blog.image || "/img/FullStack.png"}
           alt="Hero Image"
-          className="w-full h-full object-cover object-center rounded-xl"
+          className="w-full h-full object-cover object-center"
         />
       </section>
       <article className="prose prose-lg max-w-6xl mx-auto my-12 px-4 md:px-0">
-        <h1 className="text-4xl font-bold tracking-tight sm:text-4xl">
-          {blog.title}
-        </h1>
         <p
           className="first-letter:text-6xl mt-4 first-letter:font-bold first-letter:mr-3 first-letter:float-left text-xl tracking-wide leading-relaxed"
           dangerouslySetInnerHTML={{
