@@ -5,62 +5,71 @@ import DOMPurify from "dompurify";
 
 export default function AllBlogs() {
   const [showCategories, setShowCategories] = useState(false);
-  const [categories, setCategories] = useState();
+  const [categories, setCategories] = useState([]);
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [layoutOpen, setLayoutOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [currentLayout, setCurrentLayout] = useState("horizontal");
 
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      setLoading(true);
-      try {
-        const cachedBlogs = sessionStorage.getItem("blogs");
-        if (cachedBlogs) {
-          setBlogs(JSON.parse(cachedBlogs));
-          setLoading(false);
-          return;
-        }
-
+  const fetchBlogs = async () => {
+    setLoading(true);
+    try {
+      const cachedBlogs = sessionStorage.getItem("blogs");
+      if (cachedBlogs) {
+        setBlogs(JSON.parse(cachedBlogs));
+      } else {
         const response = await fetch(
           "https://gorkhageeks-backend.onrender.com/blog/"
         );
         const data = await response.json();
         setBlogs(data);
-
-        // Cache the blogs for future use
         sessionStorage.setItem("blogs", JSON.stringify(data));
-
-        setLoading(false);
-      } catch (error) {
-        console.log("Error fetching data", error);
-        setLoading(false);
       }
-    };
-
-    const fetchCategories = async () => {
-      try {
-        const cachedCategories = localStorage.getItem("categories");
-        if (cachedCategories) {
-          setCategories(JSON.parse(cachedCategories));
-          setLoading(false);
-          return;
-        }
-        const response = await fetch(
-          "https://gorkhageeks-backend.onrender.com/blog/categories/"
-        );
-        const data = await response.json();
-        setCategories(data);
-        localStorage.setItem("categories", JSON.stringify(data));
-      } catch (error) {
-        console.log("Error fetching categories", error);
+    } catch (error) {
+      console.error("Error fetching data", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const fetchCategories = async () => {
+    try {
+      const cachedCategories = localStorage.getItem("categories");
+      if (cachedCategories) {
+        setCategories(JSON.parse(cachedCategories));
+        setLoading(false);
+        return;
       }
-    };
-
-    fetchCategories();
+      const response = await fetch(
+        "https://gorkhageeks-backend.onrender.com/blog/categories/"
+      );
+      const data = await response.json();
+      setCategories(data);
+      localStorage.setItem("categories", JSON.stringify(data));
+    } catch (error) {
+      console.log("Error fetching categories", error);
+    }
+  };
+  useEffect(() => {
     fetchBlogs();
+    fetchCategories();
   }, []);
+
+  const fetchBlogByCategory = async (categoryId) => {
+    console.log("Fetching blogs for categoryId:", categoryId);
+    try {
+      setLoading(true); // Set loading to true before fetching
+      const response = await fetch(
+        `https://gorkhageeks-backend.onrender.com/blog/?categories=${categoryId}`
+      );
+      const data = await response.json();
+      setBlogs(data);
+      setLoading(false);
+    } catch (error) {
+      console.log("Error fetching blog by category", error);
+      setLoading(false);
+    }
+  };
 
   const toggleLayout = (layout) => {
     setCurrentLayout(layout);
@@ -105,6 +114,12 @@ export default function AllBlogs() {
               </button>
               {isOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white shadow-md rounded-md z-10 border-t-4 border-t-purple-400">
+                  <button
+                    className="px-4 py-3 hover:bg-gray-100 w-full text-left"
+                    onClick={() => fetchBlogs()} // Ensure fetchBlogs is used correctly here
+                  >
+                    All Blogs
+                  </button>
                   <div className="px-4 py-2 text-gray-500 font-semibold">
                     Categories
                   </div>
@@ -113,6 +128,7 @@ export default function AllBlogs() {
                       <DropdownMenuItem
                         key={category.id}
                         label={category.name}
+                        onClick={() => fetchBlogByCategory(category.id)}
                       />
                     ))}
                   </div>
@@ -162,7 +178,11 @@ export default function AllBlogs() {
         </header>
         {/* Map over blogs and render each one */}
         {/* THis is horizental Layout  */}
-        {currentLayout === "horizontal" ? (
+        {blogs.length == 0 ? (
+          <div className="text-center text-gray-600 mt-20">
+            No blog posted yet.
+          </div>
+        ) : currentLayout === "horizontal" ? (
           <div className="flex flex-wrap justify-center">
             {blogs.map((blog) => (
               <div
@@ -180,13 +200,31 @@ export default function AllBlogs() {
                       style={{ aspectRatio: "1200/600", objectFit: "cover" }}
                     />
                   </div>
-                  <div className="md:w-1/2 p-6 md:p-8">
+                  <div className="md:w-1/2 px-6 py-4 ">
                     <div className="space-y-4">
+                      <p className="bg-gray-100 p-1.5 inline tracking-wider rounded-md">
+                        {blog.categories[0]?.name || "All Blogs"}
+                      </p>
                       <h2 className="text-2xl md:text-3xl font-bold leading-tight">
                         {blog.title}
                       </h2>
+                      <div className="flex flex-wrap items-center space-x-3">
+                        <div className="flex flex-wrap gap-2">
+                          {(Array.isArray(JSON.parse(blog.tags))
+                            ? JSON.parse(blog.tags)
+                            : []
+                          ).map((tag, index) => (
+                            <span
+                              key={index}
+                              className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
                       <p
-                        className="text-muted-foreground text-base leading-relaxed line-clamp-5"
+                        className="text-muted-foreground text-base leading-relaxed line-clamp-4"
                         dangerouslySetInnerHTML={{
                           __html: DOMPurify.sanitize(blog.content),
                         }}
@@ -308,9 +346,12 @@ function MenuIcon(props) {
   );
 }
 
-function DropdownMenuItem({ label }) {
+function DropdownMenuItem({ label, onClick }) {
   return (
-    <button className="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-left">
+    <button
+      className="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-left"
+      onClick={onClick}
+    >
       {label}
     </button>
   );
