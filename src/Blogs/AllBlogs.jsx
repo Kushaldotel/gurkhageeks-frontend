@@ -11,6 +11,8 @@ export default function AllBlogs() {
   const [layoutOpen, setLayoutOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [currentLayout, setCurrentLayout] = useState("horizontal");
+  const BASE_URL = import.meta.env.VITE_BASE_URL
+  // console.log(BASE_URL);
 
   const fetchBlogs = async () => {
     setLoading(true);
@@ -19,9 +21,7 @@ export default function AllBlogs() {
       if (cachedBlogs) {
         setBlogs(JSON.parse(cachedBlogs));
       } else {
-        const response = await fetch(
-          "https://gorkhageeks-backend.onrender.com/blog/"
-        );
+        const response = await fetch(`${BASE_URL}/blog/`);
         const data = await response.json();
         setBlogs(data);
         sessionStorage.setItem("blogs", JSON.stringify(data));
@@ -40,9 +40,7 @@ export default function AllBlogs() {
         setLoading(false);
         return;
       }
-      const response = await fetch(
-        "https://gorkhageeks-backend.onrender.com/blog/categories/"
-      );
+      const response = await fetch(`${BASE_URL}/blog/categories/`);
       const data = await response.json();
       setCategories(data);
       localStorage.setItem("categories", JSON.stringify(data));
@@ -68,6 +66,16 @@ export default function AllBlogs() {
     } catch (error) {
       console.log("Error fetching blog by category", error);
       setLoading(false);
+    }
+  };
+  // ${BASE_URL}
+  const parseTags = (tags) => {
+    try {
+      const parsed = JSON.parse(tags);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (error) {
+      console.error("Error parsing tags:", error);
+      return [];
     }
   };
 
@@ -116,7 +124,10 @@ export default function AllBlogs() {
                 <div className="absolute right-0 mt-2 w-48 bg-white shadow-md rounded-md z-10 border-t-4 border-t-purple-400">
                   <button
                     className="px-4 py-3 hover:bg-gray-100 w-full text-left"
-                    onClick={() => fetchBlogs()} // Ensure fetchBlogs is used correctly here
+                    onClick={() => {
+                      fetchBlogs();
+                      setIsOpen(false);
+                    }}
                   >
                     All Blogs
                   </button>
@@ -129,6 +140,7 @@ export default function AllBlogs() {
                         key={category.id}
                         label={category.name}
                         onClick={() => fetchBlogByCategory(category.id)}
+                        setIsOpen={setIsOpen}
                       />
                     ))}
                   </div>
@@ -210,10 +222,7 @@ export default function AllBlogs() {
                       </h2>
                       <div className="flex flex-wrap items-center space-x-3">
                         <div className="flex flex-wrap gap-2">
-                          {(Array.isArray(JSON.parse(blog.tags))
-                            ? JSON.parse(blog.tags)
-                            : []
-                          ).map((tag, index) => (
+                          {parseTags(blog.tags).map((tag, index) => (
                             <span
                               key={index}
                               className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded"
@@ -257,7 +266,7 @@ export default function AllBlogs() {
                       </div>
                       <div className="mt-6">
                         <Link to={`/BlogDetail/${blog.id}`}>
-                          <button>Learn More →</button>
+                          <button>Show More →</button>
                         </Link>
                       </div>
                     </div>
@@ -346,11 +355,14 @@ function MenuIcon(props) {
   );
 }
 
-function DropdownMenuItem({ label, onClick }) {
+function DropdownMenuItem({ label, onClick, setIsOpen }) {
   return (
     <button
       className="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-left"
-      onClick={onClick}
+      onClick={() => {
+        onClick();
+        setIsOpen(false);
+      }}
     >
       {label}
     </button>

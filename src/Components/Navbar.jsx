@@ -47,7 +47,7 @@ const Navbar = () => {
   return (
     <div className="sticky z-50">
       <header className=" text-gray-900 bg-opacity-90 backdrop-blur-2xl h-16 bg-transparent z-50 transition-colors duration-300 mx-auto flex items-center px-8 shadow-sm">
-        <div className="sticky container max-w-7xl mx-auto flex items-center justify-between ">
+        <div className="sticky container  flex items-center justify-between max-w-7xl mx-auto">
           <Link to="/" className="flex items-center gap-2 text-primary">
             <h1 className="font-semibold">GurkhaGeeks ✓</h1>
           </Link>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // import styles
+import Swal from "sweetalert2";
 
 const AddArticle = () => {
   const [title, setTitle] = useState("");
@@ -49,6 +50,7 @@ const AddArticle = () => {
     if (featuredImage) {
       formData.append("featuredImage", featuredImage);
     }
+    const accessToken = localStorage.getItem("accessToken");
 
     try {
       const response = await fetch(
@@ -56,8 +58,7 @@ const AddArticle = () => {
         {
           method: "POST",
           headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIzMDYwMjI0LCJpYXQiOjE3MjMwNDgyMjQsImp0aSI6ImY0MDY3NDA4ZjFhMzRhMDM4ZTAwZjkyYjRlYWJiMjMwIiwidXNlcl9pZCI6MX0.VaNg2AwPXLEuGmfj9JsxKvBNNJmMHOE-cz07P3V_8Kk",
+            Authorization: `Bearer ${accessToken}`,
           },
           body: formData,
         }
@@ -66,9 +67,23 @@ const AddArticle = () => {
         const errorText = await response.text();
         throw new Error(`Network response was not ok: ${errorText}`);
       }
-
       const result = await response.json();
       console.log("Blog post result", result);
+
+      // Clear form fields
+      setTitle("");
+      setContent("");
+      setSelectedCategory("");
+      setTags([]);
+      setFeaturedImage(null);
+
+      // Show success message using SweetAlert
+      Swal.fire({
+        title: "Success!",
+        text: "Data submitted successfully!",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
     } catch (error) {
       console.log(error, "Error submitting data!!");
     }
@@ -122,18 +137,30 @@ const AddArticle = () => {
 
   return (
     <div className="relative py-6 w-full top-0">
-      <div className="max-w-7xl min-h-screen pt-4 mx-auto p-6 sm:p-8 md:p-10 bg-gray-50 shadow-sm rounded-lg border border-gray-200">
+      <div className="max-w-7xl min-h-screen pt-4 mx-auto p-6 sm:p-8 md:p-10 rounded-lg ">
         <div className="mb-6">
-          <h1 className="text-3xl font-bold">Add New Blog Post</h1>
-          <p className="text-gray-600">
-            Fill out the form to create a new blog post.
-          </p>
+          <h1 className="text-3xl font-medium ">Add New Blog Post</h1>
+          <svg
+            className="w-72 h-7"
+            viewBox="10 0 160 10"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M 0 5 Q 5 0, 10 5 T 20 5 T 30 5 T 40 5 T 50 5 T 60 5 T 70 5 T 80 5 T 90 5 T 100 5 T 110 5 T 120 5 T 130 5 T 140 5 T 150 5 T 160 6 T 170 7 T 180 8"
+              stroke="black"
+              fill="transparent"
+              stroke-width="2"
+            />
+          </svg>
         </div>
         <form onSubmit={handleSubmit}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6">
             <div className="grid gap-4">
               <div className="grid gap-2">
-                <label htmlFor="title" className="text-gray-700">
+                <label
+                  htmlFor="title"
+                  className="text-gray-700 sm:text-lg md:text-xl"
+                >
                   Title
                 </label>
                 <input
@@ -141,42 +168,11 @@ const AddArticle = () => {
                   id="title"
                   name="title"
                   placeholder="Enter the blog post title"
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  className="w-full px-4 py-2 border-b border-gray-800 sm:text-lg xl:text-4xl focus:outline-none focus:ring-b-2 focus:ring-blue-600"
                   value={title}
                   onChange={handleTitleChange}
                   required
                 />
-              </div>
-              <div className="grid space-y-2">
-                <label htmlFor="categories" className="text-gray-700">
-                  Categories
-                </label>
-                <select
-                  id="categories"
-                  name="categories"
-                  className="w-full py-2 px-6 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-                  value={selectedCategory}
-                  onChange={handleCategoriesChange}
-                  required
-                  style={{
-                    paddingRight: "2.5rem", // Adjust padding to accommodate the custom arrow
-                    boxSizing: "border-box",
-                    background: `url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor"%3E%3Cpath d="M7 10l5 5 5-5z"%3E%3C/path%3E%3C/svg%3E') no-repeat right 0.75rem center`,
-                    backgroundSize: "1rem",
-                    WebkitAppearance: "none",
-                    appearance: "none",
-                    boxSizing: "border-box",
-                  }}
-                >
-                  <option value="" disabled>
-                    Select categories
-                  </option>
-                  {categories.map((category) => (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
-                    </option>
-                  ))}
-                </select>
               </div>
             </div>
             <div className="flex-col space-y-4">
@@ -189,24 +185,61 @@ const AddArticle = () => {
                   id="tags"
                   name="tags"
                   placeholder="Enter tags, separated by commas"
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  className="w-full px-4 py-2 border-b border-gray-800 sm:text-lg xl:text-2xl focus:outline-none"
                   value={tags.join(", ")}
                   onChange={handleTagsChange}
                   required
                 />
               </div>
-              <div className="flex-col space-y-2">
-                <label htmlFor="featured-image" className="text-gray-700">
-                  Feature Thumbnail
-                </label>
-                <input
-                  type="file"
-                  id="featured-image"
-                  name="featuredImage"
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-                  onChange={handleFileChange}
-                  required
-                />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid gap-4">
+                <div className="grid space-y-2">
+                  <label htmlFor="categories" className="text-gray-700">
+                    Categories
+                  </label>
+                  <select
+                    id="categories"
+                    name="categories"
+                    className="w-full py-2 px-6 border-b border-gray-800 focus:outline-none "
+                    value={selectedCategory}
+                    onChange={handleCategoriesChange}
+                    required
+                    style={{
+                      paddingRight: "2.5rem",
+                      boxSizing: "border-box",
+                      background: `url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor"%3E%3Cpath d="M7 10l5 5 5-5z"%3E%3C/path%3E%3C/svg%3E') no-repeat right 0.75rem center`,
+                      backgroundSize: "1rem",
+                      WebkitAppearance: "none",
+                      appearance: "none",
+                      boxSizing: "border-box",
+                    }}
+                  >
+                    <option value="" disabled>
+                      Select categories
+                    </option>
+                    {categories.map((category) => (
+                      <option key={category.id} value={category.id}>
+                        {category.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <div className="flex-col space-y-4">
+                <div className="flex-col space-y-2">
+                  <label htmlFor="featured-image" className="text-gray-700">
+                    Feature Thumbnail
+                  </label>
+                  <input
+                    type="file"
+                    id="featured-image"
+                    name="featuredImage"
+                    className="w-full px-4 py-2 border-b border-gray-800 focus:outline-none"
+                    onChange={handleFileChange}
+                    required
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -221,12 +254,12 @@ const AddArticle = () => {
               modules={modules}
               formats={formats}
               placeholder="Enter your Blog Post..........."
-              className="bg-white rounded-lg h-96"
+              className=""
               required
             />
           </div>
           <div className="clearfix p-4"></div>
-          <div className="md:col-span-2 flex justify-end gap-2 mt-14">
+          <div className="md:col-span-2 flex justify-end gap-2 mt-2">
             <button
               type="button"
               className="px-4 py-2 bg-gray-500 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-600"
