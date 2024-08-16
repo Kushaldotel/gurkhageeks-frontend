@@ -3,16 +3,16 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import ProfileDropdown from "./ProfileDropdown";
 import { useAuth } from "../Auth/AuthContext";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { pathname } = useLocation();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const { user } = useAuth(); // Get the user from the Auth context
-
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -28,12 +28,12 @@ const Navbar = () => {
     };
   }, []);
 
-  const handleLogout = async () => {
-    e.preventDeafult();
-  };
-
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
   const profileDropdown = () => {
@@ -48,9 +48,27 @@ const Navbar = () => {
     <div className="sticky z-50">
       <header className=" text-gray-900 bg-opacity-90 backdrop-blur-2xl h-16 bg-transparent z-50 transition-colors duration-300 mx-auto flex items-center px-8 shadow-sm">
         <div className="sticky container  flex items-center justify-between max-w-7xl mx-auto">
-          <Link to="/" className="flex items-center gap-2 text-primary">
-            <h1 className="font-semibold">GurkhaGeeks ✓</h1>
-          </Link>
+          <div className="flex  space-x-4">
+            <button onClick={toggleMenu} className="md:hidden">
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+            <Link to="/" className="flex items-center gap-2 text-primary">
+              <h1 className="font-semibold">GurkhaGeeks ✓</h1>
+            </Link>
+          </div>
           <nav className="hidden md:flex items-center gap-6">
             <Link
               to="/"
@@ -157,20 +175,22 @@ const Navbar = () => {
               )}
             </div>
             <Link
-              to="/Roadmaps"
-              className="text-sm font-medium hover:text-primary"
-            >
-              Categories
-            </Link>
-            <Link
               to="/About"
-              className="text-sm font-medium hover:text-primary"
+              className={
+                location.pathname === "/About"
+                  ? "font-semibold text-sm underline rounded-full"
+                  : "text-sm font-medium"
+              }
             >
               About
             </Link>
             <Link
               to="/Contactus"
-              className="text-sm font-medium hover:text-primary"
+              className={
+                location.pathname === "/Contactus"
+                  ? "font-semibold text-sm underline rounded-full"
+                  : "text-sm font-medium"
+              }
             >
               Contact
             </Link>
@@ -197,6 +217,68 @@ const Navbar = () => {
               Add Project
             </Link> */}
           </nav>
+
+          {/* For Mobile Version  */}
+          {isMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+              className="fixed p-4 top-12 left-0 right-0 w-96 bg-white shadow-md md:hidden"
+              style={{ width: "100vw", maxWidth: "100%", left: 0 }}
+            >
+              <nav className="flex flex-col p-4">
+                <Link to="/" className="py-2 ">
+                  Home
+                </Link>
+                <Link to="/Blogs" className="py-2">
+                  Blogs
+                </Link>
+                <button onClick={toggleDropdown} className="py-2 text-left">
+                  Roadmaps ▾
+                </button>
+                {isDropdownOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="pl-4 overflow-hidden"
+                  >
+                    <Link to="/Fullstack" className="block py-2">
+                      Full Stack
+                    </Link>
+                    <Link to="/Mernstack" className="block py-2">
+                      MERN Stack
+                    </Link>
+                    <Link to="/AIML" className="block py-2">
+                      AI & ML
+                    </Link>
+                    <Link to="/Frontend" className="block py-2">
+                      Front-end Dev
+                    </Link>
+                    <Link to="/Backend" className="block py-2">
+                      Back-end Dev
+                    </Link>
+                    <Link to="/Cybersecurity" className="block py-2">
+                      Cybersecurity
+                    </Link>
+                  </motion.div>
+                )}
+                <Link to="/About" className="py-2">
+                  About
+                </Link>
+                <Link to="/Contactus" className="py-2">
+                  Contact
+                </Link>
+                <Link to="/AddBlog" className="py-2">
+                  Add Blog
+                </Link>
+              </nav>
+            </motion.div>
+          )}
+
           <div className="relative">
             {!user ? (
               <Link to="/Login">

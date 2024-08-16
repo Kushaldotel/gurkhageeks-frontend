@@ -51,9 +51,9 @@ const BlogDetail = () => {
         </h1>
         <section className="relative mt-6 shadow-md rounded-sm h-[72vh] overflow-hidden">
           <img
-            src={blog.image || "/img/FullStack.png"}
+            src={blog.thumbnail || "/img/AI.jpg"}
             alt="Hero Image"
-            className="w-full h-full object-cover object-center"
+            className="w-full h-full object-cover object-center border"
           />
         </section>
         <article className="prose prose-lg max-w-6xl mx-auto my-12 px-4 md:px-0">

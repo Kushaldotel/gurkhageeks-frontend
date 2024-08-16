@@ -8,10 +8,15 @@ export const useAuth = () => {
 };
 
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    // Initialize user state from localStorage if available
+    const savedUser = localStorage.getItem("user");
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
   const [error, setError] = useState("");
   const [showToast, setShowToast] = useState(false);
   const navigate = useNavigate();
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   const setTokens = (accessToken, refreshToken) => {
     localStorage.setItem("accessToken", accessToken);
@@ -32,16 +37,13 @@ const AuthProvider = ({ children }) => {
       throw new Error("Refresh token is missing");
     }
 
-    const response = await fetch(
-      "https://gorkhageeks-backend.onrender.com/auth/token/refresh/",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ refresh: refreshToken }),
-      }
-    );
+    const response = await fetch(`${BASE_URL}/auth/token/refresh/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ refresh: refreshToken }),
+    });
 
     if (!response.ok) {
       throw new Error("Failed to refresh token");
@@ -83,21 +85,20 @@ const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await fetch(
-        "https://gorkhageeks-backend.onrender.com/auth/login/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        }
-      );
+      const response = await fetch(`${BASE_URL}/auth/login/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
       const result = await response.json();
       if (response.ok) {
         setTokens(result.access, result.refresh);
-        setUser({ email });
+        const userData = { email };
+        setUser(userData);
+        localStorage.setItem("user", JSON.stringify(userData)); // Save user data to localStorage
         navigate("/");
       } else {
         showErrorToast(result.message || "Incorrect username or password!");
@@ -107,24 +108,20 @@ const AuthProvider = ({ children }) => {
       showErrorToast("An error occurred. Please try again!");
     }
   };
-
   const signup = async (firstName, lastName, email, password) => {
     try {
-      const response = await fetch(
-        "https://gorkhageeks-backend.onrender.com/auth/register/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            first_name: firstName,
-            last_name: lastName,
-            email,
-            password,
-          }),
-        }
-      );
+      const response = await fetch(`${BASE_URL}/auth/register/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          first_name: firstName,
+          last_name: lastName,
+          email,
+          password,
+        }),
+      });
 
       const result = await response.json();
       if (response.ok) {
@@ -141,16 +138,15 @@ const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       const accessToken = getAccessToken();
-      const response = await fetch(
-        "https://gorkhageeks-backend.onrender.com/auth/logout/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
+      const refreshToken = getRefreshToken();
+      const response = await fetch(`${BASE_URL}/auth/logout/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({ refresh_token: refreshToken }),
+      });
 
       if (response.ok) {
         console.log("Logout successful, navigating to login...");
