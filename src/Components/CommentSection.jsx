@@ -6,12 +6,13 @@ const CommentSection = ({ id }) => {
   const [allReviews, setAllReviews] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
+  const BASE_URL = import.meta.env.VITE_BASE_URL
 
   useEffect(() => {
     const fetchComments = async () => {
       try {
         const response = await fetch(
-          `https://gorkhageeks-backend.onrender.com/blog/postcomment/${id}/`
+          `${BASE_URL}/blog/postcomment/${id}/`
         );
         const data = await response.json();
         setAllReviews(data);

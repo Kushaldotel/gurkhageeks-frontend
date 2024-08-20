@@ -10,7 +10,8 @@ const AddArticle = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [tags, setTags] = useState([]);
   const [featuredImage, setFeaturedImage] = useState(null);
-
+  const BASE_URL = import.meta.env.VITE_BASE_URL
+  
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleCategoriesChange = (e) => setSelectedCategory(e.target.value);
   const handleTagsChange = (e) =>
@@ -22,7 +23,7 @@ const AddArticle = () => {
     const fetchCategories = async () => {
       try {
         const response = await fetch(
-          "https://gorkhageeks-backend.onrender.com/blog/categories/"
+          `${BASE_URL}/blog/categories/`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch categories");
@@ -48,13 +49,13 @@ const AddArticle = () => {
     formData.append("tags", JSON.stringify(tags));
     formData.append("author", "1"); // Add the default author name here
     if (featuredImage) {
-      formData.append("featuredImage", featuredImage);
+      formData.append("thumbnail", featuredImage);
     }
     const accessToken = localStorage.getItem("accessToken");
 
     try {
       const response = await fetch(
-        "https://gorkhageeks-backend.onrender.com/blog/",
+        `${BASE_URL}/blog/`,
         {
           method: "POST",
           headers: {
@@ -86,6 +87,7 @@ const AddArticle = () => {
       });
     } catch (error) {
       console.log(error, "Error submitting data!!");
+      alert("Login to add the blog")
     }
   };
 

@@ -7,7 +7,6 @@ export default function AboutUs() {
         <div className="absolute inset-0 bg-gradient-to-b max-w-7xl mx-auto m-4 rounded-2xl shadow-md  from-slate-300 to-transparent flex items-center justify-center">
           <div className="text-center space-y-4 max-w-2xl px-4">
             <h1 className="text-4xl sm:text-6xl font-bold text-gray-800 font-josefin">
-             
               Building a Developer Community <br /> ♟
             </h1>
             <p className="text-lg sm:text-lg text-gray-700">
@@ -17,7 +16,7 @@ export default function AboutUs() {
               to="#"
               className="inline-flex items-center justify-center rounded-md bg-primary px-8 py-3 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus:outline-none focus:ring-1 focus:ring-primary/50 border border-gray-400"
             >
-              Learn More 
+              Learn More
             </Link>
           </div>
         </div>
@@ -30,58 +29,62 @@ export default function AboutUs() {
                 About Gurkha Geeks ✓
               </h2>
               <p className="text-muted-foreground">
-                At our furniture company, we are passionate about creating
-                timeless pieces that elevate the spaces they occupy. Our mission
-                is to design and craft furniture that not only looks beautiful,
-                but also provides unparalleled comfort and functionality.
+                n the ever-evolving world of technology, developer communities
+                play a vital role in fostering growth, collaboration, and
+                innovation. These communities are more than just forums or chat
+                rooms; they are vibrant ecosystems where developers of all skill
+                levels come together to share knowledge, solve problems, and
+                build lasting relationships. Whether you're a seasoned
+                professional or a newcomer to coding, being part of a developer
+                community can significantly impact your career and personal
+                development.
               </p>
               <p className="text-muted-foreground">
-                With over a decade of experience in the industry, we have honed
-                our skills and developed a deep understanding of materials,
-                construction, and design. Our team of talented designers and
-                skilled artisans work tirelessly to bring our vision to life,
-                ensuring that every piece we create is a testament to our
-                commitment to quality and innovation.
-              </p>
-              <p className="text-muted-foreground">
-                With over a decade of experience in the industry, we have honed
-                our skills and developed a deep understanding of materials,
-                construction, and design. Our team of talented designers and
-                skilled artisans work tirelessly to bring our vision to life,
-                ensuring that every piece we create is a testament to our
-                commitment to quality and innovation.
-              </p>
-              <p className="text-muted-foreground">
-                At our furniture company, we are passionate about creating
-                timeless pieces that elevate the spaces they occupy. Our mission
-                is to design and craft furniture that not only looks beautiful,
-                but also provides unparalleled comfort and functionality.
+                A developer community is a collective of individuals who share a
+                common interest in coding, software development, and technology.
+                These communities can be found online, in local meetups, or at
+                global conferences. They provide a platform for developers to:
+                <br />
+                * Collaborate on Projects: Working together on open-source
+                projects or hackathons allows developers to learn from one
+                another and contribute to meaningful work.
+                <br />
+                * Share Knowledge: From tutorials to blog posts, members of
+                developer communities often share their expertise, helping
+                others learn new technologies or improve their coding skills.
+                <br />
+                * Get Support: Facing a tough coding challenge? Developer
+                communities offer a place to ask questions and get help from
+                those who have faced similar issues.
+                <br />* Network: Building connections within the community can
+                open doors to new job opportunities, collaborations, and
+                friendships.
               </p>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <img
-                src="/img/vector6.png"
+                src="/img/Google150.png"
                 alt="Furniture"
                 width={300}
                 height={300}
                 className="rounded-t-full rounded-bl-full object-cover border border-gray-300 shadow-md bg-gray-200"
               />
               <img
-                src="/img/vector1.png"
+                src="/img/Google150.png"
                 alt="Team"
                 width={300}
                 height={300}
                 className="rounded-t-full rounded-br-full object-cover border border-gray-300 shadow-md bg-gray-200"
               />
               <img
-                src="/img/vector2.png"
+                src="/img/Google150.png"
                 alt="Furniture"
                 width={300}
                 height={300}
                 className="rounded-b-full rounded-tl-full object-cover bg-gray-200"
               />
               <img
-                src="/img/vector5.png"
+                src="/img/Google150.png"
                 alt="Team"
                 width={300}
                 height={300}
@@ -161,7 +164,7 @@ export default function AboutUs() {
                 className="rounded-full h-7 w-7 border p-0.5 object-cover"
               />
               <div className="text-center">
-                <p className="text-sm font-medium leading-none">Hacker 🤝  </p>
+                <p className="text-sm font-medium leading-none">Hacker 🤝 </p>
                 <p className="text-sm text-muted-foreground">
                   Finishing Specialist
                 </p>
