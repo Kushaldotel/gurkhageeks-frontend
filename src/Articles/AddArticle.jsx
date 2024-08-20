@@ -212,7 +212,7 @@ const AddArticle = () => {
                       backgroundSize: "1rem",
                       WebkitAppearance: "none",
                       appearance: "none",
-                      boxSizing: "border-box",
+
                     }}
                   >
                     <option value="" disabled>
