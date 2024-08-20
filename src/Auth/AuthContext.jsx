@@ -37,21 +37,38 @@ const AuthProvider = ({ children }) => {
       throw new Error("Refresh token is missing");
     }
 
-    const response = await fetch(`${BASE_URL}/auth/token/refresh/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ refresh: refreshToken }),
-    });
+    try {
+      const response = await fetch(`${BASE_URL}/auth/token/refresh/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ refresh: refreshToken }),
+      });
 
-    if (!response.ok) {
-      throw new Error("Failed to refresh token");
+      if (!response.ok) {
+        if (response.status === 401) {
+          // If the refresh token is expired or invalid, remove the user and tokens
+          removeTokens();
+          setUser(null);
+          localStorage.removeItem("user");
+          navigate("/Login");
+          throw new Error("Session expired, please log in again");
+        }
+        throw new Error("Failed to refresh token");
+      }
+
+      const result = await response.json();
+      setTokens(result.access, result.refresh);
+      return result.access;
+    } catch (error) {
+      console.error("Error refreshing access token:", error);
+      removeTokens();
+      setUser(null);
+      localStorage.removeItem("user");
+      navigate("/Login");
+      throw error;
     }
-
-    const result = await response.json();
-    setTokens(result.access, result.refresh);
-    return result.access;
   };
 
   const fetchWithAuth = async (url, options = {}) => {

@@ -98,8 +98,10 @@ export default function AllBlogs() {
   return (
     <>
       <div className="min-h-screen">
-        <header className="py-4 p-4 flex items-center justify-between max-w-7xl mx-auto md:p-6 lg:px-8 xl:px-0">
-          <h1 className="text-2xl font-bold text-gray-800">All Blogs</h1>
+        <header className="py-4 p-4 sm:flex items-center justify-between max-w-7xl mx-auto md:p-6 lg:px-8 xl:px-0">
+          <h1 className="text-2xl font-bold text-gray-800 py-4 sm:p-0">
+            All Blogs
+          </h1>
           <div className="flex space-x-8">
             <div className="relative">
               <button

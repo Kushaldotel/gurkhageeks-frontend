@@ -45,27 +45,28 @@ const AllArticles = () => {
     <>
       <section className="py-12 md:py-16 lg:py-20">
         <div className="container max-w-7xl mx-auto px-4 md:px-6">
-          <div className="flex justify-between items-center">
-            <h2 className="text-2xl lg:text-3xl font-bold mb-8">
-              Recent Blogs
-            </h2>
-
-            <div className="flex justify-center mt-8 space-x-2">
-              <button
-                onClick={handlePrevious}
-                disabled={currentPage === 1}
-                className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-200 disabled:opacity-50"
-              >
-                <ChevronLeftIcon className="w-5 h-5" />
-              </button>
-              <button
-                onClick={handleNext}
-                disabled={currentPage === totalPages}
-                className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-200 disabled:opacity-50"
-              >
-                <ChevronRightIcon className="w-5 h-5" />
-              </button>
-            </div>
+          <div className="flex justify-between items-center py-8">
+            <>
+              <h2 className="text-2xl lg:text-3xl font-bold ">Recent Blogs</h2>
+            </>
+            <>
+              <div className="flex justify-center items-center space-x-2">
+                <button
+                  onClick={handlePrevious}
+                  disabled={currentPage === 1}
+                  className="px-4 py-2 border border-gray-400 rounded-md text-gray-700 hover:bg-gray-200 disabled:opacity-50"
+                >
+                  <ChevronLeftIcon className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={handleNext}
+                  disabled={currentPage === totalPages}
+                  className="px-4 py-2 border border-gray-400 rounded-md text-gray-700 hover:bg-gray-200 disabled:opacity-50"
+                >
+                  <ChevronRightIcon className="w-5 h-5" />
+                </button>
+              </div>
+            </>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {paginatedArticles.map((article) => (
@@ -85,7 +86,7 @@ const AllArticles = () => {
                   <div className="p-4 flex flex-col flex-grow">
                     <h3 className="text-xl font-bold mb-2">{article.title}</h3>
                     <p
-                      className="text-muted-foreground text-base leading-relaxed line-clamp-4"
+                      className="text-muted-foreground text-xs leading-4 line-clamp-4"
                       dangerouslySetInnerHTML={{
                         __html: DOMPurify.sanitize(article.content),
                       }}

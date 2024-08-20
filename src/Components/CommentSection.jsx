@@ -54,7 +54,7 @@ const CommentSection = ({ id }) => {
     } catch (error) {}
   };
   return (
-    <div className="max-w-6xl mx-auto py-6 px-2">
+    <div className="max-w-7xl mx-auto py-6 px-2">
       <div className="grid gap-6">
         <div className="grid gap-2">
           <h2 className="text-2xl font-bold font-great-vibes">
