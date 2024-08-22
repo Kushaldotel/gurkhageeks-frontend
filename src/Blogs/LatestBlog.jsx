@@ -62,7 +62,7 @@ const LatestBlog = () => {
                   {/* Format date */}
                 </p>
                 <p
-                  className="text-muted-foreground text-base leading-relaxed line-clamp-2"
+                  className="text-muted-foreground text-xs leading-relaxed line-clamp-2"
                   dangerouslySetInnerHTML={{
                     __html: DOMPurify.sanitize(blog.content),
                   }}
