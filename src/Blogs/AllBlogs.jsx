@@ -19,12 +19,24 @@ export default function AllBlogs() {
     try {
       const cachedBlogs = sessionStorage.getItem("blogs");
       if (cachedBlogs) {
-        setBlogs(JSON.parse(cachedBlogs));
+        const parsedBlogs = JSON.parse(cachedBlogs);
+        // console.log("Parsed blogs data:", parsedBlogs);
+        if (parsedBlogs && Array.isArray(parsedBlogs)) {
+          setBlogs(parsedBlogs);
+        } else {
+          console.error("Cached blogs data is not array");
+          setBlogs([]);
+        }
       } else {
         const response = await fetch(`${BASE_URL}/blog/`);
-        const data = await response.json();
-        setBlogs(data);
-        sessionStorage.setItem("blogs", JSON.stringify(data));
+        const result = await response.json();
+        console.log("result", result.data);
+        if (result.success && Array.isArray(result.data)) {
+          setBlogs(result.data);
+          sessionStorage.setItem("blogs", JSON.stringify(result.data));
+        } else {
+          console.log("Fetched  blogs data is not array");
+        }
       }
     } catch (error) {
       console.error("Error fetching data", error);
@@ -37,15 +49,30 @@ export default function AllBlogs() {
     try {
       const cachedCategories = sessionStorage.getItem("categories");
       if (cachedCategories) {
+        try {
+          const parsedCategories = JSON.parse(cachedCategories);
+          if (Array.isArray(parsedCategories)) {
+            setCategories(parsedCategories);
+          }
+        } catch (error) {
+          console.log(
+            "Error parsing the categories form session storage",
+            error
+          );
+        }
         setCategories(JSON.parse(cachedCategories));
         setLoading(false);
         return;
       }
       const response = await fetch(`${BASE_URL}/blog/categories/`);
-      const data = await response.json();
-      console.log(data);
-      setCategories(data);
-      sessionStorage.setItem("categories", JSON.stringify(data));
+      const result = await response.json();
+      if (Array.isArray(result.data)) {
+        setCategories(result.data);
+        // console.log(result.data);
+        sessionStorage.setItem("categories", JSON.stringify(result.data));
+      } else {
+        console.error("Data is not array");
+      }
     } catch (error) {
       console.log("Error fetching categories", error);
     }
@@ -62,8 +89,14 @@ export default function AllBlogs() {
       const response = await fetch(
         `${BASE_URL}/blog/?categories=${categoryId}`
       );
-      const data = await response.json();
-      setBlogs(data);
+      const result = await response.json();
+      try {
+        if (Array.isArray(result.data)) {
+          setBlogs(result.data);
+        }
+      } catch (error) {
+        console.log("Categories data is not array", error);
+      }
       setLoading(false);
     } catch (error) {
       console.log("Error fetching blog by category", error);

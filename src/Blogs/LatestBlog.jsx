@@ -15,8 +15,14 @@ const LatestBlog = () => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-        const data = await response.json();
-        setLatestBlogs(data.slice(0, 5)); // Get the top 5 latest blogs
+        const result = await response.json();
+
+        if (Array.isArray(result.data)) {
+          setLatestBlogs(result.data.slice(0, 5)); // Get the top 5 latest blogs
+        } else {
+          console.error("Unexpected data format:", data);
+          setError("Invalid data format");
+        }
       } catch (error) {
         console.error("Error fetching latest blogs:", error);
         setError(error);
@@ -51,7 +57,9 @@ const LatestBlog = () => {
                 className="rounded-lg object-cover flex-shrink-0 border p-0.5 border-blue-400"
               />
               <div className="space-y-1">
-                <h3 className="font-semibold line-clamp-2 hover:text-purple-600">{blog.title}</h3>
+                <h3 className="font-semibold line-clamp-2 hover:text-purple-600">
+                  {blog.title}
+                </h3>
                 <p className="text-sm text-gray-600 flex items-center">
                   <CalendarIcon className="w-4 h-4 mr-1" />
                   {new Date(blog.created_at).toLocaleDateString("en-US", {

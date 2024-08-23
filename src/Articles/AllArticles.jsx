@@ -15,10 +15,17 @@ const AllArticles = () => {
         const response = await fetch(
           "https://devapi.gurkhageeks.com/blog/recentposts/"
         );
-        const data = await response.json();
-        setLatestArticles(data);
+        const result = await response.json();
+        console.log("API Response:", result);
+
+        if (result.success && Array.isArray(result.data)) {
+          setLatestArticles(result.data);
+          setTotalPages(Math.ceil(result.data.length / itemsPerPage));
+        } else {
+          console.error("Unexpected data format:", result);
+          setError("Invalid data format");
+        }
         setError(null);
-        setTotalPages(Math.ceil(data.length / itemsPerPage));
       } catch (error) {
         setError(error);
         console.log("Error Fetching Data!!", error);

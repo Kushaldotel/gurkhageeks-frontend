@@ -98,8 +98,13 @@ export default function Component() {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-        const data = await response.json();
-        setBlog(data);
+        const result = await response.json();
+
+        if (result.data && typeof result.data === 'object') {
+          setBlog(result.data);
+        } else {
+          console.error("Data is not an object");
+        }
       } catch (error) {
         console.log("Error fetching Data!", error);
         setError(error);
@@ -149,7 +154,7 @@ export default function Component() {
 
       {/* Comment Section */}
       <section className="mt-8">
-        <CommentSection id={id} />{" "}
+        {/* <CommentSection id={id} />{" "} */}
         {/* Pass the blog id to the comment section */}
       </section>
     </div>
