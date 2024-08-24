@@ -204,7 +204,6 @@ const AddArticle = () => {
                     required
                     style={{
                       paddingRight: "2.5rem",
-                      boxSizing: "border-box",
                       background: `url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor"%3E%3Cpath d="M7 10l5 5 5-5z"%3E%3C/path%3E%3C/svg%3E') no-repeat right 0.75rem center`,
                       backgroundSize: "1rem",
                       WebkitAppearance: "none",
