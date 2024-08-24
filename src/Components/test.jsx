@@ -50,11 +50,11 @@ export default function Component() {
                   className="h-48 w-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 px-4 pb-4">
+                {/* <div className="absolute bottom-0 left-0 right-0 px-4 pb-4">
                   <h3 className="text-lg font-semibold text-foreground group-hover:underline">
                     Building Responsive Websites with Tailwind CSS
                   </h3>
-                </div>
+                </div> */}
               </Link>
             </div>
           </div>
