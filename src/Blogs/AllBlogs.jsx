@@ -11,7 +11,7 @@ export default function AllBlogs() {
   const [layoutOpen, setLayoutOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [currentLayout, setCurrentLayout] = useState("horizontal");
-  const BASE_URL = import.meta.env.VITE_BASE_URL
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
   // console.log(BASE_URL);
 
   const fetchBlogs = async () => {
