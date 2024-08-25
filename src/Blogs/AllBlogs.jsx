@@ -19,12 +19,24 @@ export default function AllBlogs() {
     try {
       const cachedBlogs = sessionStorage.getItem("blogs");
       if (cachedBlogs) {
-        setBlogs(JSON.parse(cachedBlogs));
+        const parsedBlogs = JSON.parse(cachedBlogs);
+        // console.log("Parsed blogs data:", parsedBlogs);
+        if (parsedBlogs && Array.isArray(parsedBlogs)) {
+          setBlogs(parsedBlogs);
+        } else {
+          console.error("Cached blogs data is not array");
+          setBlogs([]);
+        }
       } else {
         const response = await fetch(`${BASE_URL}/blog/`);
-        const data = await response.json();
-        setBlogs(data);
-        sessionStorage.setItem("blogs", JSON.stringify(data));
+        const result = await response.json();
+        console.log("result", result.data);
+        if (result.success && Array.isArray(result.data)) {
+          setBlogs(result.data);
+          sessionStorage.setItem("blogs", JSON.stringify(result.data));
+        } else {
+          console.log("Fetched  blogs data is not array");
+        }
       }
     } catch (error) {
       console.error("Error fetching data", error);
@@ -32,18 +44,35 @@ export default function AllBlogs() {
       setLoading(false);
     }
   };
+
   const fetchCategories = async () => {
     try {
-      const cachedCategories = localStorage.getItem("categories");
+      const cachedCategories = sessionStorage.getItem("categories");
       if (cachedCategories) {
+        try {
+          const parsedCategories = JSON.parse(cachedCategories);
+          if (Array.isArray(parsedCategories)) {
+            setCategories(parsedCategories);
+          }
+        } catch (error) {
+          console.log(
+            "Error parsing the categories form session storage",
+            error
+          );
+        }
         setCategories(JSON.parse(cachedCategories));
         setLoading(false);
         return;
       }
       const response = await fetch(`${BASE_URL}/blog/categories/`);
-      const data = await response.json();
-      setCategories(data);
-      localStorage.setItem("categories", JSON.stringify(data));
+      const result = await response.json();
+      if (Array.isArray(result.data)) {
+        setCategories(result.data);
+        // console.log(result.data);
+        sessionStorage.setItem("categories", JSON.stringify(result.data));
+      } else {
+        console.error("Data is not array");
+      }
     } catch (error) {
       console.log("Error fetching categories", error);
     }
@@ -58,16 +87,23 @@ export default function AllBlogs() {
     try {
       setLoading(true); // Set loading to true before fetching
       const response = await fetch(
-        `https://gorkhageeks-backend.onrender.com/blog/?categories=${categoryId}`
+        `${BASE_URL}/blog/?categories=${categoryId}`
       );
-      const data = await response.json();
-      setBlogs(data);
+      const result = await response.json();
+      try {
+        if (Array.isArray(result.data)) {
+          setBlogs(result.data);
+        }
+      } catch (error) {
+        console.log("Categories data is not array", error);
+      }
       setLoading(false);
     } catch (error) {
       console.log("Error fetching blog by category", error);
       setLoading(false);
     }
   };
+
   // ${BASE_URL}
   const parseTags = (tags) => {
     try {
@@ -95,13 +131,15 @@ export default function AllBlogs() {
   return (
     <>
       <div className="min-h-screen">
-        <header className="py-4 p-4 flex items-center justify-between max-w-7xl mx-auto md:p-6 lg:px-8 xl:px-0">
-          <h1 className="text-2xl font-bold text-gray-800">All Blogs</h1>
+        <header className="py-4 p-4 sm:flex items-center justify-between max-w-7xl mx-auto md:p-6 lg:px-8 xl:px-0">
+          <h1 className="text-2xl font-bold text-gray-800 py-4 sm:p-0">
+            All Blogs
+          </h1>
           <div className="flex space-x-8">
             <div className="relative">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex items-center gap-2 border border-gray-300 rounded-sm px-3 py-2 text-gray-700"
+                className="flex items-center gap-2 border border-gray-500 rounded-sm px-3 py-2 text-gray-700"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -118,7 +156,9 @@ export default function AllBlogs() {
                   <rect x="14" y="14" width="7" height="7"></rect>
                   <rect x="3" y="14" width="7" height="7"></rect>
                 </svg>
-                <span>All Categories</span>
+                <span className="text-xs sm:text-sm font-medium">
+                  All Categories
+                </span>
               </button>
               {isOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white shadow-md rounded-md z-10 border-t-4 border-t-purple-400">
@@ -151,14 +191,14 @@ export default function AllBlogs() {
             <div className="relative">
               <button
                 onClick={() => setLayoutOpen(!layoutOpen)}
-                className="flex items-center gap-3 border border-gray-300 rounded-sm px-3 py-2 text-gray-700"
+                className="flex items-center gap-3 border border-gray-500 rounded-sm px-3 py-2 text-gray-700"
               >
                 <img
                   src="/img/layout.png"
                   alt="Layout Options"
-                  className="h-6 w-6"
+                  className="h-4 w-4 sm:h-5 sm:w-5"
                 />
-                <span>Layouts</span>
+                <span className="text-xs sm:text-sm font-medium">Layouts</span>
               </button>
               {layoutOpen && (
                 <div className="absolute right-0 mt-2 w-40 bg-white shadow-md rounded-md z-10 border-t-4 border-t-purple-400">
@@ -204,15 +244,15 @@ export default function AllBlogs() {
                 <div className="flex flex-col md:flex-row bg-white overflow-hidden">
                   <div className="md:w-1/2">
                     <img
-                      src={blog.image || "/img/FullStack.png"} // Ensure image fallback
+                      src={blog.thumbnail || "/img/AI.jpg"}
                       alt="Blog Post Image"
                       width={800}
                       height={600}
-                      className="w-full h-full object-cover rounded-sm"
+                      className="w-full h-full object-cover rounded-sm border"
                       style={{ aspectRatio: "1200/600", objectFit: "cover" }}
                     />
                   </div>
-                  <div className="md:w-1/2 px-6 py-4 ">
+                  <div className="md:w-1/2 sm:px-6 py-4 ">
                     <div className="space-y-4">
                       <p className="bg-gray-100 p-1.5 inline tracking-wider rounded-md">
                         {blog.categories[0]?.name || "All Blogs"}
@@ -246,13 +286,13 @@ export default function AllBlogs() {
                             className="h-7 w-7 p-0.5 border border-gray-200 rounded-full"
                           />
                         </div>
-                        <div className="font-medium">
+                        <div className="font-normal">
                           {blog.authorInitials || "Adarsh Thapa"}
                         </div>
                         <div>
                           <p className="font-medium">{blog.authorName}</p>
                           <p className="text-muted-foreground text-sm">
-                            Published on :{" "}
+                            ◆{" "}
                             {new Date(blog.created_at).toLocaleDateString(
                               "en-US",
                               {
@@ -266,7 +306,7 @@ export default function AllBlogs() {
                       </div>
                       <div className="mt-6">
                         <Link to={`/BlogDetail/${blog.id}`}>
-                          <button>Show More →</button>
+                          <button>Read More →</button>
                         </Link>
                       </div>
                     </div>
@@ -284,7 +324,7 @@ export default function AllBlogs() {
               >
                 <div className="h-48 overflow-hidden">
                   <img
-                    src={blog.image || "/img/FullStack.png"}
+                    src={blog.thumbnail || "/img/FullStack.png"}
                     alt="Blog Post Image"
                     className="w-full h-full object-cover"
                   />

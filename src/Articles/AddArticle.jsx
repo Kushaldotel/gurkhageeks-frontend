@@ -10,6 +10,7 @@ const AddArticle = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [tags, setTags] = useState([]);
   const [featuredImage, setFeaturedImage] = useState(null);
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleCategoriesChange = (e) => setSelectedCategory(e.target.value);
@@ -21,14 +22,16 @@ const AddArticle = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch(
-          "https://gorkhageeks-backend.onrender.com/blog/categories/"
-        );
+        const response = await fetch(`${BASE_URL}/blog/categories/`);
         if (!response.ok) {
           throw new Error("Failed to fetch categories");
         }
-        const data = await response.json();
-        setCategories(data);
+        const result = await response.json();
+        if (result.data && Array.isArray(result.data)) {
+          setCategories(result.data);
+        } else {
+          console.log("Data property is missing!!");
+        }
       } catch (error) {
         console.log("Error Fetching categories", error);
       }
@@ -48,21 +51,18 @@ const AddArticle = () => {
     formData.append("tags", JSON.stringify(tags));
     formData.append("author", "1"); // Add the default author name here
     if (featuredImage) {
-      formData.append("featuredImage", featuredImage);
+      formData.append("thumbnail", featuredImage);
     }
     const accessToken = localStorage.getItem("accessToken");
 
     try {
-      const response = await fetch(
-        "https://gorkhageeks-backend.onrender.com/blog/",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-          body: formData,
-        }
-      );
+      const response = await fetch(`${BASE_URL}/blog/`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: formData,
+      });
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(`Network response was not ok: ${errorText}`);
@@ -86,6 +86,7 @@ const AddArticle = () => {
       });
     } catch (error) {
       console.log(error, "Error submitting data!!");
+      alert("Login to add the blog");
     }
   };
 
@@ -207,12 +208,10 @@ const AddArticle = () => {
                     required
                     style={{
                       paddingRight: "2.5rem",
-                      boxSizing: "border-box",
                       background: `url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor"%3E%3Cpath d="M7 10l5 5 5-5z"%3E%3C/path%3E%3C/svg%3E') no-repeat right 0.75rem center`,
                       backgroundSize: "1rem",
                       WebkitAppearance: "none",
                       appearance: "none",
-
                     }}
                   >
                     <option value="" disabled>

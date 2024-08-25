@@ -109,7 +109,7 @@ export default function ContactUs() {
               </form>
             </div>
             <div className="rounded-xl overflow-hidden">
-              <iframe
+              {/* <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.7297115330106!2d-73.99024568423844!3d40.72911497932921!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b3117469%3A0xd134e199a405a163!2s123%20Main%20St%2C%20New%20York%2C%20NY%2010001%2C%20USA!5e0!3m2!1sen!2sus!4v1686080400000!5m2!1sen!2sus"
                 width="100%"
                 height="400"
@@ -117,7 +117,7 @@ export default function ContactUs() {
                 allowFullScreen=""
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-              />
+              /> */}
             </div>
           </div>
         </div>

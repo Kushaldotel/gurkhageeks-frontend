@@ -59,7 +59,7 @@ import React from 'react'
 const RecentArticle = () => {
   return (
     <div>
-      Hello
+      {/* Hello */}
     </div>
   )
 }
