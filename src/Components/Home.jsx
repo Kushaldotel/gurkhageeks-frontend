@@ -4,7 +4,7 @@ import AllArticles from "../Articles/AllArticles";
 import { motion } from "framer-motion";
 import ArticlesType from "../Articles/ArticlesType";
 import RecentArticle from "../Articles/RecentArticle";
-
+import MostViews from "../Blogs/MostViews";
 export default function Home() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
@@ -46,6 +46,9 @@ export default function Home() {
         </section>
         <section>
           <RecentArticle />
+        </section>
+        <section>
+          <MostViews />
         </section>
       </main>
     </div>

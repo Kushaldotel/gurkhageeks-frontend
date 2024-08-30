@@ -9,27 +9,27 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const storedData = localStorage.getItem('userData');
+        const storedData = localStorage.getItem("userData");
         if (storedData) {
           setUserData(JSON.parse(storedData));
         } else {
-          const response = await fetch('https://your-api/user/profile', {
+          const response = await fetch("https://your-api/user/profile", {
             headers: {
-              'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
           });
           if (response.ok) {
             const data = await response.json();
             setUserData(data);
-            localStorage.setItem('userData', JSON.stringify(data));
+            localStorage.setItem("userData", JSON.stringify(data));
           } else {
-            throw new Error('Failed to fetch user data');
+            throw new Error("Failed to fetch user data");
           }
         }
       } catch (error) {
-        console.error('Error fetching user data:', error);
-        setError('Unable to fetch user data');
-        toast.error('Unable to fetch user data');
+        console.error("Error fetching user data:", error);
+        setError("Unable to fetch user data");
+        toast.error("Unable to fetch user data");
       }
     };
 

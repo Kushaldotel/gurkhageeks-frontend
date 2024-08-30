@@ -125,6 +125,7 @@ const AuthProvider = ({ children }) => {
       showErrorToast("An error occurred. Please try again!");
     }
   };
+  
   const signup = async (firstName, lastName, email, password) => {
     try {
       const response = await fetch(`${BASE_URL}/auth/register/`, {

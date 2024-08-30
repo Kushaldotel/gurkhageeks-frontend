@@ -20,7 +20,7 @@ export default function AllBlogs() {
       const cachedBlogs = sessionStorage.getItem("blogs");
       if (cachedBlogs) {
         const parsedBlogs = JSON.parse(cachedBlogs);
-        // console.log("Parsed blogs data:", parsedBlogs);
+        // console.log("Parsed blogs data:", parsedBlogs)
         if (parsedBlogs && Array.isArray(parsedBlogs)) {
           setBlogs(parsedBlogs);
         } else {
