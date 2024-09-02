@@ -130,18 +130,20 @@ const ProfileDropdown = ({ toggleDropdown }) => {
   };
 
   return (
-    <div className="absolute right-0 mt-6 w-48 text-sm bg-white shadow-lg rounded-lg border border-t-4 border-t-purple-500">
-      <ul className="p-4">
-        <li
-          onClick={toggleDropdown}
-          className={
-            location.pathname === "/Profile"
-              ? "bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg cursor-pointer p-2 text-white font-semibold mb-1"
-              : "hover:bg-gray-200 p-2 mb-1 rounded-lg cursor-pointer"
-          }
-        >
-          <Link to="/Profile">Profile</Link>
-        </li>
+    <div className="absolute right-0 mt-6 w-48 text-sm bg-white shadow-lg rounded-sm border border-gray-400">
+      <ul className="">
+        <Link to="/Profile">
+          <li
+            onClick={toggleDropdown}
+            className={
+              location.pathname === "/Profile"
+                ? "bg-gray-200 text-gray-900 rounded-sm cursor-pointer p-4  font-semibold "
+                : "hover:bg-gray-200 p-4 rounded-sm cursor-pointer"
+            }
+          >
+            Profile
+          </li>
+        </Link>
 
         {/* Uncomment and use this if needed */}
         {/* <li
@@ -156,7 +158,7 @@ const ProfileDropdown = ({ toggleDropdown }) => {
         </li> */}
 
         <li
-          className="hover:bg-gray-200 p-2 mb-1 rounded-lg cursor-pointer"
+          className="hover:bg-gray-100 p-4 rounded-sm cursor-pointer"
           onClick={handleSignOut}
         >
           Log Out

@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-const Profile = () => {
+import { Link, RotateCcw } from "lucide-react";
+// import { Link, PenSquare, Archive, BarChart2, RotateCcw } from 'lucide-react'
+export default function Profile() {
   const [userData, setUserData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -12,82 +15,128 @@ const Profile = () => {
         const storedData = localStorage.getItem("userData");
         if (storedData) {
           setUserData(JSON.parse(storedData));
-        } else {
-          const response = await fetch("https://your-api/user/profile", {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-          });
-          if (response.ok) {
-            const data = await response.json();
-            setUserData(data);
-            localStorage.setItem("userData", JSON.stringify(data));
-          } else {
-            throw new Error("Failed to fetch user data");
-          }
+          setIsLoading(false);
+          return;
         }
+
+        const response = await fetch(`${BASE_URL}/accounts/userprofile/`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch user data");
+        }
+
+        const result = await response.json();
+        setUserData(result.data);
+        localStorage.setItem("userData", JSON.stringify(data));
       } catch (error) {
         console.error("Error fetching user data:", error);
         setError("Unable to fetch user data");
         toast.error("Unable to fetch user data");
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchUserData();
-  }, []);
+  }, [BASE_URL]);
+
+  if (isLoading) {
+    return <div className="text-center p-4">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center text-red-500 p-4">{error}</div>;
+  }
 
   return (
-    <div className="w-full min-h-screen">
-      {userData && (
-        <>
-          <section className="w-full bg-gray-100 dark:bg-gray-800 py-12 md:py-16 lg:py-20">
-            <div className="container px-4 md:px-6  mx-auto max-w-7xl">
-              <div className="max-w-2xl mx-auto text-center space-y-4">
-                <h1 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl font-great-vibes">
-                  Welcome,{" "}
-                  <span className="bg-gradient-to-r from-purple-600 to-blue-600 text-transparent bg-clip-text">
-                    {userData.firstName} {userData.lastName}
-                  </span>{" "}
-                  !
-                </h1>
-                <p className="text-gray-500 dark:text-gray-400 text-lg md:text-xl">
-                  Explore your profile and manage your account settings.
-                </p>
-              </div>
+    <div className="max-w-3xl mx-auto p-4 min-h-screen">
+      <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+        <div className="relative">
+          <img
+            src="/placeholder.svg?height=150&width=150"
+            alt="Profile picture"
+            width={150}
+            height={150}
+            className="rounded-full"
+          />
+          <div className="absolute top-0 right-0 bg-white rounded-full p-2 shadow-md">
+            <span className="text-sm font-medium">Note...</span>
+          </div>
+        </div>
+
+        <div className="flex-grow text-center md:text-left">
+          <div className="flex flex-col md:flex-row md:items-center gap-4 mb-4">
+            <h1 className="text-2xl font-semibold">
+              {userData?.username || "Username"}
+            </h1>
+            <div className="flex flex-wrap justify-center md:justify-start gap-2">
+              <button className="border border-gray-300 text-gray-700 px-4 py-2 rounded text-sm">
+                Edit profile
+              </button>
+              <button className="border border-gray-300 text-gray-700 px-4 py-2 rounded text-sm">
+                View archive
+              </button>
+              <button className="border border-gray-300 text-gray-700 px-4 py-2 rounded text-sm">
+                Ad tools
+              </button>
             </div>
-          </section>
-          <section className="w-full py-12 md:py-16 lg:py-20  mx-auto max-w-7xl font-great-vibes lg:text-2xl">
-            <div className="container px-4 md:px-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md">
-                <div className="p-6">
-                  <h3 className="text-lg font-semibold">First Name</h3>
-                  <p className="text-gray-500 dark:text-gray-400 mt-2">
-                    {userData.firstName}
-                  </p>
-                </div>
+          </div>
+
+          <div className="flex justify-center md:justify-start gap-6 mb-4">
+            <span>
+              <strong>{userData?.posts_count || 0}</strong> posts
+            </span>
+            <span>
+              <strong>{userData?.followers_count || 0}</strong> followers
+            </span>
+            <span>
+              <strong>{userData?.following_count || 0}</strong> following
+            </span>
+          </div>
+
+          <div className="mb-2">
+            <h2 className="font-semibold">
+              {`${userData?.first_name || "First Name"} ${
+                userData?.last_name || "Last Name"
+              }`}
+            </h2>
+
+            {userData?.website && (
+              <div className="flex items-center gap-1 text-blue-500">
+                <Link className="w-4 h-4" aria-hidden="true" />
+                <a
+                  href={userData.website}
+                  className="text-sm"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {userData.website}
+                </a>
               </div>
-              <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md">
-                <div className="p-6">
-                  <h3 className="text-lg font-semibold">Last Name</h3>
-                  <p className="text-gray-500 dark:text-gray-400 mt-2">
-                    {userData.lastName}
-                  </p>
-                </div>
-              </div>
-              <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md">
-                <div className="p-6">
-                  <h3 className="text-lg font-semibold">Email</h3>
-                  <p className="text-gray-500 dark:text-gray-400 mt-2">
-                    {userData.email}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-        </>
-      )}
+            )}
+          </div>
+
+          <div className="text-sm text-gray-500">
+            21 accounts reached in the last 30 days.{" "}
+            <a href="#" className="font-semibold text-blue-500">
+              View insights
+            </a>
+          </div>
+        </div>
+
+        <div className="md:self-start">
+          <button
+            className="p-2 rounded-full hover:bg-gray-200"
+            aria-label="Refresh"
+          >
+            <RotateCcw className="w-6 h-6" />
+          </button>
+        </div>
+      </div>
     </div>
   );
-};
-
-export default Profile;
+}

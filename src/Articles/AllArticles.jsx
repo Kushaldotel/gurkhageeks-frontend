@@ -8,13 +8,12 @@ const AllArticles = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6; // Number of articles per page
   const [totalPages, setTotalPages] = useState(0);
+  const BASE_URL = import.meta.env.VITE_BASE_URL; // Base URL from environment
 
   useEffect(() => {
     const recentBlogs = async () => {
       try {
-        const response = await fetch(
-          "https://devapi.gurkhageeks.com/blog/recentposts/"
-        );
+        const response = await fetch(`${BASE_URL}/blog/recentposts/`);
         const result = await response.json();
         console.log("API Response:", result);
 
@@ -82,7 +81,7 @@ const AllArticles = () => {
                 to={`/BlogDetail/${article.id}`}
                 className="flex"
               >
-                <div className="bg-white rounded-sm border border-gray-200 cursor-pointer shadow-md overflow-hidden flex flex-col">
+                <div className="bg-white border border-gray-200 cursor-pointer shadow-md overflow-hidden flex flex-col rounded-xl">
                   <img
                     src={article.thumbnail || "/img/AI.jpg"}
                     width={400}

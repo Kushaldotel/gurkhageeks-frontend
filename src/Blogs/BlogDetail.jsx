@@ -142,7 +142,7 @@ export default function Component() {
             />
           </div>
           <article className="prose prose-lg max-w-6xl mx-auto my-12 px-4 md:px-0">
-            <div className="text-lg font-serif tracking-wide leading-relaxed">
+            <div className="text-lg tracking-wide leading-relaxed">
               {parse(DOMPurify.sanitize(blog.content))}
             </div>
           </article>

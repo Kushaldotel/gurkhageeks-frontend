@@ -161,7 +161,7 @@ export default function AllBlogs() {
                 </span>
               </button>
               {isOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white shadow-md rounded-md z-10 border-t-4 border-t-purple-400">
+                <div className="absolute right-0 mt-2 w-48 bg-white shadow-sm rounded-sm z-10 border border-gray-400">
                   <button
                     className="px-4 py-3 hover:bg-gray-100 w-full text-left"
                     onClick={() => {
@@ -201,7 +201,7 @@ export default function AllBlogs() {
                 <span className="text-xs sm:text-sm font-medium">Layouts</span>
               </button>
               {layoutOpen && (
-                <div className="absolute right-0 mt-2 w-40 bg-white shadow-md rounded-md z-10 border-t-4 border-t-purple-400">
+                <div className="absolute right-0 mt-2 w-40 bg-white shadow-sm rounded-sm z-10 border border-gray-400">
                   <div className="px-4 py-2 text-gray-500 font-semibold">
                     Layouts
                   </div>

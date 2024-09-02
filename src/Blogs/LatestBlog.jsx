@@ -45,7 +45,7 @@ const LatestBlog = () => {
   return (
     <div className="lg:w-1/3 lg:border-l lg:p-4">
       <div className="sticky top-8">
-        <h2 className="text-2xl font-bold mb-4">Latest Blogs</h2>
+        <h2 className="text-2xl font-bold mb-4">Most Views </h2>
         <div className="space-y-6">
           {latestBlogs.map((blog, index) => (
             <div key={index} className="flex space-x-4">

@@ -44,12 +44,12 @@ export default function Home() {
         <section>
           <AllArticles />
         </section>
-        <section>
+        {/* <section>
           <RecentArticle />
-        </section>
-        <section>
+        </section> */}
+        {/* <section>
           <MostViews />
-        </section>
+        </section> */}
       </main>
     </div>
   );
