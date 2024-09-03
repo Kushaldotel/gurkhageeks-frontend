@@ -4,6 +4,14 @@ import Login from '../Pages/Auth/Login';
 import Signup from '../Pages/Auth/Signup';
 import Home from '../Pages/Homepage';
 import AllBlogs from '../Pages/Blogs/list';
+import AboutUs from '../Pages/About';
+import ContactUs from '../Pages/Contact';
+import AIML from '../Pages/Roadmaps/AIML';
+import Backend from '../Pages/Roadmaps/Backend';
+import Cybersecurity from '../Pages/Roadmaps/Cybersecurity';
+import Frontend from '../Pages/Roadmaps/Frontend';
+import Mernstack from '../Pages/Roadmaps/Mernstack';
+import Fullstack from '../Pages/Roadmaps/Fullstack';
 
 const PublicLayout = () => {
 	return (
@@ -18,6 +26,22 @@ const PublicLayout = () => {
 
         {/* Blog routes */}
         <Route path="/blogs" element={<AllBlogs />} />
+
+        {/* About us */}
+        <Route path='/about' element={<AboutUs />} />
+
+        {/* RoadMaps */}
+        <Route path='/roadmap/mernstack' element={<Mernstack />} />
+        <Route path='/roadmap/fullstack' element={<Fullstack />} />
+        <Route path='/roadmap/frontend' element={<Frontend />} />
+        <Route path='/roadmap/backend' element={<Backend />} />
+        <Route path='/roadmap/ai-ml' element={<AIML />} />
+        <Route path='/roadmap/cybersecurity' element={<Cybersecurity />} />
+
+        {/* Contact us */}
+        <Route path='/contact' element={<ContactUs />} />
+
+        {/* Add Blog */}
 			</Routes>
 		</Suspense>
 	);
