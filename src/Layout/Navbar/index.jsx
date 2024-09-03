@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import ProfileDropdown from '../../Components/ProfileDropdown';
-import { useAuth } from '../../Auth/AuthContext';
+import { useAuth } from '../../Pages/Auth/Context';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
@@ -79,9 +79,9 @@ const Navbar = () => {
 							Home
 						</Link>
 						<Link
-							to="/blogs"
+							to="/blog/list"
 							className={
-								location.pathname === '/blogs'
+								location.pathname === '/blog/list'
 									? 'font-semibold text-sm underline rounded-full'
 									: 'text-sm font-medium'
 							}>
@@ -183,9 +183,9 @@ const Navbar = () => {
 							Contact
 						</Link>
 						<Link
-							to="/AddBlog"
+							to="/blog/create"
 							className={
-								location.pathname === '/AddBlog'
+								location.pathname === '/blog/create'
 									? 'font-semibold text-sm  underline rounded-full'
 									: 'text-sm font-medium'
 							}>
@@ -266,7 +266,7 @@ const Navbar = () => {
 
 					<div className="relative">
 						{!user ? (
-							<Link to="/Login">
+							<Link to="/login">
 								<button className="rounded-md py-1.5 px-4 text-sm bg-gray-800 text-gray-50 font-light">
 									Login
 								</button>
