@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Loader from "../Components/Loader";
 import DOMPurify from "dompurify";
 import parse from "html-react-parser";
-import Swal from "sweetalert2"; // Import SweetAlert for success message
-import CommentSection from "../Components/CommentSection";
+import Loader from "../../Components/Loader";
+import CommentSection from "../../Components/CommentSection";
 
 const BlogDetail = () => {
   const { id } = useParams();

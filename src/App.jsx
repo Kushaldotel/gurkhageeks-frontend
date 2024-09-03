@@ -1,32 +1,14 @@
-import { useState } from "react";
-import "./App.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Navbar from "./Components/Navbar";
-import Home from "./Components/Home";
-import Footer from "./Components/Footer";
-import AddArticle from "./Articles/AddArticle";
-import Login from "./Login/login";
-import AllBlogs from "./Blogs/AllBlogs";
-import Signup from "./Signup/Signup";
-import Mernstack from "./Categories/Mernstack";
-import Fullstack from "./Categories/Fullstack";
-import Frontend from "./Categories/Frontend";
-import Backend from "./Categories/Backend";
-import AIML from "./Categories/AIML";
-import Cybersecurity from "./Categories/Cybersecurity";
-import AddProject from "./Projects/AddProject";
-import ProjectShowcase from "./Projects/ProjectShowcase";
-import Profile from "./Components/Profile";
-import Contact from "./Contactus/contact";
-import About from "./Aboutus/About";
-import BlogDetail from "./Blogs/BlogDetail";
-import ScrollToTop from "./Components/ScrollToTop";
+import './App.css';
+import Layout from './Layout';
+import PublicLayout from './Routes/public-route';
 
 function App() {
-  return (
-    <>
-      {/* <Router> */}
-        <ScrollToTop />
+	return (
+		<>
+			<Layout>
+				<PublicLayout />
+			</Layout>
+			{/* <ScrollToTop />
         <Routes>
           <Route
             exact
@@ -184,12 +166,10 @@ function App() {
               </>
             }
           />
-          <Route path="/Login" element={<Login />} />
-          <Route path="/Signup" element={<Signup />} />
-        </Routes>
-      {/* </Router> */}
-    </>
-  );
+         
+        </Routes> */}
+		</>
+	);
 }
 
 export default App;
