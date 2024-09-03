@@ -1,7 +1,7 @@
 import { useState } from "react";
-import AllArticles from "../../Articles/AllArticles";
-import RecentArticle from "../../Articles/RecentArticle";
-import ArticlesType from "../../Articles/ArticlesType";
+import AllArticles from "../Articles/AllArticles";
+import RecentArticle from "../Articles/RecentArticle";
+import ArticlesType from "../Articles/ArticlesType";
 
 export default function Home() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);

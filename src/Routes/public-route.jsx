@@ -12,6 +12,8 @@ import Cybersecurity from '../Pages/Roadmaps/Cybersecurity';
 import Frontend from '../Pages/Roadmaps/Frontend';
 import Mernstack from '../Pages/Roadmaps/Mernstack';
 import Fullstack from '../Pages/Roadmaps/Fullstack';
+import AddArticle from '../Pages/Articles/AddArticle';
+import BlogDetail from '../Pages/Blogs/details';
 
 const PublicLayout = () => {
 	return (
@@ -25,7 +27,9 @@ const PublicLayout = () => {
 				<Route path="/" element={<Home />} />
 
         {/* Blog routes */}
-        <Route path="/blogs" element={<AllBlogs />} />
+        <Route path='/blog/create' element={<AddArticle />} />
+        <Route path="/blog/list" element={<AllBlogs />} />
+        <Route path="/blog/details/:id" element={<BlogDetail />} />
 
         {/* About us */}
         <Route path='/about' element={<AboutUs />} />
