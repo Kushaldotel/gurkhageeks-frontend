@@ -100,9 +100,9 @@ const Navbar = () => {
 									<div className="flex flex-col p-2">
 										<div className="grid grid-cols-2 gap-2">
 											<Link
-												to="/Fullstack"
+												to="/roadmap/fullstack"
 												className={
-													location.pathname === '/Fullstack'
+													location.pathname === '/roadmap/fullstack'
 														? 'px-4 py-2 text-sm font-medium rounded-md underline'
 														: 'text-sm block px-4 py-2 text-gray-700 hover:bg-gray-200 hover:text-primary rounded-md'
 												}
@@ -110,9 +110,9 @@ const Navbar = () => {
 												Full Stack
 											</Link>
 											<Link
-												to="/Mernstack"
+												to="/roadmap/mernstack"
 												className={
-													location.pathname === '/Mernstack'
+													location.pathname === '/roadmap/mernstack'
 														? 'px-4 py-2 text-sm font-medium rounded-md underline'
 														: 'text-sm block px-4 py-2 text-gray-700 hover:bg-gray-200 hover:text-primary rounded-md'
 												}
@@ -120,9 +120,9 @@ const Navbar = () => {
 												MERN Stack
 											</Link>
 											<Link
-												to="/AIML"
+												to="/roadmap/ai-ml"
 												className={
-													location.pathname === '/AIML'
+													location.pathname === '/roadmap/ai-ml'
 														? 'px-4 py-2 text-sm font-medium rounded-md underline'
 														: 'text-sm block px-4 py-2 text-gray-700 hover:bg-gray-200 hover:text-primary rounded-md'
 												}
@@ -130,9 +130,9 @@ const Navbar = () => {
 												AI & ML
 											</Link>
 											<Link
-												to="/Frontend"
+												to="/roadmap/frontend"
 												className={
-													location.pathname === '/Frontend'
+													location.pathname === '/roadmap/frontend'
 														? 'px-4 py-2 text-sm font-medium rounded-md underline'
 														: 'text-sm block px-4 py-2 text-gray-700 hover:bg-gray-200 hover:text-primary rounded-md'
 												}
@@ -140,9 +140,9 @@ const Navbar = () => {
 												Front-end Dev
 											</Link>
 											<Link
-												to="/Backend"
+												to="/roadmap/backend"
 												className={
-													location.pathname === '/Backend'
+													location.pathname === '/roadmap/backend'
 														? 'px-4 py-2 text-sm font-medium rounded-md underline'
 														: 'text-sm block px-4 py-2 text-gray-700 hover:bg-gray-200 hover:text-primary rounded-md'
 												}
@@ -150,9 +150,9 @@ const Navbar = () => {
 												Back-end Dev
 											</Link>
 											<Link
-												to="/Cybersecurity"
+												to="/roadmap/cybersecurity"
 												className={
-													location.pathname === '/Cybersecurity'
+													location.pathname === '/roadmap/cybersecurity'
 														? 'px-4 py-2 text-sm font-medium rounded-md underline'
 														: 'text-sm block px-4 py-2 text-gray-700 hover:bg-gray-200 hover:text-primary rounded-md'
 												}
@@ -165,18 +165,18 @@ const Navbar = () => {
 							)}
 						</div>
 						<Link
-							to="/About"
+							to="/about"
 							className={
-								location.pathname === '/About'
+								location.pathname === '/about'
 									? 'font-semibold text-sm underline rounded-full'
 									: 'text-sm font-medium'
 							}>
 							About
 						</Link>
 						<Link
-							to="/Contactus"
+							to="/contact"
 							className={
-								location.pathname === '/Contactus'
+								location.pathname === '/contact'
 									? 'font-semibold text-sm underline rounded-full'
 									: 'text-sm font-medium'
 							}>
