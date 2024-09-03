@@ -1,51 +1,59 @@
-import React, { Suspense } from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Login from '../Pages/Auth/Login';
-import Signup from '../Pages/Auth/Signup';
-import Home from '../Pages/Homepage';
-import AllBlogs from '../Pages/Blogs/list';
-import AboutUs from '../Pages/About';
-import ContactUs from '../Pages/Contact';
-import AIML from '../Pages/Roadmaps/AIML';
-import Backend from '../Pages/Roadmaps/Backend';
-import Cybersecurity from '../Pages/Roadmaps/Cybersecurity';
-import Frontend from '../Pages/Roadmaps/Frontend';
-import Mernstack from '../Pages/Roadmaps/Mernstack';
-import Fullstack from '../Pages/Roadmaps/Fullstack';
 import AddArticle from '../Pages/Articles/AddArticle';
-import BlogDetail from '../Pages/Blogs/details';
+import PageNotFound from '../Pages/PageNotFound';
+
+const LoginPage = lazy(()=> import('../Pages/Auth/Login'))
+const SignupPage = lazy(()=> import('../Pages/Auth/Signup'))
+const HomePage = lazy(()=> import('../Pages/Homepage'))
+const BlogList = lazy(()=> import('../Pages/Blogs/list'))
+const BlogDetail = lazy(()=> import('../Pages/Blogs/details'))
+const AboutPage = lazy(()=> import('../Pages/About'))
+const ContactPage = lazy(()=> import('../Pages/Contact'))
+
+// roadmaps
+const AIMLPage = lazy(()=> import('../Pages/Roadmaps/AIML'))
+const BackendPage = lazy(()=> import('../Pages/Roadmaps/Cybersecurity'))
+const CybersecurityPage = lazy(()=> import('../Pages/Roadmaps/Cybersecurity'))
+const MernstackPage = lazy(()=> import('../Pages/Roadmaps/Mernstack'))
+const FrontendPage = lazy(()=> import('../Pages/Roadmaps/Frontend'))
+const FullstackPage = lazy(()=> import('../Pages/Roadmaps/Fullstack'))
 
 const PublicLayout = () => {
 	return (
-		<Suspense fallback={<p>Loading...</p>}>
+		<Suspense fallback={""}>
 			<Routes>
 				{/* Auth page */}
-				<Route path="/login" element={<Login />} />
-				<Route path="/signup" element={<Signup />} />
+				<Route path="/login" element={<LoginPage />} />
+				<Route path="/signup" element={<SignupPage />} />
 
 				{/* Homepage */}
-				<Route path="/" element={<Home />} />
+				<Route path="/" element={<HomePage />} />
 
         {/* Blog routes */}
         <Route path='/blog/create' element={<AddArticle />} />
-        <Route path="/blog/list" element={<AllBlogs />} />
+        <Route path="/blog/list" element={<BlogList />} />
         <Route path="/blog/details/:id" element={<BlogDetail />} />
 
         {/* About us */}
-        <Route path='/about' element={<AboutUs />} />
+        <Route path='/about' element={<AboutPage />} />
 
         {/* RoadMaps */}
-        <Route path='/roadmap/mernstack' element={<Mernstack />} />
-        <Route path='/roadmap/fullstack' element={<Fullstack />} />
-        <Route path='/roadmap/frontend' element={<Frontend />} />
-        <Route path='/roadmap/backend' element={<Backend />} />
-        <Route path='/roadmap/ai-ml' element={<AIML />} />
-        <Route path='/roadmap/cybersecurity' element={<Cybersecurity />} />
+        <Route path='/roadmap/mernstack' element={<MernstackPage />} />
+        <Route path='/roadmap/fullstack' element={<FullstackPage />} />
+        <Route path='/roadmap/frontend' element={<FrontendPage />} />
+        <Route path='/roadmap/backend' element={<BackendPage />} />
+        <Route path='/roadmap/ai-ml' element={<AIMLPage />} />
+        <Route path='/roadmap/cybersecurity' element={<CybersecurityPage />} />
 
         {/* Contact us */}
-        <Route path='/contact' element={<ContactUs />} />
+        <Route path='/contact' element={<ContactPage />} />
 
-        {/* Projecs */}
+        {/* Projects */}
+
+        {/* 404 Page Not Found */}
+        <Route path="*" element={<PageNotFound />} />
+
 			</Routes>
 		</Suspense>
 	);
