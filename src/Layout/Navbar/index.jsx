@@ -218,7 +218,7 @@ const Navbar = () => {
 								<Link to="/" className="py-2 ">
 									Home
 								</Link>
-								<Link to="/Blogs" className="py-2">
+								<Link to="/blog/list" className="py-2">
 									Blogs
 								</Link>
 								<button onClick={toggleDropdown} className="py-2 text-left">
@@ -231,33 +231,33 @@ const Navbar = () => {
 										exit={{ opacity: 0, height: 0 }}
 										transition={{ duration: 0.3 }}
 										className="pl-4 overflow-hidden">
-										<Link to="/Fullstack" className="block py-2">
+										<Link to="/roadmap/fullstack" className="block py-2">
 											Full Stack
 										</Link>
-										<Link to="/Mernstack" className="block py-2">
+										<Link to="/roadmap/mernstack" className="block py-2">
 											MERN Stack
 										</Link>
-										<Link to="/AIML" className="block py-2">
+										<Link to="/roadmap/ai-ml" className="block py-2">
 											AI & ML
 										</Link>
-										<Link to="/Frontend" className="block py-2">
+										<Link to="/roadmap/frontend" className="block py-2">
 											Front-end Dev
 										</Link>
-										<Link to="/Backend" className="block py-2">
+										<Link to="/roadmap/backend" className="block py-2">
 											Back-end Dev
 										</Link>
-										<Link to="/Cybersecurity" className="block py-2">
+										<Link to="/roadmap/cybersecurity" className="block py-2">
 											Cybersecurity
 										</Link>
 									</motion.div>
 								)}
-								<Link to="/About" className="py-2">
+								<Link to="/about" className="py-2">
 									About
 								</Link>
-								<Link to="/Contactus" className="py-2">
+								<Link to="/contact" className="py-2">
 									Contact
 								</Link>
-								<Link to="/AddBlog" className="py-2">
+								<Link to="/blog/create" className="py-2">
 									Add Blog
 								</Link>
 							</nav>

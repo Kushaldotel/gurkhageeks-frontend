@@ -45,7 +45,7 @@ const PublicLayout = () => {
         {/* Contact us */}
         <Route path='/contact' element={<ContactUs />} />
 
-        {/* Add Blog */}
+        {/* Projecs */}
 			</Routes>
 		</Suspense>
 	);
