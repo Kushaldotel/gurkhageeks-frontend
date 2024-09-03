@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import Toast from "../Components/Toast";
-import { useAuth } from "../Auth/AuthContext";
+import { useAuth } from "../../../Auth/AuthContext";
+import Toast from "../../../Components/Toast";
 
 const Signup = () => {
   const [email, setEmail] = useState("");

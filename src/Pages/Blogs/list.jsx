@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Loader from "../Components/Loader";
 import DOMPurify from "dompurify";
+import Loader from "../../Components/Loader";
 
 export default function AllBlogs() {
   const [showCategories, setShowCategories] = useState(false);
