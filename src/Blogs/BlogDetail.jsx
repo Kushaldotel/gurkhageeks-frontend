@@ -82,7 +82,7 @@ import DOMPurify from "dompurify";
 import parse from "html-react-parser";
 import Swal from "sweetalert2"; // Import SweetAlert for success message
 import CommentSection from "../Components/CommentSection";
-import LatestBlog from "./LatestBlog";
+import LatestBlogDetail from "./LatestBlogDetail";
 
 export default function Component() {
   const { id } = useParams(); // Get the blog id from the URL
@@ -100,7 +100,7 @@ export default function Component() {
         }
         const result = await response.json();
 
-        if (result.data && typeof result.data === 'object') {
+        if (result.data && typeof result.data === "object") {
           setBlog(result.data);
         } else {
           console.error("Data is not an object");
@@ -149,7 +149,7 @@ export default function Component() {
         </div>
 
         {/* Latest Blogs Section */}
-        <LatestBlog />
+        <LatestBlogDetail />
       </div>
 
       {/* Comment Section */}

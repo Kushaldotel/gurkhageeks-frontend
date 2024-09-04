@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import MostViews from "../Blogs/MostViews";
 
 export default function Home() {
-
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   return (
