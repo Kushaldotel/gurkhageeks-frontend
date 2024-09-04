@@ -1,24 +1,16 @@
 import { useEffect, useState } from "react";
+import { MoreVertical, Share2 } from "lucide-react";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { Link, RotateCcw } from "lucide-react";
-// import { Link, PenSquare, Archive, BarChart2, RotateCcw } from 'lucide-react'
-export default function Profile() {
+
+export default function Component() {
   const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const BASE_URL = import.meta.env.VITE_BASE_URL; // Base URL from environment
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const storedData = localStorage.getItem("userData");
-        if (storedData) {
-          setUserData(JSON.parse(storedData));
-          setIsLoading(false);
-          return;
-        }
-
         const response = await fetch(`${BASE_URL}/accounts/userprofile/`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -30,8 +22,11 @@ export default function Profile() {
         }
 
         const result = await response.json();
-        setUserData(result.data);
-        localStorage.setItem("userData", JSON.stringify(data));
+        if (result.success) {
+          setUserData(result.data[0]);
+        } else {
+          throw new Error("Data fetching unsuccessful");
+        }
       } catch (error) {
         console.error("Error fetching user data:", error);
         setError("Unable to fetch user data");
@@ -53,88 +48,90 @@ export default function Profile() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-4 min-h-screen">
-      <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-        <div className="relative">
-          <img
-            src="/placeholder.svg?height=150&width=150"
-            alt="Profile picture"
-            width={150}
-            height={150}
-            className="rounded-full"
-          />
-          <div className="absolute top-0 right-0 bg-white rounded-full p-2 shadow-md">
-            <span className="text-sm font-medium">Note...</span>
+    <div className="min-h-screen">
+      <div className="w-full mt-4 max-w-3xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+        <div className="relative h-40 bg-gradient-to-r from-gray-200 to-gray-400">
+          <div className="absolute -bottom-12 left-4">
+            <img
+              src={userData?.profile_pic || "/img/icons.png"}
+              alt="Profile picture"
+              width={96}
+              height={96}
+              className="rounded-full border-4 border-gray-300 bg-white"
+            />
           </div>
         </div>
-
-        <div className="flex-grow text-center md:text-left">
-          <div className="flex flex-col md:flex-row md:items-center gap-4 mb-4">
-            <h1 className="text-2xl font-semibold">
-              {userData?.username || "Username"}
-            </h1>
-            <div className="flex flex-wrap justify-center md:justify-start gap-2">
-              <button className="border border-gray-300 text-gray-700 px-4 py-2 rounded text-sm">
-                Edit profile
-              </button>
-              <button className="border border-gray-300 text-gray-700 px-4 py-2 rounded text-sm">
-                View archive
-              </button>
-              <button className="border border-gray-300 text-gray-700 px-4 py-2 rounded text-sm">
-                Ad tools
-              </button>
+        <div className="pt-16 pb-4 px-4">
+          <div className="flex justify-between items-start mb-4">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">
+                {`${userData?.first_name || "First Name"} ${
+                  userData?.last_name || "Last Name"
+                }`}
+              </h1>
+              <div className="flex items-center text-gray-600">
+                {/* You can add location data here if available */}
+                <img
+                  src="/placeholder.svg?height=20&width=30"
+                  alt="US flag"
+                  width={20}
+                  height={15}
+                  className="mr-2"
+                />
+                {/* Placeholder for location */}
+                Location Placeholder
+              </div>
+            </div>
+            <button className="text-gray-500 hover:text-gray-700 p-2 rounded-full hover:bg-gray-100">
+              <MoreVertical className="h-5 w-5" />
+            </button>
+          </div>
+          <div className="space-y-2 mb-4">
+            <div className="flex items-center space-x-2 flex-wrap">
+              <span className="text-gray-600">
+                {userData?.email || "Email"}
+              </span>
+              <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                {/* Placeholder for role or job title */}
+                Role or Job Title
+              </span>
+              <span className="text-gray-600">Full-time</span>
             </div>
           </div>
-
-          <div className="flex justify-center md:justify-start gap-6 mb-4">
-            <span>
-              <strong>{userData?.posts_count || 0}</strong> posts
-            </span>
-            <span>
-              <strong>{userData?.followers_count || 0}</strong> followers
-            </span>
-            <span>
-              <strong>{userData?.following_count || 0}</strong> following
-            </span>
+          <div className="flex space-x-2 mb-6">
+            <button className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+              Message
+            </button>
+            <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 flex items-center space-x-2">
+              <Share2 className="h-4 w-4" />
+              <span>Share profile</span>
+            </button>
           </div>
-
-          <div className="mb-2">
-            <h2 className="font-semibold">
-              {`${userData?.first_name || "First Name"} ${
-                userData?.last_name || "Last Name"
-              }`}
-            </h2>
-
-            {userData?.website && (
-              <div className="flex items-center gap-1 text-blue-500">
-                <Link className="w-4 h-4" aria-hidden="true" />
-                <a
-                  href={userData.website}
-                  className="text-sm"
-                  target="_blank"
-                  rel="noopener noreferrer"
+          <div>
+            <h2 className="text-xl font-semibold mb-2 text-gray-900">Skills</h2>
+            <div className="flex flex-wrap gap-2">
+              {/* You can map over user's skills or projects here if available */}
+              {[
+                "Product Design",
+                "UX Design",
+                "Google Analytics",
+                "SEO Content",
+                "Customer Service",
+                "UI Design",
+                "Design Strategy",
+                "Web-Development",
+                "Integrated Design",
+                "Front End",
+              ].map((skill) => (
+                <span
+                  key={skill}
+                  className="bg-gray-100 text-gray-800 rounded-full px-3 py-1 text-sm"
                 >
-                  {userData.website}
-                </a>
-              </div>
-            )}
+                  {skill}
+                </span>
+              ))}
+            </div>
           </div>
-
-          <div className="text-sm text-gray-500">
-            21 accounts reached in the last 30 days.{" "}
-            <a href="#" className="font-semibold text-blue-500">
-              View insights
-            </a>
-          </div>
-        </div>
-
-        <div className="md:self-start">
-          <button
-            className="p-2 rounded-full hover:bg-gray-200"
-            aria-label="Refresh"
-          >
-            <RotateCcw className="w-6 h-6" />
-          </button>
         </div>
       </div>
     </div>

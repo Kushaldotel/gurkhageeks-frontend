@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import Home from "./Components/Home";
 import Footer from "./Components/Footer";
-import AddArticle from "./Articles/AddArticle";
+import AddBlog from "./Blogs/AddBlog";
 import Login from "./Login/login";
 import AllBlogs from "./Blogs/AllBlogs";
 import Signup from "./Signup/Signup";
@@ -44,7 +44,7 @@ function App() {
           element={
             <>
               <Navbar />
-              <AddArticle />
+              <AddBlog />
               <Footer />
             </>
           }

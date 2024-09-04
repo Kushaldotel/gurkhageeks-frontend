@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import AllArticles from "../Articles/AllArticles";
+import AllArticles from "../Blogs/LatestBlog";
 import { motion } from "framer-motion";
-import ArticlesType from "../Articles/ArticlesType";
-import RecentArticle from "../Articles/RecentArticle";
 import MostViews from "../Blogs/MostViews";
+
 export default function Home() {
+
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   return (
@@ -36,9 +36,6 @@ export default function Home() {
               Learn More →
             </button>
           </div>
-        </section>
-        <section>
-          <ArticlesType />
         </section>
 
         <section>

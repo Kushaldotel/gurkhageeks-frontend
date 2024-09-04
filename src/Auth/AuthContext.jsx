@@ -46,8 +46,6 @@
 //     localStorage.removeItem("refreshToken");
 //   }, []);
 
-
-  
 //   const refreshAccessToken = useCallback(async () => {
 //     const refreshToken = getRefreshToken();
 //     if (!refreshToken) {
@@ -239,8 +237,13 @@
 //   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 // };
 
-
-import React, { createContext, useState, useContext, useEffect, useCallback } from "react";
+import React, {
+  createContext,
+  useState,
+  useContext,
+  useEffect,
+  useCallback,
+} from "react";
 import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext(null);
@@ -258,6 +261,7 @@ export const AuthProvider = ({ children }) => {
     const savedUser = localStorage.getItem("user");
     return savedUser ? JSON.parse(savedUser) : null;
   });
+
   const [error, setError] = useState("");
   const [showToast, setShowToast] = useState(false);
   const navigate = useNavigate();
@@ -268,8 +272,14 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("refreshToken", refreshToken);
   }, []);
 
-  const getAccessToken = useCallback(() => localStorage.getItem("accessToken"), []);
-  const getRefreshToken = useCallback(() => localStorage.getItem("refreshToken"), []);
+  const getAccessToken = useCallback(
+    () => localStorage.getItem("accessToken"),
+    []
+  );
+  const getRefreshToken = useCallback(
+    () => localStorage.getItem("refreshToken"),
+    []
+  );
 
   const removeTokens = useCallback(() => {
     localStorage.removeItem("accessToken");
@@ -355,7 +365,11 @@ export const AuthProvider = ({ children }) => {
 
       const result = await response.json();
       if (response.ok && result.success) {
-        console.log("Login successful, tokens:", result.data.access, result.data.refresh);
+        console.log(
+          "Login successful, tokens:",
+          result.data.access,
+          result.data.refresh
+        );
         setTokens(result.data.access, result.data.refresh);
         const userData = {
           email: result.data.email,
