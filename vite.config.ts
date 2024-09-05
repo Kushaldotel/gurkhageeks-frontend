@@ -5,7 +5,6 @@ import * as path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  envPrefix: "REACT_",
   plugins: [react(), envCompatible()],
   resolve: {
     alias: {

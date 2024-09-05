@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import createSagaMiddleware from "redux-saga";
 import storage from "redux-persist/lib/storage";
 import {
   persistReducer,
@@ -11,32 +12,38 @@ import {
   REGISTER,
 } from "redux-persist";
 import { rootReducer } from "./reducers";
+import rootSaga from "./sagas";
 
 const persistConfig = {
   key: "root",
   storage: storage,
-  whitelist: [],
+  whitelist: [], // List the reducers to persist
 };
 
-// persisted storage
+// Create the Saga middleware
+const sagaMiddleware = createSagaMiddleware();
+
+// Persisted storage
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
   reducer: persistedReducer,
-  //  ignore all the action types it dispatches:
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(sagaMiddleware),
 });
 
-//store redux reducers using redux persist
+// Run the root saga
+sagaMiddleware.run(rootSaga);
+
+// Store redux reducers using redux persist
 const persistor = persistStore(store);
+
 export { store, persistor };
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch;

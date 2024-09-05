@@ -3,8 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import AddArticle from "../Pages/Articles/create.tsx";
 import PageNotFound from "../Pages/PageNotFound/index.tsx";
 
-const LoginPage = lazy(() => import("../Pages/Auth/Login"));
-const SignupPage = lazy(() => import("../Pages/Auth/Signup"));
+
 const HomePage = lazy(() => import("../Pages/Homepage/index.tsx"));
 const BlogList = lazy(() => import("../Pages/Blogs/list.tsx"));
 const BlogDetail = lazy(() => import("../Pages/Blogs/details.tsx"));
@@ -20,13 +19,11 @@ const FrontendPage = lazy(() => import("../Pages/Roadmaps/Frontend/index.tsx"));
 const FullstackPage = lazy(() => import("../Pages/Roadmaps/Fullstack/index.tsx"));
 
 const PublicLayout = () => {
+  
   return (
     <Suspense fallback={""}>
       <Routes>
-        {/* Auth page */}
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} />
-
+        
         {/* Homepage */}
         <Route path="/" element={<HomePage />} />
 
