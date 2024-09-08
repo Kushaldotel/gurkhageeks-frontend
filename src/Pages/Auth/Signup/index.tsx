@@ -29,7 +29,6 @@ const Signup = () => {
   });
 
   const handleSubmit = (values: any) => {
-		console.log(values, 'values')
     dispatch(signupRequest(values));
   };
 

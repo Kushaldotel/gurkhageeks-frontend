@@ -13,7 +13,15 @@ interface SignupAction {
 // signup saga
 function* SignupSaga(action: SignupAction): Generator {
   try {
-    const response: any = yield call(Signup, action.payload);
+    const formData = new FormData();
+
+    Object.entries(action.payload).forEach(([key, value]) => {
+      formData.append(key, value as string);
+    });
+    
+    // @ts-ignore
+    const response: any = yield call(Signup, formData);
+    
     yield put(signupSuccess(response));
   } catch (error) {
     if (error instanceof AxiosError) {
