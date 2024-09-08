@@ -1,11 +1,18 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import AppButton from "@/Components/Button";
+import { useAppDispatch, useAppSelector } from "@/Utils/hooks/appHooks";
+import { authSelector } from "../redux/selector";
+import { loginRequest } from "../redux/authSlice";
 
 const Login: React.FC = () => {
+  const dispatch = useAppDispatch();
   const [showPassword, setShowPassword] = useState(false);
+  const { loading } = useAppSelector(authSelector);
+  const navigate = useNavigate();
 
   // initial state
   const initialState = { email: "", password: "" };
@@ -19,13 +26,11 @@ const Login: React.FC = () => {
   });
 
   const handleSubmit = async (values: { email: string; password: string }) => {
-    console.log("Form data", values);
-    // Handle login logic here
+    dispatch(loginRequest({ credentials: values, navigate }));
   };
 
-  const handleGoogleSignIn = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    // Handle Google Sign-In here...
+  const handleGoogleSignIn = async () => {
+    // Handle Google Sign-In logic here...
   };
 
   return (
@@ -51,7 +56,7 @@ const Login: React.FC = () => {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            {({ isSubmitting }) => (
+            {() => (
               <Form className="space-y-5">
                 <div>
                   <label
@@ -111,7 +116,9 @@ const Login: React.FC = () => {
                         checked={showPassword}
                         onChange={() => setShowPassword(!showPassword)}
                       />
-                      <label htmlFor="show_pwd" className="text-sm">Show password</label>
+                      <label htmlFor="show_pwd" className="text-sm">
+                        Show password
+                      </label>
                     </div>
                     <div className="text-sm mt-2">
                       <Link
@@ -125,13 +132,12 @@ const Login: React.FC = () => {
                 </div>
 
                 <div>
-                  <button
+                  <AppButton
                     type="submit"
-                    disabled={isSubmitting}
-                    className="flex w-full justify-center rounded-sm bg-gray-700 px-3 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  >
-                    {isSubmitting ? "Signing in..." : "Sign in"}
-                  </button>
+                    loading={loading}
+                    className="w-full"
+                    label="Login"
+                  />
                 </div>
               </Form>
             )}
@@ -143,15 +149,12 @@ const Login: React.FC = () => {
             <hr className="w-full border-gray-300" />
           </div>
 
-          <div>
-            <button
-              className="flex flex-1 border border-gray-400 space-x-2 py-2 px-4 rounded-xl items-center justify-center w-full"
-              onClick={handleGoogleSignIn}
-            >
-              <img src="/img/Google150.png" alt="" className="h-6 w-6" />
-              <p className="font-semibold">Sign In with Google</p>
-            </button>
-          </div>
+          <AppButton
+            variant="outline"
+            label="Sign in With Google"
+            className="w-full"
+            onClick={handleGoogleSignIn}
+          />
         </div>
       </div>
       <p className="mt-10 text-center text-md text-gray-500">

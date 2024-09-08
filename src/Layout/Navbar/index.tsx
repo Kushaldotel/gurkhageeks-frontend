@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import ProfileDropdown from "../../Components/ProfileDropdown";
-import { useAuth } from "../../Pages/Auth/Context";
 import { motion } from "framer-motion";
+import getCookie from "@/Utils/cookies/getCookie";
 
 const Navbar: React.FC = () => {
   const { pathname } = useLocation();
@@ -10,7 +10,10 @@ const Navbar: React.FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLButtonElement | null>(null);
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
-  const { user } = useAuth(); // Get the user from the Auth context
+
+  const isAuthenticated = getCookie('accessToken')
+
+  console.log(isAuthenticated, 'is authenticated')
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -269,7 +272,7 @@ const Navbar: React.FC = () => {
           )}
 
           <div className="relative">
-            {!user ? (
+            {!isAuthenticated ? (
               <Link to="/login">
                 <button className="rounded-md py-1.5 px-4 text-sm bg-gray-800 text-gray-50 font-light">
                   Login

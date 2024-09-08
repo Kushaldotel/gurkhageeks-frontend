@@ -3,10 +3,13 @@ import getCookie from "./cookies/getCookie";
 import deleteCookie from "./cookies/deleteCookie";
 import setCookie from "./cookies/setCookie";
 
+const url = `${import.meta.env.VITE_APP_BASE_SCHEMA}${ import.meta.env.VITE_APP_BASE_URL}${import.meta.env.VITE_APP_VERSION}`;
+
 export const axiosInstance = axios.create({
-  baseURL: `${import.meta.env.VITE_APP_BASE_SCHEMA}${
-    import.meta.env.VITE_APP_BASE_URL
-  }${import.meta.env.VITE_APP_VERSION}`,
+  baseURL: url,
+});
+export const axiosInstanceWithoutToken = axios.create({
+  baseURL: url,
 });
 
 axiosInstance.interceptors.request.use(

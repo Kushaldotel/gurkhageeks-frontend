@@ -1,28 +1,75 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AuthProps } from "./types";
+import setCookie from "@/Utils/cookies/setCookie";
 
 const initialState: AuthProps = {
   loading: false,
-  error: null,
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    signupRequest: (state) => {
+    // signup
+    signupRequest: (state, action) => {
       state.loading = true;
     },
     signupSuccess: (state) => {
       state.loading = false;
     },
-    signupFailure: (state, { payload }) => {
+    signupFailure: (state) => {
       state.loading = false;
-      state.error = payload;
+    },
+
+    // email verfication
+    verificationRequest: (state, action) => {
+      state.loading = true;
+    },
+    verificationSuccess: (state, { payload }) => {
+      state.loading = false;
+    },
+    verificationFailure: (state) => {
+      state.loading = false;
+    },
+
+    // login
+    loginRequest: (state, action) => {
+      state.loading = true;
+    },
+    loginSuccess: (state, { payload }) => {
+      console.log(payload, "payload");
+      state.loading = false;
+
+      // set accessToken, refreshToken 
+      setCookie("accessToken", payload?.data?.access, {
+        secure: true,
+        "max-age": 360000,
+        sameSite: "Lax",
+      });
+      setCookie("refreshToken", payload?.data?.refresh, {
+        secure: true,
+        "max-age": 3600000,
+        sameSite: "Lax",
+      });
+    },
+    loginFailure: (state) => {
+      state.loading = false;
     },
   },
 });
 
-export const { signupFailure, signupRequest, signupSuccess } =
-  authSlice.actions;
+export const {
+  // signup
+  signupFailure,
+  signupRequest,
+  signupSuccess,
+  // email verifcation
+  verificationFailure,
+  verificationRequest,
+  verificationSuccess,
+  // login
+  loginFailure,
+  loginRequest,
+  loginSuccess,
+} = authSlice.actions;
 export default authSlice.reducer;

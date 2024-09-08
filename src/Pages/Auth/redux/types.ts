@@ -11,5 +11,4 @@ export interface AuthCredentialProps{
 
 export interface AuthProps{
   loading: boolean;
-  error: null;
 }

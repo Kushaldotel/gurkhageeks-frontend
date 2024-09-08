@@ -1,15 +1,20 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { useAppDispatch } from "@/Utils/hooks/appHooks";
+import { useAppDispatch, useAppSelector } from "@/Utils/hooks/appHooks";
 import { useState } from "react";
 import { signupRequest } from "../redux/authSlice";
-import { Button } from "@/Components/ui/button";
+import AppButton from "@/Components/Button";
+import { authSelector } from "../redux/selector";
+import { AuthCredentialProps } from "../redux/types";
 
 const Signup = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const { loading } = useAppSelector(authSelector);
 
+  // initial state
   const initialValues = {
     first_name: "",
     last_name: "",
@@ -29,8 +34,8 @@ const Signup = () => {
       .required("Confirm Password is required"),
   });
 
-  const handleSubmit = (values: any) => {
-    dispatch(signupRequest(values));
+  const handleSubmit = (credentials: AuthCredentialProps) => {
+    dispatch(signupRequest({ credentials, navigate }));
   };
 
   return (
@@ -189,14 +194,12 @@ const Signup = () => {
                 </label>
               </div>
 
-              <div>
-                <Button
-                  type="submit"
-                  className="w-full"
-                >
-                  Sign Up
-                </Button>
-              </div>
+              <AppButton
+                type="submit"
+                label="Submit"
+                className="w-full"
+                loading={loading}
+              />
             </Form>
           )}
         </Formik>
