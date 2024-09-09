@@ -40,7 +40,7 @@ const authSlice = createSlice({
     loginSuccess: (state, { payload }) => {
       state.loading = false;
 
-      // set accessToken, refreshToken 
+      // set accessToken, refreshToken
       setCookie("accessToken", payload?.data?.access, {
         secure: true,
         "max-age": 360000,
@@ -56,18 +56,28 @@ const authSlice = createSlice({
       state.loading = false;
     },
 
+    // organization registration
+    orgRegisterRequest: (state, action) => {
+      state.loading = true;
+    },
+    orgRegisterSuccess: (state) => {
+      state.loading = false;
+    },
+    orgRegisterFailure: (state) => {
+      state.loading = false;
+    },
     // logout
-    logoutRequest: (state, action)=>{
-      state.loading = true
+    logoutRequest: (state, action) => {
+      state.loading = true;
     },
-    logoutSuccess: (state)=>{
-      state.loading = false
-      deleteCookie('accessToken')
-      deleteCookie('refreshToken')
+    logoutSuccess: (state) => {
+      state.loading = false;
+      deleteCookie("accessToken");
+      deleteCookie("refreshToken");
     },
-    logoutFailure: (state)=>{
-      state.loading = false
-    }
+    logoutFailure: (state) => {
+      state.loading = false;
+    },
   },
 });
 
@@ -84,6 +94,10 @@ export const {
   loginFailure,
   loginRequest,
   loginSuccess,
+  // register organization
+  orgRegisterFailure,
+  orgRegisterRequest,
+  orgRegisterSuccess,
   // logout
   logoutRequest,
   logoutFailure,

@@ -4,15 +4,9 @@ import storage from "redux-persist/lib/storage";
 import {
   persistReducer,
   persistStore,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
 } from "redux-persist";
-import { rootReducer } from "./reducers";
-import rootSaga from "./sagas";
+import { rootReducer } from "@/Utils/reducers";
+import rootSaga from "@/Utils/sagas";
 
 const persistConfig = {
   key: "root",
