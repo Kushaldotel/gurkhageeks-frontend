@@ -11,14 +11,13 @@ import { Toaster } from "./Components/ui/toaster";
 import EmailVerification from "./Pages/Auth/Verification";
 import getCookie from "./Utils/cookies/getCookie";
 import { persistor, store } from "./store/store";
+import VerificationPage from "./Pages/Auth/Verification/verification";
 
 function App() {
   const location = useLocation();
 
   const isAuthPage =
-    location.pathname === "/signup" ||
-    location.pathname === "/login" ||
-    location.pathname.includes("/confirm");
+    location.pathname === "/signup" || location.pathname === "/login" || location.pathname.includes('/auth');
 
   const isAuthenticated = getCookie("accessToken");
   return (
@@ -31,6 +30,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/auth/verify" element={<VerificationPage />} />
           <Route
             path="/auth/confirm/:uidb/:token"
             element={<EmailVerification />}
