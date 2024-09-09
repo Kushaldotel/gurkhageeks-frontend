@@ -2,8 +2,8 @@ import axios from "axios";
 import getCookie from "./cookies/getCookie";
 import deleteCookie from "./cookies/deleteCookie";
 import setCookie from "./cookies/setCookie";
-import { store } from "./store";
 import { showToast } from "@/Global/globalAppSlice";
+import { store } from "@/store/store";
 
 const url = `${import.meta.env.VITE_APP_BASE_SCHEMA}${import.meta.env.VITE_APP_BASE_URL}${import.meta.env.VITE_APP_VERSION}`;
 

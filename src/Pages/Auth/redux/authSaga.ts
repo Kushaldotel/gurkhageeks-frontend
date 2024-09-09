@@ -4,13 +4,21 @@ import {
   loginSuccess,
   logoutFailure,
   logoutSuccess,
+  orgRegisterFailure,
+  orgRegisterSuccess,
   signupFailure,
   signupSuccess,
   verificationFailure,
   verificationSuccess,
 } from "./authSlice";
-import { Login, Logout, Signup, Verification } from "./api";
-import { AuthCredentialProps } from "./types";
+import {
+  Login,
+  Logout,
+  RegisterOrganization,
+  Signup,
+  Verification,
+} from "./api";
+import { AuthCredentialProps, OrganizationAuthProps } from "./types";
 import { AxiosError } from "axios";
 import { showToast } from "@/Global/globalAppSlice";
 import { NavigateFunction } from "react-router-dom";
@@ -105,7 +113,7 @@ function* EmailVerificationSaga(action: {
         showToast({
           type: "error",
           title: "Error",
-          message: "An unknown error occurred during signup.",
+          message: "An unknown error occurred during verification.",
         })
       );
     }
@@ -144,6 +152,59 @@ function* LoginSaga(action: SignupAction): Generator {
         showToast({
           type: "error",
           title: "Error",
+          message: "An unknown error occurred during login.",
+        })
+      );
+    }
+  }
+}
+
+// organization registration
+function* OrganizationRegistrationSaga(action: {
+  type: string;
+  payload: {
+    credentials: OrganizationAuthProps;
+    navigate: NavigateFunction;
+  };
+}): Generator {
+  try {
+    const formData = new FormData();
+    const { navigate } = action.payload;
+    Object.entries(action.payload.credentials).forEach(([key, value]) => {
+      formData.append(key, value as string);
+    });
+
+    // @ts-ignore
+    const response: any = yield call(RegisterOrganization, formData);
+
+    yield put(orgRegisterSuccess());
+    // Show success toast
+    yield put(
+      showToast({
+        type: "success",
+        title: "Success",
+        message:
+          response?.data?.data?.status?.message || "Registration successful!",
+      })
+    );
+
+    // Navigate to /login
+    navigate("/login");
+  } catch (error) {
+    yield put(orgRegisterFailure());
+    if (error instanceof AxiosError) {
+      yield put(
+        showToast({
+          type: "error",
+          title: "Error",
+          message: error.response?.data?.message || error.message,
+        })
+      );
+    } else {
+      yield put(
+        showToast({
+          type: "error",
+          title: "Error",
           message: "An unknown error occurred during signup.",
         })
       );
@@ -159,7 +220,7 @@ function* LogoutSaga(action: {
   try {
     const { token, navigate } = action.payload;
 
-    const response = yield call(Logout, {refresh_token: token});
+    const response = yield call(Logout, { refresh_token: token });
     if (response) {
       yield put(logoutSuccess());
       yield put(
@@ -186,10 +247,16 @@ function* LogoutSaga(action: {
         showToast({
           type: "error",
           title: "Error",
-          message: "An unknown error occurred during signup.",
+          message: "An unknown error occurred during logout.",
         })
       );
     }
   }
 }
-export { SignupSaga, LoginSaga, EmailVerificationSaga, LogoutSaga };
+export {
+  SignupSaga,
+  LoginSaga,
+  EmailVerificationSaga,
+  LogoutSaga,
+  OrganizationRegistrationSaga,
+};

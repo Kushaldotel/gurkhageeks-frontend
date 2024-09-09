@@ -3,7 +3,6 @@ import "./App.css";
 import ScrollToTop from "./Components/ScrollToTop";
 import Layout from "./Layout";
 import PublicLayout from "./Routes/public-route";
-import { persistor, store } from "./Utils/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Login from "./Pages/Auth/Login";
@@ -11,6 +10,7 @@ import Signup from "./Pages/Auth/Signup";
 import { Toaster } from "./Components/ui/toaster";
 import EmailVerification from "./Pages/Auth/Verification";
 import getCookie from "./Utils/cookies/getCookie";
+import { persistor, store } from "./store/store";
 
 function App() {
   const location = useLocation();
