@@ -11,13 +11,13 @@ const EmailVerification: React.FC = () => {
   const { uidb, token } = useParams();
   const { loading } = useAppSelector(authSelector);
 
-  useEffect(() => {
-    handleVerification;
-  }, [uidb, token]);
   const handleVerification = () => {
     const values = { uidb, token };
     dispatch(verificationRequest({ values, navigate }));
   };
+  useEffect(() => {
+    handleVerification();
+  }, [uidb, token]);
   return (
     <div className="w-[100vw] h-[100vh] flex items-center justify-center">
       {loading ? (
