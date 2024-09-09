@@ -54,7 +54,7 @@ function* SignupSaga(action: SignupAction): Generator {
     );
 
     // Navigate to /login
-    navigate("/login");
+    navigate("/auth/verify");
   } catch (error) {
     yield put(signupFailure());
     if (error instanceof AxiosError) {

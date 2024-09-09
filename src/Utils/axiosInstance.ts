@@ -5,6 +5,7 @@ import setCookie from "./cookies/setCookie";
 import { showToast } from "@/Global/globalAppSlice";
 import { store } from "@/store/store";
 
+// @ts-ignore
 const url = `${import.meta.env.VITE_APP_BASE_SCHEMA}${import.meta.env.VITE_APP_BASE_URL}${import.meta.env.VITE_APP_VERSION}`;
 
 export const axiosInstance = axios.create({
