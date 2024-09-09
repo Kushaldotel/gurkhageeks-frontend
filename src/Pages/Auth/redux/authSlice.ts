@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AuthProps } from "./types";
 import setCookie from "@/Utils/cookies/setCookie";
+import deleteCookie from "@/Utils/cookies/deleteCookie";
 
 const initialState: AuthProps = {
   loading: false,
@@ -37,7 +38,6 @@ const authSlice = createSlice({
       state.loading = true;
     },
     loginSuccess: (state, { payload }) => {
-      console.log(payload, "payload");
       state.loading = false;
 
       // set accessToken, refreshToken 
@@ -55,6 +55,19 @@ const authSlice = createSlice({
     loginFailure: (state) => {
       state.loading = false;
     },
+
+    // logout
+    logoutRequest: (state, action)=>{
+      state.loading = true
+    },
+    logoutSuccess: (state)=>{
+      state.loading = false
+      deleteCookie('accessToken')
+      deleteCookie('refreshToken')
+    },
+    logoutFailure: (state)=>{
+      state.loading = false
+    }
   },
 });
 
@@ -71,5 +84,9 @@ export const {
   loginFailure,
   loginRequest,
   loginSuccess,
+  // logout
+  logoutRequest,
+  logoutFailure,
+  logoutSuccess,
 } = authSlice.actions;
 export default authSlice.reducer;

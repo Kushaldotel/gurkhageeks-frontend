@@ -1,4 +1,6 @@
-import { axiosInstanceWithoutToken } from "@/Utils/axiosInstance";
+import {
+  axiosInstanceWithoutToken,
+} from "@/Utils/axiosInstance";
 import { AuthCredentialProps } from "./types";
 
 // signup
@@ -15,4 +17,9 @@ export const Verification = (body: { uidb: string; token: string }) => {
 // login
 export const Login = (credentials: AuthCredentialProps) => {
   return axiosInstanceWithoutToken.post("/auth/login/", credentials);
+};
+
+// logout
+export const Logout = (token: { refresh_token: string }) => {
+  return axiosInstanceWithoutToken.post("/auth/logout/", token);
 };

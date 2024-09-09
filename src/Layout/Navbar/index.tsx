@@ -13,7 +13,6 @@ const Navbar: React.FC = () => {
 
   const isAuthenticated = getCookie('accessToken')
 
-  console.log(isAuthenticated, 'is authenticated')
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {

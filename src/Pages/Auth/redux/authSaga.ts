@@ -2,12 +2,14 @@ import { call, put } from "redux-saga/effects";
 import {
   loginFailure,
   loginSuccess,
+  logoutFailure,
+  logoutSuccess,
   signupFailure,
   signupSuccess,
   verificationFailure,
   verificationSuccess,
 } from "./authSlice";
-import { Login, Signup, Verification } from "./api";
+import { Login, Logout, Signup, Verification } from "./api";
 import { AuthCredentialProps } from "./types";
 import { AxiosError } from "axios";
 import { showToast } from "@/Global/globalAppSlice";
@@ -33,7 +35,7 @@ function* SignupSaga(action: SignupAction): Generator {
     // @ts-ignore
     const response: any = yield call(Signup, formData);
 
-    yield put(signupSuccess(response.data));
+    yield put(signupSuccess());
     // Show success toast
     yield put(
       showToast({
@@ -116,7 +118,6 @@ function* LoginSaga(action: SignupAction): Generator {
     // @ts-ignore
     const response: any = yield call(Login, credentials);
 
-    
     yield put(loginSuccess(response.data));
 
     yield put(
@@ -150,4 +151,45 @@ function* LoginSaga(action: SignupAction): Generator {
   }
 }
 
-export { SignupSaga, LoginSaga, EmailVerificationSaga };
+// logout saga
+function* LogoutSaga(action: {
+  type: string;
+  payload: { token: string; navigate: NavigateFunction };
+}): Generator {
+  try {
+    const { token, navigate } = action.payload;
+
+    const response = yield call(Logout, {refresh_token: token});
+    if (response) {
+      yield put(logoutSuccess());
+      yield put(
+        showToast({
+          type: "success",
+          title: "Success",
+          message: "You have been logged out successfully.",
+        })
+      );
+      navigate("/");
+    }
+  } catch (error) {
+    yield put(logoutFailure());
+    if (error instanceof AxiosError) {
+      yield put(
+        showToast({
+          type: "error",
+          title: "Error",
+          message: error.response?.data?.message || error.message,
+        })
+      );
+    } else {
+      yield put(
+        showToast({
+          type: "error",
+          title: "Error",
+          message: "An unknown error occurred during signup.",
+        })
+      );
+    }
+  }
+}
+export { SignupSaga, LoginSaga, EmailVerificationSaga, LogoutSaga };
