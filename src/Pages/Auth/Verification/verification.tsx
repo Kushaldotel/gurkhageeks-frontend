@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const VerificationPage: React.FC = () => {
   const navigate = useNavigate()
+  const email = localStorage.getItem('email')
   return (
     <main className="w-screen h-screen flex">
       <section className="mx-auto mt-12 text-center">
@@ -15,7 +16,7 @@ const VerificationPage: React.FC = () => {
         </div>
         <h1 className="font-semibold text-xl">Please verify your email</h1>
         <p className="mt-4">You&apos;re almost there! We sent an email to</p>
-        <strong>email@gmail.com</strong>
+        <strong>{email}</strong>
         <p className="max-w-[460px] py-8">
           Just click on the link in that email to complete your signup. if you
           don't see it, you may need to <strong>check your spam </strong>folder.
