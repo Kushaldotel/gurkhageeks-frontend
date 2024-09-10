@@ -34,6 +34,7 @@ interface SignupAction {
 // signup saga
 function* SignupSaga(action: SignupAction): Generator {
   try {
+    const { email } = action.payload.credentials
     const formData = new FormData();
     const { navigate } = action.payload;
     Object.entries(action.payload.credentials).forEach(([key, value]) => {
@@ -52,7 +53,7 @@ function* SignupSaga(action: SignupAction): Generator {
         message: response?.data?.data?.status?.message || "Signup successful!",
       })
     );
-
+    localStorage.setItem('email', email)
     // Navigate to /login
     navigate("/auth/verify");
   } catch (error) {
@@ -62,7 +63,7 @@ function* SignupSaga(action: SignupAction): Generator {
         showToast({
           type: "error",
           title: "Error",
-          message: error.response?.data?.message || error.message,
+          message: error.response?.data?.data?.email[0] || error.message,
         })
       );
     } else {

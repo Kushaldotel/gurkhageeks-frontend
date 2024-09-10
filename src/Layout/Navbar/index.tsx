@@ -11,8 +11,7 @@ const Navbar: React.FC = () => {
   const dropdownRef = useRef<HTMLButtonElement | null>(null);
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
 
-  const isAuthenticated = getCookie('accessToken')
-
+  const isAuthenticated = getCookie("accessToken");
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
