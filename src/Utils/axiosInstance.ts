@@ -2,8 +2,11 @@ import axios from "axios";
 import getCookie from "./cookies/getCookie";
 import deleteCookie from "./cookies/deleteCookie";
 import setCookie from "./cookies/setCookie";
+import { showToast } from "@/Global/globalAppSlice";
+import { store } from "@/store/store";
 
-const url = `${import.meta.env.VITE_APP_BASE_SCHEMA}${ import.meta.env.VITE_APP_BASE_URL}${import.meta.env.VITE_APP_VERSION}`;
+// @ts-ignore
+const url = `${import.meta.env.VITE_APP_BASE_SCHEMA}${import.meta.env.VITE_APP_BASE_URL}${import.meta.env.VITE_APP_VERSION}`;
 
 export const axiosInstance = axios.create({
   baseURL: url,
@@ -47,6 +50,24 @@ function determineContentType(data: any) {
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
+    //handle no interner error
+    if (error === "No Internet") {
+      store?.dispatch(
+        showToast({
+          type: "error",
+          title: "Connection Interrupted!",
+          message: "Please check your internet connection",
+        })
+      );
+    } else if (error.toJSON().message === "Network Error") {
+      store?.dispatch(
+        showToast({
+          type: "error",
+          title: "Connection Interrupted!",
+          message: "please check your internet connection",
+        })
+      );
+    }
     // internal server error
     if (error.response?.status === 500 || error.response?.status > 500) {
       alert("Internal Server Error");
