@@ -1,5 +1,6 @@
 import AllArticles from "../Articles/list";
 import ArticlesType from "../Articles/ArticleType";
+import LatestBlog from "../Blogs/latest";
 
 export default function Home() {
   return (
@@ -36,7 +37,8 @@ export default function Home() {
         </section>
 
         <section>
-          <AllArticles />
+          {/* <AllArticles /> */}
+          <LatestBlog/>
         </section>
       </main>
     </div>
