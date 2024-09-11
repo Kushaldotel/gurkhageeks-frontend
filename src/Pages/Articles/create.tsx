@@ -259,7 +259,7 @@ const AddArticle: React.FC = () => {
             <ReactQuill
               theme="snow"
               value={content}
-              onChange={handleProcedureContentChange}
+                onChange={handleProcedureContentChange}
               modules={modules}
               formats={formats}
               placeholder="Enter your Blog Post..........."
