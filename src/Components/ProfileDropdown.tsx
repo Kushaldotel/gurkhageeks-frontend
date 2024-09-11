@@ -1,16 +1,29 @@
+import React from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { logoutRequest } from "@/Pages/Auth/redux/authSlice";
 import getCookie from "@/Utils/cookies/getCookie";
 import { useAppDispatch } from "@/Utils/hooks/appHooks";
-import React from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { User, LogOut } from "lucide-react";
+import { Button } from "@/Components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/Components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
 
-// Define the type for props
 interface ProfileDropdownProps {
   toggleDropdown: () => void;
+  userAvatar?: string;
+  userName: string;
 }
 
 const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
   toggleDropdown,
+  userAvatar,
+  userName,
 }) => {
   const dispatch = useAppDispatch();
   const { pathname } = useLocation();
@@ -20,28 +33,42 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
     const token = getCookie("refreshToken");
     dispatch(logoutRequest({ token, navigate }));
   };
-  return (
-    <div className="absolute right-0 mt-6 w-48 text-sm bg-white shadow-lg rounded-lg border border-t-4 border-t-purple-500">
-      <ul className="p-4">
-        <li
-          onClick={toggleDropdown}
-          className={
-            pathname === "/Profile"
-              ? "bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg cursor-pointer p-2 text-white font-semibold mb-1"
-              : "hover:bg-gray-200 p-2 mb-1 rounded-lg cursor-pointer"
-          }
-        >
-          <Link to="/Profile">Profile</Link>
-        </li>
 
-        <li
-          className="hover:bg-gray-200 p-2 mb-1 rounded-lg cursor-pointer"
-          onClick={handleSignOut}
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+          <Avatar className="h-8 w-8">
+            {/* <AvatarImage src={userAvatar} alt={userName} />  */}
+            <AvatarImage src='/img/bg.jpg'  /> 
+            {/* <AvatarFallback>{userName.charAt(0)}</AvatarFallback> */}
+          </Avatar>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56" align="end" forceMount>
+        <DropdownMenuItem asChild>
+          <Link
+            to="/Profile"
+            className="flex items-center"
+            onClick={toggleDropdown}
+          >
+            <User className="mr-2 h-4 w-4" />
+            <span>Profile</span>
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          onSelect={(event) => {
+            event.preventDefault();
+            handleSignOut();
+          }}
+          className="text-red-600 focus:text-red-600 focus:bg-red-50"
         >
-          Log Out
-        </li>
-      </ul>
-    </div>
+          <LogOut className="mr-2 h-4 w-4" />
+          <span>Log out</span>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 
