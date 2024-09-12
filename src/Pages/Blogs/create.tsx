@@ -8,20 +8,24 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import BlogModal from "./modal";
 import Modal from "@/Components/Modal";
-import { useAppDispatch } from "@/Utils/hooks/appHooks";
-import { getCategoriesRequest } from "./redux/blogSlice";
+import { useAppDispatch, useAppSelector } from "@/Utils/hooks/appHooks";
+import { createBlogPostRequest, getCategoriesRequest } from "./redux/blogSlice";
+import { useNavigate } from "react-router-dom";
+import { profileSelector } from "../Profile/redux/selector";
+import { BlogFormProps } from "./redux/types";
 
 const CreateBlogs: React.FC = () => {
   const dispatch = useAppDispatch();
   const [showModal, setShowModal] = useState<boolean>(false);
-
+  const navigate = useNavigate();
+  const { userDetails } = useAppSelector(profileSelector)
   const initialState = {
     title: "",
     content: "",
     categories: [],
     tags: [],
     thumbnail: null,
-    author: "",
+    author: userDetails?.id,
   };
 
   const validationSchema = Yup.object().shape({
@@ -33,9 +37,8 @@ const CreateBlogs: React.FC = () => {
     tags: Yup.array().max(5, "You can add up to 5 tags"),
   });
 
-  const handleSubmit = (values: any) => {
-    console.log(values, "submitted values");
-    setShowModal(false);
+  const handleSubmit = (values: BlogFormProps, { resetForm }: any) => {
+    dispatch(createBlogPostRequest({ data: values, navigate, setShowModal, resetForm }));
   };
 
   useEffect(() => {

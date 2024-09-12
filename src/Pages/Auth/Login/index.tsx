@@ -35,8 +35,8 @@ const Login: React.FC = () => {
     password: Yup.string().required("Password is required"),
   });
 
-  const handleSubmit = async (values: { email: string; password: string }) => {
-    dispatch(loginRequest({ credentials: values, navigate }));
+  const handleSubmit = async (values: { email: string; password: string }, { resetForm }: any) => {
+    dispatch(loginRequest({ credentials: values, navigate, resetForm }));
   };
 
   const handleGoogleSignIn = async () => {
