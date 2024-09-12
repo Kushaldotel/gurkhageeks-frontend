@@ -4,42 +4,43 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogOverlay,
   DialogTitle,
   DialogTrigger,
+  DialogOverlay,
 } from "@/Components/ui/dialog";
 
 interface ModalProps {
-  title: string;
+  title?: string;
   description?: string;
-  body?: React.ReactNode;
   children: React.ReactNode;
   showModal: boolean;
-  setShowModal?: Dispatch<SetStateAction<boolean>>;
+  setShowModal: Dispatch<SetStateAction<boolean>>;
+  trigger: React.ReactNode;
 }
 
 const Modal: React.FC<ModalProps> = ({
   title,
   description,
   children,
-  body,
   showModal,
+  trigger,
+  setShowModal,
 }) => {
   return (
-    <Dialog>
-      <DialogTrigger asChild>{children}</DialogTrigger>
-      {showModal && (
-        <DialogOverlay>
-          <DialogContent className="max-w-[460px]">
-            <DialogHeader>
-              <DialogTitle>{title}</DialogTitle>
+    <Dialog open={showModal} onOpenChange={setShowModal}>
+      <DialogTrigger asChild>{trigger}</DialogTrigger>
+      <DialogOverlay>
+        <DialogContent className="max-w-[460px]">
+          <DialogHeader>
+            <DialogTitle>{title || ""}</DialogTitle>
+            {description && (
               <DialogDescription>{description}</DialogDescription>
-            </DialogHeader>
-            {/* body */}
-            {body}
-          </DialogContent>
-        </DialogOverlay>
-      )}
+            )}
+          </DialogHeader>
+          {/* body */}
+          {children}
+        </DialogContent>
+      </DialogOverlay>
     </Dialog>
   );
 };

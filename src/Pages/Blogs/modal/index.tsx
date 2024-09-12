@@ -1,31 +1,50 @@
-import AppButton from "@/Components/Button";
 import { ComboBox } from "@/Components/Combobox";
 import { Badge } from "@/Components/ui/badge";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
+import { useAppSelector } from "@/Utils/hooks/appHooks";
+import { FormikProps } from "formik";
 import { X } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { blogSelector } from "../redux/selector";
 
-const options = [
-  { value: "next.js", label: "Next.js" },
-  { value: "sveltekit", label: "SvelteKit" },
-  { value: "nuxt.js", label: "Nuxt.js" },
-  { value: "remix", label: "Remix" },
-  { value: "astro", label: "Astro" },
-];
+interface BlogModalProps {
+  formik: FormikProps<any>;
+}
 
-const BlogModal: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [tags, setTags] = useState<string[]>([]);
-  const [inputValue, setInputValue] = useState("");
+const BlogModal: React.FC<BlogModalProps> = ({ formik }) => {
+  const { categories: categoryList } = useAppSelector(blogSelector)
+  const categoryOptions = categoryList.map((category: { id: string; name: string }) => ({
+    value: category.id,
+    label: category.name,
+  }));
+  const {
+    values: { categories, tags, thumbnail },
+    setFieldValue,
+    errors,
+    touched,
+  } = formik;
+
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (thumbnail) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(thumbnail);
+    } else {
+      setImagePreview(null);
+    }
+  }, [thumbnail]);
+
   const handleCategoryChange = (values: string[]) => {
-    setSelectedCategory(values[0] || null);
+    setFieldValue("categories", values);
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
+    setFieldValue("tagInput", event.target.value);
   };
 
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -36,45 +55,45 @@ const BlogModal: React.FC = () => {
   };
 
   const addTag = () => {
-    const newTags = inputValue
+    const newTags = formik.values.tagInput
       .split(",")
-      .map((tag) => tag.trim())
-      .filter((tag) => tag && !tags.includes(tag))
+      .map((tag: string) => tag.trim())
+      .filter((tag: string) => tag && !tags.includes(tag))
       .slice(0, 5 - tags.length); // Limit to 5 tags
     if (newTags.length > 0) {
-      setTags((prev) => [...prev, ...newTags]);
-      setInputValue("");
+      setFieldValue("tags", [...tags, ...newTags]);
+      setFieldValue("tagInput", "");
     }
   };
 
   const removeTag = (tag: string) => {
-    setTags((prev) => prev.filter((t) => t !== tag));
+    setFieldValue("tags", tags.filter((t: string) => t !== tag));
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      setFieldValue("thumbnail", file);
     }
   };
-
   return (
     <section>
+      {/* Categories Field */}
       <div className="flex flex-col mb-6">
         <Label htmlFor="category" className="mb-1">
           Category
         </Label>
         <ComboBox
-          options={options}
-          multiple={false}
+          options={categoryOptions}
+          multiple={true}
           onChange={handleCategoryChange}
-          placeholder="Select category..."
+          value={categories}
+          name="categories"
         />
+       
       </div>
+
+      {/* Thumbnail Field */}
       <div className="mb-6">
         <p>Thumbnail</p>
         <Label htmlFor="thumbnail">
@@ -104,22 +123,29 @@ const BlogModal: React.FC = () => {
           accept="image/*"
           onChange={handleFileChange}
         />
+        {touched.thumbnail && typeof errors.thumbnail === "string" && (
+          <div className="text-red-500">{errors.thumbnail}</div>
+        )}
       </div>
+
+      {/* Tags Field */}
       <div className="flex flex-col mb-6">
         <Label htmlFor="tags" className="mb-1">
           Tags
         </Label>
         <Input
           type="text"
-          value={inputValue}
+          value={formik.values.tagInput || ""}
           onChange={handleInputChange}
           onKeyDown={handleInputKeyDown}
           placeholder="Add tags (up to 5)"
-          className="mb-2 p-2 border border-gray-300 rounded"
         />
-        <div className="flex flex-wrap gap-2">
-          {tags.map((tag) => (
-            <Badge className="flex items-center gap-2" key={tag}>
+        {touched.tags && typeof errors.tags === "string" && (
+          <div className="text-red-500">{errors.tags}</div>
+        )}
+        <div className="flex flex-wrap gap-2 mt-4">
+          {tags.map((tag: string) => (
+            <Badge className="flex items-center gap-2 justify-between rounded-sm" key={tag}>
               {tag}
               <X
                 className="cursor-pointer"
@@ -129,10 +155,6 @@ const BlogModal: React.FC = () => {
             </Badge>
           ))}
         </div>
-      </div>
-      <div className="text-end">
-        <AppButton label="Cancel" variant="outline" className="me-2" />
-        <AppButton label="Publish" />
       </div>
     </section>
   );
