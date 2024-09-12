@@ -15,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/Components/ui/select";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs";
 import { Loader2, LayoutGrid, LayoutList } from "lucide-react";
 import DOMPurify from "dompurify";
@@ -40,15 +41,21 @@ export default function AllBlogs() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [currentLayout, setCurrentLayout] = useState<"horizontal" | "card">("horizontal");
+  const [currentLayout, setCurrentLayout] = useState<"horizontal" | "card">(
+    "horizontal"
+  );
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
-  const BASE_URL = `${import.meta.env.VITE_APP_BASE_SCHEMA}${import.meta.env.VITE_APP_BASE_URL}${import.meta.env.VITE_APP_VERSION}`;
+  const BASE_URL = `${import.meta.env.VITE_APP_BASE_SCHEMA}${
+    import.meta.env.VITE_APP_BASE_URL
+  }${import.meta.env.VITE_APP_VERSION}`;
 
   const fetchBlogs = async (categoryId?: number) => {
     setLoading(true);
     try {
-      const url = categoryId ? `${BASE_URL}/blog/?categories=${categoryId}` : `${BASE_URL}/blog/`;
+      const url = categoryId
+        ? `${BASE_URL}/blog/?categories=${categoryId}`
+        : `${BASE_URL}/blog/`;
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -104,9 +111,11 @@ export default function AllBlogs() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-7xl mx-auto">
+    <div className="container mx-auto px-4 py-8 max-w-7xl">
       <div className="flex flex-col md:flex-row justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-4 md:mb-0">All Blogs</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-4 md:mb-0">
+          All Blogs
+        </h1>
         <div className="flex space-x-4">
           <Select value={selectedCategory} onValueChange={handleCategoryChange}>
             <SelectTrigger className="w-[180px]">
@@ -123,7 +132,9 @@ export default function AllBlogs() {
           </Select>
           <Tabs
             value={currentLayout}
-            onValueChange={(value) => setCurrentLayout(value as "horizontal" | "card")}
+            onValueChange={(value) =>
+              setCurrentLayout(value as "horizontal" | "card")
+            }
           >
             <TabsList>
               <TabsTrigger value="horizontal">
@@ -140,9 +151,17 @@ export default function AllBlogs() {
       </div>
 
       {blogs.length === 0 ? (
-        <div className="text-center text-gray-600 mt-20">No blog posts available.</div>
+        <div className="text-center text-gray-600 mt-20">
+          No blog posts available.
+        </div>
       ) : (
-        <div className={currentLayout === "horizontal" ? "space-y-8" : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"}>
+        <div
+          className={
+            currentLayout === "horizontal"
+              ? "space-y-8"
+              : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          }
+        >
           {blogs.map((blog, index) => (
             <div key={blog.id}>
               {currentLayout === "horizontal" ? (
@@ -163,11 +182,15 @@ export default function AllBlogs() {
                         {new Date(blog.created_at).toLocaleDateString()}
                       </p>
                     </div>
-                    <h2 className="text-xl font-bold mb-2 line-clamp-1">{blog.title}</h2>
+                    <h2 className="text-xl font-bold mb-2 line-clamp-1">
+                      {blog.title}
+                    </h2>
                     <div
                       className="text-gray-600 text-sm line-clamp-3 mb-4"
                       dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(blog.content.substring(0, 150) + "..."),
+                        __html: DOMPurify.sanitize(
+                          blog.content.substring(0, 150) + "..."
+                        ),
                       }}
                     />
                     <div className="flex justify-between items-center">
@@ -175,7 +198,9 @@ export default function AllBlogs() {
                         <div className="rounded-full bg-gray-200 text-gray-800 w-8 h-8 flex items-center justify-center text-xs font-medium">
                           {blog.authorInitials}
                         </div>
-                        <span className="text-sm font-medium">{blog.authorName}</span>
+                        <span className="text-sm font-medium">
+                          {blog.authorName}
+                        </span>
                       </div>
                       <Button variant="outline" asChild>
                         <Link to={`/blog/details/${blog.id}`}>Read More</Link>
@@ -207,7 +232,9 @@ export default function AllBlogs() {
                     <div
                       className="text-gray-600 text-sm line-clamp-3"
                       dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(blog.content.substring(0, 150) + "..."),
+                        __html: DOMPurify.sanitize(
+                          blog.content.substring(0, 150) + "..."
+                        ),
                       }}
                     />
                   </CardContent>
@@ -216,7 +243,9 @@ export default function AllBlogs() {
                       <div className="rounded-full bg-gray-200 text-gray-800 w-8 h-8 flex items-center justify-center text-xs font-medium">
                         {blog.authorInitials}
                       </div>
-                      <span className="text-sm font-medium">{blog.authorName}</span>
+                      <span className="text-sm font-medium">
+                        {blog.authorName}
+                      </span>
                     </div>
                     <Button variant="outline" asChild>
                       <Link to={`/blog/${blog.id}`}>Read More</Link>
