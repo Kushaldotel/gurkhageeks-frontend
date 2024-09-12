@@ -1,4 +1,5 @@
 import { axiosInstance } from "@/Utils/axiosInstance"
+import { BlogFormProps } from "./types"
 
 
 
@@ -7,7 +8,13 @@ export const Categories = () =>{
   return axiosInstance.get('/blog/categories/')
 }
 
+// get blog 
+
 // create blog
+export const CreateBlog = (body: BlogFormProps) =>{
+  return axiosInstance.post('/blog/', body)
+}
+
 
 // edit blog
 

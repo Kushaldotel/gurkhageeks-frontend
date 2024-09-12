@@ -1,34 +1,37 @@
-import React, { useState, useEffect } from "react"
-import { Link, useLocation } from "react-router-dom"
-import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, ChevronDown, User } from "lucide-react"
-import { Button } from "@/Components/ui/button"
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X, ChevronDown, User } from "lucide-react";
+import { Button } from "@/Components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/Components/ui/dropdown-menu"
+} from "@/Components/ui/dropdown-menu";
 // import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar"
-import { cn } from "@/lib/utils"
-import ProfileDropdown from "@/Components/ProfileDropdown"
-import getCookie from "@/Utils/cookies/getCookie"
+import { cn } from "@/lib/utils";
+import ProfileDropdown from "@/Components/ProfileDropdown";
+import getCookie from "@/Utils/cookies/getCookie";
+import { useAppDispatch } from "@/Utils/hooks/appHooks";
+import { getUserDetailRequest } from "@/Pages/Profile/redux/profileSlice";
 
 const Navbar: React.FC = () => {
-  const { pathname } = useLocation()
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
-  const isAuthenticated = getCookie("accessToken")
-
+  const dispatch = useAppDispatch();
+  const { pathname } = useLocation();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const isAuthenticated = getCookie("accessToken");
+  
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const navItems = [
     { name: "Home", path: "/" },
@@ -47,22 +50,28 @@ const Navbar: React.FC = () => {
     { name: "About", path: "/about" },
     { name: "Contact", path: "/contact" },
     { name: "Add Blog", path: "/blog/create" },
-  ]
+  ];
 
+  // fetch user details
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(getUserDetailRequest());
+    }
+  }, []);
   return (
     <header
       className={cn(
         "sticky top-0 z-50 w-full transition-all duration-300",
-        isScrolled
-          ? "bg-white/80 backdrop-blur-md shadow-sm"
-          : "bg-transparent"
+        isScrolled ? "bg-white/80 backdrop-blur-md shadow-sm" : "bg-transparent"
       )}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:max-w-7xl">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2">
-              <span className="text-2xl font-bold text-primary">GurkhaGeeks</span>
+              <span className="text-2xl font-bold text-primary">
+                GurkhaGeeks
+              </span>
               <span className="text-2xl text-green-500">✓</span>
             </Link>
           </div>
@@ -127,7 +136,11 @@ const Navbar: React.FC = () => {
               className="md:hidden"
               onClick={toggleMenu}
             >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
             </Button>
           </div>
         </div>
@@ -192,7 +205,7 @@ const Navbar: React.FC = () => {
         )}
       </AnimatePresence>
     </header>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

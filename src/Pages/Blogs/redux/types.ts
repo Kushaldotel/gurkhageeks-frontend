@@ -4,5 +4,5 @@ export interface BlogFormProps{
   thumbnail: null;
   tags: string[] | [];
   categories: number[];
-  author: string;
+  author?: number;
 }
