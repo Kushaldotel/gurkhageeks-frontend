@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
+import Swal from "sweetalert2";
 
 interface ProfileDropdownProps {
   toggleDropdown: () => void;
@@ -30,8 +31,30 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
   const navigate = useNavigate();
 
   const handleSignOut = () => {
-    const token = getCookie("refreshToken");
-    dispatch(logoutRequest({ token, navigate }));
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will be logged out of your account.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, log out",
+      cancelButtonText: "Cancel",
+      reverseButtons: true,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const token = getCookie("refreshToken");
+          dispatch(logoutRequest({ token, navigate }));
+          Swal.fire(
+            "Logged out!",
+            "You have been logged out successfully.",
+            "success"
+          );
+        } catch (error) {
+          console.error("Error logging out:", error);
+          Swal.fire("Error!", "An error occurred. Please try again.", "error");
+        }
+      }
+    });
   };
 
   return (
@@ -40,7 +63,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
             {/* <AvatarImage src={userAvatar} alt={userName} />  */}
-            <AvatarImage src='/img/bg.jpg'  /> 
+            <AvatarImage src="/img/bg.jpg" />
             {/* <AvatarFallback>{userName.charAt(0)}</AvatarFallback> */}
           </Avatar>
         </Button>
