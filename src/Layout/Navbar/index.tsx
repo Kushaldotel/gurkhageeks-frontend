@@ -73,7 +73,7 @@ const Navbar: React.FC = () => {
         isScrolled ? "bg-white/80 backdrop-blur-md shadow-sm" : "bg-transparent"
       )}
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:max-w-7xl">
+      <div className="container mx-auto px-4 sm:px-6 xl:px-0 xl:max-w-7xl">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2">

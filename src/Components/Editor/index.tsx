@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import "./index.css"
 
 interface QuillEditorProps {
   value: string;
@@ -24,6 +25,26 @@ const QuillEditor: React.FC<QuillEditorProps> = ({
   const handleEditorChange = (content: string) => {
     onChange(content);
   };
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ["bold", "italic", "underline", "strike"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      // ["link", "image"],
+      [{ align: [] }],
+      [{ color: [] }, { background: [] }],
+      ["clean"],
+    ],
+  };
+
+  const formats = [
+    "header",
+    "bold", "italic", "underline", "strike",
+    "list", "bullet",
+    // "link", "image",
+    "align",
+    "color", "background",
+  ];
 
   return (
     <ReactQuill
@@ -31,26 +52,9 @@ const QuillEditor: React.FC<QuillEditorProps> = ({
       theme="snow"
       value={value}
       onChange={handleEditorChange}
-      placeholder={placeholder || "Write something awesome..."}
-      modules={{
-        toolbar: [
-          [{ header: [1, 2, false] }],
-          ["bold", "italic", "underline", "strike"],
-          [{ list: "ordered" }, { list: "bullet" }],
-          ["link", "image"],
-        ],
-      }}
-      formats={[
-        "header",
-        "bold",
-        "italic",
-        "underline",
-        "strike",
-        "list",
-        "bullet",
-        "link",
-        "image",
-      ]}
+      placeholder={placeholder || "Create something amazing..."}
+      modules={modules}
+      formats={formats}
     />
   );
 };

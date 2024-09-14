@@ -1,13 +1,13 @@
 import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import PageNotFound from "../Pages/PageNotFound/index.tsx";
-import CreateBlogs from "@/Pages/Blogs/create.tsx";
 
 const HomePage = lazy(() => import("../Pages/Homepage/index.tsx"));
 const BlogList = lazy(() => import("../Pages/Blogs/list.tsx"));
 const BlogDetail = lazy(() => import("../Pages/Blogs/details.tsx"));
 const LatestBlog = lazy(() => import("../Pages/Blogs/latest.tsx"));
 const AboutPage = lazy(() => import("../Pages/About"));
+
 const ContactPage = lazy(() => import("../Pages/Contact/index.tsx"));
 
 // roadmaps
@@ -32,10 +32,9 @@ const PublicLayout = () => {
         <Route path="/" element={<HomePage />} />
 
         {/* Blog routes */}
-        <Route path="/blog/create" element={<CreateBlogs />} />
         <Route path="/blog/list" element={<BlogList />} />
         <Route path="/blog/latest" element={<LatestBlog />} />
-        <Route path="/blog/details/:id" element={<BlogDetail />} />
+        <Route path="/blog/details/:slug" element={<BlogDetail />} />
 
         {/* About us */}
         <Route path="/about" element={<AboutPage />} />
@@ -50,6 +49,7 @@ const PublicLayout = () => {
 
         {/* Contact us */}
         <Route path="/contact" element={<ContactPage />} />
+
 
         {/* Projects */}
 
