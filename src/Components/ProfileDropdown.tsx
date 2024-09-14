@@ -71,7 +71,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuItem asChild>
           <Link
-            to="/Profile"
+            to="/profile"
             className="flex items-center"
             onClick={toggleDropdown}
           >

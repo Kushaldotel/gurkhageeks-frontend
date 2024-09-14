@@ -1,0 +1,47 @@
+.quill-editor-container {
+    @apply max-w-6xl mx-auto bg-white border rounded-lg shadow-lg overflow-hidden;
+  }
+  .ql-toolbar.ql-snow {
+    @apply border-none bg-gray-50 p-4;
+  }
+  .ql-container.ql-snow {
+    @apply border-none;
+  }
+  .ql-editor {
+    @apply min-h-[800px] p-6 text-gray-800 text-lg;
+  }
+  .ql-editor.ql-blank::before {
+    @apply text-gray-400 font-light text-2xl text-center;
+    content: 'Write your own thoughts...';
+    font-style: normal;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .ql-formats {
+    @apply mr-4;
+  }
+  .ql-formats button {
+    @apply w-8 h-8 flex items-center justify-center rounded-md transition-colors duration-200 ease-in-out;
+  }
+  .ql-formats button:hover {
+    @apply bg-gray-200;
+  }
+  .ql-formats button.ql-active {
+    @apply bg-blue-100 text-blue-600;
+  }
+  .ql-formats .ql-stroke {
+    @apply stroke-current stroke-2;
+  }
+  .ql-formats .ql-fill {
+    @apply fill-current;
+  }
+  .ql-formats .ql-picker {
+    @apply text-sm;
+  }
+  .ql-formats .ql-picker-options {
+    @apply bg-white shadow-lg rounded-md border-none;
+  }
+  .ql-formats .ql-picker-item {
+    @apply px-4 py-2 hover:bg-gray-100;
+  }

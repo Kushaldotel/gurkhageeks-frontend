@@ -11,6 +11,8 @@ const url = `${import.meta.env.VITE_APP_BASE_SCHEMA}${import.meta.env.VITE_APP_B
 export const axiosInstance = axios.create({
   baseURL: url,
 });
+
+
 export const axiosInstanceWithoutToken = axios.create({
   baseURL: url,
 });

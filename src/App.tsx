@@ -12,13 +12,17 @@ import EmailVerification from "./Pages/Auth/Verification";
 import getCookie from "./Utils/cookies/getCookie";
 import { persistor, store } from "./store/store";
 import VerificationPage from "./Pages/Auth/Verification/verification";
-
+import CreateBlogs from "./Pages/Blogs/create";
+import Profile from "./Pages/Profile/index"
 function App() {
   const location = useLocation();
-  const isAuthPage =
-    location.pathname === "/signup" || location.pathname === "/login" || location.pathname.includes('/auth');
-
-  const isAuthenticated = getCookie('accessToken')
+  const restrictLayout =
+    location.pathname === "/signup" ||
+    location.pathname === "/login" ||
+    location.pathname.includes("/auth") ||
+    location.pathname === "/blog/create" ||
+    location.pathname == "/profile";
+  const isAuthenticated = getCookie("accessToken");
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
@@ -34,9 +38,13 @@ function App() {
             path="/auth/confirm/:uidb/:token"
             element={<EmailVerification />}
           />
+          <Route path="/blog/create" element={<CreateBlogs />} />
+
+          {/* Profile */}
+          <Route path="/profile" element={<Profile />} />
         </Routes>
 
-        {!isAuthPage && (
+        {!restrictLayout && (
           <Layout>
             <PublicLayout />
           </Layout>
