@@ -6,7 +6,6 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogOverlay,
 } from "@/Components/ui/dialog";
 
 interface ModalProps {
@@ -28,19 +27,18 @@ const Modal: React.FC<ModalProps> = ({
 }) => {
   return (
     <Dialog open={showModal} onOpenChange={setShowModal}>
-      <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogOverlay>
-        <DialogContent className="max-w-[460px]">
-          <DialogHeader>
-            <DialogTitle>{title || ""}</DialogTitle>
-            {description && (
-              <DialogDescription>{description}</DialogDescription>
-            )}
-          </DialogHeader>
-          {/* body */}
-          {children}
-        </DialogContent>
-      </DialogOverlay>
+      {/* <DialogTrigger asChild>{trigger}</DialogTrigger> */}
+      {trigger}
+      <DialogContent className="max-w-[460px]">
+        <DialogHeader>
+          <DialogTitle>{title || ""}</DialogTitle>
+          {description && (
+            <DialogDescription>{description}</DialogDescription>
+          )}
+        </DialogHeader>
+        {/* body */}
+        {children}
+      </DialogContent>
     </Dialog>
   );
 };

@@ -16,9 +16,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
 import Swal from "sweetalert2";
 
 interface ProfileDropdownProps {
-  toggleDropdown: () => void;
+  toggleDropdown?: () => void;
   userAvatar?: string;
-  userName: string;
+  userName?: string;
 }
 
 const ProfileDropdown: React.FC<ProfileDropdownProps> = ({

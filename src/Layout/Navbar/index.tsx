@@ -13,8 +13,10 @@ import {
 import { cn } from "@/lib/utils";
 import ProfileDropdown from "@/Components/ProfileDropdown";
 import getCookie from "@/Utils/cookies/getCookie";
-import { useAppDispatch } from "@/Utils/hooks/appHooks";
+import { useAppDispatch, useAppSelector } from "@/Utils/hooks/appHooks";
 import { getUserDetailRequest } from "@/Pages/Profile/redux/profileSlice";
+import { getRoadmapListRequest } from "@/Pages/Roadmaps/redux/roadmapSlice";
+import { roadmapSelector } from "@/Pages/Roadmaps/redux/selector";
 
 const Navbar: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -22,7 +24,8 @@ const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const isAuthenticated = getCookie("accessToken");
-  
+  const { list } = useAppSelector(roadmapSelector)
+  console.log(list, 'list')
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -57,6 +60,11 @@ const Navbar: React.FC = () => {
     if (isAuthenticated) {
       dispatch(getUserDetailRequest());
     }
+  }, []);
+
+  // fetch roadmap list
+  useEffect(() => {
+    dispatch(getRoadmapListRequest());
   }, []);
   return (
     <header
