@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/Components/ui/card";
+
 import {
   Select,
   SelectContent,
@@ -16,7 +17,7 @@ import {
   SelectValue,
 } from "@/Components/ui/select";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/Components/ui/tabs";
 import { Loader2, LayoutGrid, LayoutList } from "lucide-react";
 import DOMPurify from "dompurify";
 
@@ -203,7 +204,7 @@ export default function AllBlogs() {
                         </span>
                       </div>
                       <Button variant="outline" asChild>
-                        <Link to={`/blog/details/${blog.id}`}>Read More</Link>
+                        <Link to={`/blog/details/${blog.slug}`}>Read More</Link>
                       </Button>
                     </div>
                   </div>
