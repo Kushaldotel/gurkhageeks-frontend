@@ -6,7 +6,7 @@ import DOMPurify from "dompurify";
 import parse from "html-react-parser";
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/Components/ui/alert";
-import { AlertCircle, Calendar, User, Tag } from "lucide-react";
+import { AlertCircle, Calendar, User, Tag,Loader2 } from "lucide-react";
 import { Badge } from "@/Components/ui/badge";
 
 interface Author {
@@ -71,9 +71,12 @@ export default function BlogDetail() {
   }, [slug, BASE_URL]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader2 className="w-8 h-8 animate-spin" />
+      </div>
+    );
   }
-
   if (error) {
     return (
       <Alert variant="destructive">
@@ -105,14 +108,14 @@ export default function BlogDetail() {
               </div>
               <div className="flex items-center">
                 <Calendar className="mr-2 h-4 w-4" />
-                <span>
-                  {new Date(blog.created_at).toLocaleDateString()}
-                </span>
+                <span>{new Date(blog.created_at).toLocaleDateString()}</span>
               </div>
               <div className="flex items-center flex-wrap gap-2">
                 <Tag className="h-4 w-4" />
-                {blog.tags.split(',').map((tag, index) => (
-                  <Badge key={index} variant="secondary">{tag.trim()}</Badge>
+                {blog.tags.split(",").map((tag, index) => (
+                  <Badge key={index} variant="secondary">
+                    {tag.trim()}
+                  </Badge>
                 ))}
               </div>
             </div>

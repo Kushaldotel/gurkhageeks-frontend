@@ -6,3 +6,30 @@ export interface BlogFormProps{
   categories: number[];
   author?: number;
 }
+
+
+export interface Blog{
+  id:number;
+  thumbnail:string;
+  title:string;
+  content:string;
+  categories:{name:string}[];
+  tags:string;
+  authorInitials:string;
+  authorName:string;
+  created_at:string;
+  slug:string;
+}
+
+export interface Category{
+  id:number;
+  name:string;
+}
+
+export interface BlogState{
+  blog:Blog[];
+  categories:Category[];
+  loading:boolean;
+  currentLayout: 'horizental' | 'card';
+  selectedCategory:string;
+}

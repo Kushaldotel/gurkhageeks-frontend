@@ -9,6 +9,10 @@ export const Categories = () =>{
 }
 
 // get blog 
+export const blogs = () =>{
+  return axiosInstance.get('/blog/')
+}
+
 
 // create blog
 export const CreateBlog = (body: BlogFormProps) =>{
