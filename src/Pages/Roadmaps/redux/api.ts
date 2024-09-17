@@ -7,6 +7,6 @@ export const RoadmapList = () =>{
 }
 
 // roadmap details
-export const RoadmapDetail = (id: string) =>{
-  return axiosInstanceWithoutToken.get(`/roadmaps/${id}/`)
+export const RoadmapDetail = (slug: string) =>{
+  return axiosInstanceWithoutToken.get(`/roadmaps/${slug}/`)
 }

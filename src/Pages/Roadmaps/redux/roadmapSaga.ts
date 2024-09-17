@@ -21,11 +21,11 @@ function* RoadmapListSaga(): Generator {
 // roadmap details
 function* RoadmapDetailSaga(action: {
   type: string;
-  payload: { id: string };
+  payload: { slug: string };
 }): Generator {
   try {
-    const { id } = action.payload;
-    const response: any = yield call(RoadmapDetail, id);
+    const { slug } = action.payload;
+    const response: any = yield call(RoadmapDetail, slug);
     yield put(getRoadmapDetailSuccess(response.data));
   } catch (error) {
     yield put(getRoadmapDetailFailure());

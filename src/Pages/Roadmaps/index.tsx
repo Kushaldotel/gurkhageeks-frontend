@@ -1,4 +1,8 @@
-export default function Mernstack() {
+import { useParams } from "react-router-dom";
+
+export default function Roadmap() {
+  const { slug } = useParams()
+  console.log(slug, 'slug')
   return (
     <div className="w-full max-w-7xl mx-auto p-6 md:p-10 xl:p-2 xl:py-8">
       <h1 className="text-3xl md:text-4xl font-bold mb-8">

@@ -24,7 +24,7 @@ const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const isAuthenticated = getCookie("accessToken");
-  const { list } = useAppSelector(roadmapSelector)
+  const { list } = useAppSelector(roadmapSelector);
   console.log(list, 'list')
   useEffect(() => {
     const handleScroll = () => {
@@ -39,17 +39,7 @@ const Navbar: React.FC = () => {
   const navItems = [
     { name: "Home", path: "/" },
     { name: "Blogs", path: "/blog/list" },
-    {
-      name: "Roadmaps",
-      children: [
-        { name: "Full Stack", path: "/roadmap/fullstack" },
-        { name: "MERN Stack", path: "/roadmap/mernstack" },
-        { name: "AI & ML", path: "/roadmap/ai-ml" },
-        { name: "Front-end Dev", path: "/roadmap/frontend" },
-        { name: "Back-end Dev", path: "/roadmap/backend" },
-        { name: "Cybersecurity", path: "/roadmap/cybersecurity" },
-      ],
-    },
+    { name: "Roadmaps", path: "" },
     { name: "About", path: "/about" },
     { name: "Contact", path: "/contact" },
     { name: "Add Blog", path: "/blog/create" },
@@ -86,7 +76,7 @@ const Navbar: React.FC = () => {
 
           <nav className="hidden md:flex items-center space-x-1 lg:space-x-2 xl:space-x-4">
             {navItems.map((item) =>
-              item.children ? (
+              !item.path ? (
                 <DropdownMenu key={item.name}>
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="h-8 px-2 lg:px-3">
@@ -94,21 +84,28 @@ const Navbar: React.FC = () => {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-48">
-                    {item.children.map((child) => (
-                      <DropdownMenuItem key={child.name} asChild>
-                        <Link
-                          to={child.path}
-                          className={cn(
-                            "block px-4 py-2 text-sm",
-                            pathname === child.path
-                              ? "bg-primary/10 text-primary"
-                              : "text-gray-700 hover:bg-gray-100"
-                          )}
-                        >
-                          {child.name}
-                        </Link>
-                      </DropdownMenuItem>
-                    ))}
+                    {list.map((child, id) => {
+                      const url = `/roadmap/${child.title
+                        .toLowerCase()
+                        .split(" ")
+                        .join("-")}`;
+
+                      return (
+                        <DropdownMenuItem key={id} asChild>
+                          <Link
+                            to={url}
+                            className={cn(
+                              "block px-4 py-2 text-sm",
+                              pathname === url
+                                ? "bg-primary/10 text-primary"
+                                : "text-gray-700 hover:bg-gray-100"
+                            )}
+                          >
+                            {child.title}
+                          </Link>
+                        </DropdownMenuItem>
+                      );
+                    })}
                   </DropdownMenuContent>
                 </DropdownMenu>
               ) : (
@@ -165,7 +162,7 @@ const Navbar: React.FC = () => {
           >
             <div className="px-2 pt-2 pb-3 space-y-1">
               {navItems.map((item) =>
-                item.children ? (
+                !item.path ? (
                   <div key={item.name} className="space-y-1">
                     <Button
                       variant="ghost"
@@ -175,21 +172,27 @@ const Navbar: React.FC = () => {
                       {item.name}
                     </Button>
                     <div className="pl-4 space-y-1">
-                      {item.children.map((child) => (
-                        <Link
-                          key={child.name}
-                          to={child.path}
-                          className={cn(
-                            "block px-3 py-2 rounded-md text-base font-medium",
-                            pathname === child.path
-                              ? "bg-primary/10 text-primary"
-                              : "text-gray-700 hover:bg-gray-100"
-                          )}
-                          onClick={() => setIsMenuOpen(false)}
-                        >
-                          {child.name}
-                        </Link>
-                      ))}
+                      {list.map((child, id) => {
+                        const url = `/roadmap/${child.title
+                          .toLowerCase()
+                          .split(" ")
+                          .join("-")}`;
+                        return (
+                          <Link
+                            key={id}
+                            to={url}
+                            className={cn(
+                              "block px-3 py-2 rounded-md text-base font-medium",
+                              pathname === url
+                                ? "bg-primary/10 text-primary"
+                                : "text-gray-700 hover:bg-gray-100"
+                            )}
+                            onClick={() => setIsMenuOpen(false)}
+                          >
+                            {child.title}
+                          </Link>
+                        );
+                      })}
                     </div>
                   </div>
                 ) : (

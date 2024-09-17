@@ -10,19 +10,7 @@ const AboutPage = lazy(() => import("../Pages/About"));
 
 const ContactPage = lazy(() => import("../Pages/Contact/index.tsx"));
 
-// roadmaps
-const AIMLPage = lazy(() => import("../Pages/Roadmaps/AIML/index.tsx"));
-const BackendPage = lazy(() => import("../Pages/Roadmaps/Backend"));
-const CybersecurityPage = lazy(
-  () => import("../Pages/Roadmaps/Cybersecurity/index.tsx")
-);
-const MernstackPage = lazy(
-  () => import("../Pages/Roadmaps/Mernstack/index.tsx")
-);
-const FrontendPage = lazy(() => import("../Pages/Roadmaps/Frontend/index.tsx"));
-const FullstackPage = lazy(
-  () => import("../Pages/Roadmaps/Fullstack/index.tsx")
-);
+const RoadmapPage = lazy(()=> import('@/Pages/Roadmaps'))
 
 const PublicLayout = () => {
   return (
@@ -40,12 +28,7 @@ const PublicLayout = () => {
         <Route path="/about" element={<AboutPage />} />
 
         {/* RoadMaps */}
-        <Route path="/roadmap/mernstack" element={<MernstackPage />} />
-        <Route path="/roadmap/fullstack" element={<FullstackPage />} />
-        <Route path="/roadmap/frontend" element={<FrontendPage />} />
-        <Route path="/roadmap/backend" element={<BackendPage />} />
-        <Route path="/roadmap/ai-ml" element={<AIMLPage />} />
-        <Route path="/roadmap/cybersecurity" element={<CybersecurityPage />} />
+        <Route path="/roadmap/:slug" element={<RoadmapPage />} />
 
         {/* Contact us */}
         <Route path="/contact" element={<ContactPage />} />
