@@ -1,3 +1,4 @@
+import { selectSelectedCategory } from './selector';
 import { createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
@@ -32,7 +33,7 @@ const blogSlice = createSlice({
     },
 
     // get blogs list
-    getBlogsStart(state){
+    getBlogsRequest(state){
       state.loading = true;
       state.error = null;
     },
@@ -49,6 +50,9 @@ const blogSlice = createSlice({
     },
     getCurrentLayout(state, action){
       state.currentLayout = action.payload;
+    },
+    setSelectedCategory(state, action){
+      state.selectedCategory = action.payload;
     },
 
     // post blog
@@ -79,7 +83,7 @@ export const {
   createBlogPostSuccess,
 
   // get blogs 
-  getBlogsStart,
+  getBlogsRequest,
   getBlogsFailure,
   getBlogsSuccess,
   getSelectedCategory,

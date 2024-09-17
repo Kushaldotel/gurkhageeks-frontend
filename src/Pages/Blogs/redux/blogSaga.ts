@@ -12,6 +12,7 @@ import { showToast } from "@/Global/globalAppSlice";
 import { BlogFormProps } from "./types";
 import { NavigateFunction } from "react-router-dom";
 import { Dispatch, SetStateAction } from "react";
+import { selectSelectedCategory } from "./selector";
 
 // get blog categories
 function* CategoriesSaga(): Generator {
@@ -33,6 +34,9 @@ function* BlogsSaga():Generator{
     yield put(getBlogsFailure(error))
   }
 }
+
+
+function* fetchCategoryChange(action:ReturnType<typeof setSe)
 
 // create blog
 function* CreateBlogSaga(action: {

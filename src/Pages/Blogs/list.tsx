@@ -265,7 +265,6 @@
 //   );
 // }
 
-
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Button } from "@/Components/ui/button";
@@ -279,17 +278,20 @@ import {
 import { Tabs, TabsList, TabsTrigger } from "@/Components/ui/tabs";
 import { Loader2, LayoutGrid, LayoutList } from "lucide-react";
 import DOMPurify from "dompurify";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import {
   getSelectedCategory,
   getCurrentLayout,
-} from './redux/blogSlice';
+  getCategoriesRequest,
+  getBlogsRequest,
+} from "./redux/blogSlice";
 import {
   selectBlogs,
   selectCategories,
   selectLoading,
   selectCurrentlayout,
   selectLoadingCategories,
+  selectedCategory,
 } from "./redux/selector";
 
 import {
@@ -298,26 +300,27 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/Components/ui/select';
+} from "@/Components/ui/select";
 
 export default function AllBlogs() {
   const dispatch = useDispatch();
   const blogs = useSelector(selectBlogs);
   const categories = useSelector(selectCategories);
+  const selectedCategory = useSelector()
   const loading = useSelector(selectLoading);
   const loadingCategories = useSelector(selectLoadingCategories);
 
   useEffect(() => {
-    dispatch({ type: 'blogs/fetchBlogs' });
-    dispatch({ type: 'blogs/fetchCategories' });
+    dispatch(getBlogsRequest());
+    dispatch(getCategoriesRequest());
   }, [dispatch]);
 
   const handleCategoryChange = (value) => {
     dispatch(getSelectedCategory(value));
-    if (value === 'all') {
-      dispatch({ type: 'blogs/fetchBlogs' });
+    if (value === "all") {
+      dispatch({ type: "blogs/fetchBlogs" });
     } else {
-      dispatch({ type: 'blogs/fetchBlogs', payload: parseInt(value) });
+      dispatch({ type: "blogs/fetchBlogs", payload: parseInt(value) });
     }
   };
 
@@ -486,4 +489,3 @@ export default function AllBlogs() {
     </div>
   );
 }
-
