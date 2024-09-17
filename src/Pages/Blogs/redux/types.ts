@@ -8,7 +8,7 @@ export interface BlogFormProps{
 }
 
 
-export interface Blog{
+export interface BlogProps{
   id:number;
   thumbnail:string;
   title:string;
@@ -21,15 +21,15 @@ export interface Blog{
   slug:string;
 }
 
-export interface Category{
+export interface CategoryProps{
   id:number;
   name:string;
 }
 
-export interface BlogState{
-  blog:Blog[];
-  categories:Category[];
+export interface BlogStateProps{
+  categories: CategoryProps[];
+  loadingCategories: boolean;
   loading:boolean;
-  currentLayout: 'horizental' | 'card';
-  selectedCategory:string;
+  blogs: BlogProps[];
+  loadingBlogs: boolean;
 }

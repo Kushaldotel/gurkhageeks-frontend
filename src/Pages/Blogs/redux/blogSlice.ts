@@ -1,19 +1,16 @@
-import { selectSelectedCategory } from './selector';
-import { createSlice} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
+import { BlogStateProps } from "./types";
 
-const initialState = {
-  blogs:[],
-  error:null,
-  currentLayout:'horizental',
-  selectedCategory:'all',
+const initialState: BlogStateProps = {
+  // blog categories
   categories: [],
   loadingCategories: false,
-  loading: false, // tracks loading state of create blog
+  // loading state for create blog
+  loading: false,
+  // blogs list
+  blogs: [],
+  loadingBlogs: false,
 };
-
-// const initialState:BlogState{
-
-// }
 
 const blogSlice = createSlice({
   name: "blog",
@@ -33,26 +30,15 @@ const blogSlice = createSlice({
     },
 
     // get blogs list
-    getBlogsRequest(state){
+    getBlogsRequest(state) {
       state.loading = true;
-      state.error = null;
     },
-    getBlogsSuccess(state, action){
+    getBlogsSuccess(state, action) {
       state.blogs = action.payload;
       state.loading = false;
     },
-    getBlogsFailure(state, action){
-      state.error = action.payload;
+    getBlogsFailure(state, action) {
       state.loading = false;
-    },
-    getSelectedCategory(state, action){
-      state.selectedCategory = action.payload;
-    },
-    getCurrentLayout(state, action){
-      state.currentLayout = action.payload;
-    },
-    setSelectedCategory(state, action){
-      state.selectedCategory = action.payload;
     },
 
     // post blog
@@ -82,12 +68,9 @@ export const {
   createBlogPostRequest,
   createBlogPostSuccess,
 
-  // get blogs 
+  // get blogs
   getBlogsRequest,
   getBlogsFailure,
   getBlogsSuccess,
-  getSelectedCategory,
-  getCurrentLayout,
-  
 } = blogSlice.actions;
 export default blogSlice.reducer;

@@ -1,18 +1,18 @@
 import { call, put } from "redux-saga/effects";
 import {
   createBlogPostFailure,
+  createBlogPostSuccess,
   getBlogsFailure,
   getBlogsSuccess,
   getCategoriesFailure,
   getCategoriesSuccess,
 } from "./blogSlice";
-import { Categories, CreateBlog, blogs } from "./api";
+import { Categories, CreateBlog, getBlogs } from "./api";
 import { AxiosError } from "axios";
 import { showToast } from "@/Global/globalAppSlice";
 import { BlogFormProps } from "./types";
 import { NavigateFunction } from "react-router-dom";
 import { Dispatch, SetStateAction } from "react";
-import { selectSelectedCategory } from "./selector";
 
 // get blog categories
 function* CategoriesSaga(): Generator {
@@ -25,18 +25,14 @@ function* CategoriesSaga(): Generator {
 }
 
 //get all blogs
-
 function* BlogsSaga():Generator{
   try{
-    const response:any = yield call(blogs)
+    const response:any = yield call(getBlogs)
     yield put(getBlogsSuccess(response.data.data))
   }catch(error){
     yield put(getBlogsFailure(error))
   }
 }
-
-
-function* fetchCategoryChange(action:ReturnType<typeof setSe)
 
 // create blog
 function* CreateBlogSaga(action: {
@@ -66,6 +62,7 @@ function* CreateBlogSaga(action: {
         message: response?.data?.data?.status?.message || "Post Successfully!",
       })
     );
+    yield put(createBlogPostSuccess())
   } catch (error) {
     yield put(createBlogPostFailure());
     if (error instanceof AxiosError) {

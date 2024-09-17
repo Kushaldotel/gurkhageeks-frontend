@@ -9,7 +9,7 @@ export const Categories = () =>{
 }
 
 // get blog 
-export const blogs = () =>{
+export const getBlogs = () =>{
   return axiosInstance.get('/blog/')
 }
 
