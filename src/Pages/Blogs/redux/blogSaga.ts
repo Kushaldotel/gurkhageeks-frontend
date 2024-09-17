@@ -1,10 +1,12 @@
 import { call, put } from "redux-saga/effects";
 import {
   createBlogPostFailure,
+  getBlogsFailure,
+  getBlogsSuccess,
   getCategoriesFailure,
   getCategoriesSuccess,
 } from "./blogSlice";
-import { Categories, CreateBlog } from "./api";
+import { Categories, CreateBlog, blogs } from "./api";
 import { AxiosError } from "axios";
 import { showToast } from "@/Global/globalAppSlice";
 import { BlogFormProps } from "./types";
@@ -18,6 +20,17 @@ function* CategoriesSaga(): Generator {
     yield put(getCategoriesSuccess(response.data.data));
   } catch (error) {
     yield put(getCategoriesFailure(error));
+  }
+}
+
+//get all blogs
+
+function* BlogsSaga():Generator{
+  try{
+    const response:any = yield call(blogs)
+    yield put(getBlogsSuccess(response.data.data))
+  }catch(error){
+    yield put(getBlogsFailure(error))
   }
 }
 
@@ -70,4 +83,7 @@ function* CreateBlogSaga(action: {
     }
   }
 }
-export { CategoriesSaga, CreateBlogSaga };
+export { CategoriesSaga, CreateBlogSaga, BlogsSaga }; 
+
+
+
