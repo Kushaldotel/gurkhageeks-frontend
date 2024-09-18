@@ -10,6 +10,11 @@ const initialState: BlogStateProps = {
   // blogs list
   blogs: [],
   loadingBlogs: false,
+  // blogdetail 
+  loadingBlogDetail: false,
+  blogDetail: [],
+  error: null,
+  // blo 
 };
 
 const blogSlice = createSlice({
@@ -30,15 +35,28 @@ const blogSlice = createSlice({
     },
 
     // get blogs list
-    getBlogsRequest(state) {
-      state.loading = true;
+    getBlogsRequest(state, action) {
+      state.loadingBlogs = true;
     },
     getBlogsSuccess(state, action) {
       state.blogs = action.payload;
-      state.loading = false;
+      state.loadingBlogs = false;
     },
     getBlogsFailure(state, action) {
-      state.loading = false;
+      state.loadingBlogs = false;
+    },
+
+    // get blog detail 
+    getBlogDetailRequest(state,action){
+      state.loadingBlogDetail = true;
+    },
+    getBlogDetailSuccess(state, action){
+      state.loadingBlogDetail = false;
+      state.blogDetail = action.payload;
+    },
+    getBlogDetailFailure(state, action){
+      state.loadingBlogDetail = false;
+      // state.blogDetail = action.payload
     },
 
     // post blog
@@ -67,6 +85,12 @@ export const {
   createBlogPostFailure,
   createBlogPostRequest,
   createBlogPostSuccess,
+
+  // get blog detail
+  getBlogDetailFailure,
+  getBlogDetailRequest,
+  getBlogDetailSuccess,
+
 
   // get blogs
   getBlogsRequest,

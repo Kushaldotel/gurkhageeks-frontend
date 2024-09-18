@@ -5,6 +5,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Code, Book, Zap } from "lucide-react";
 import { Button } from "@/Components/ui/button";
+import { Link } from "react-router-dom";
 export default function Home() {
   return (
     <div className="flex flex-col w-full mt-4">
@@ -36,7 +37,7 @@ export default function Home() {
           </div>
         </section> */}
         <section className="py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-0">
             <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
@@ -56,17 +57,19 @@ export default function Home() {
                   coders. The more you learn, the more you earn.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Button
-                    size="lg"
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-full transition duration-300 ease-in-out transform hover:scale-105 flex items-center"
-                  >
-                    Learn More
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
+                  <Link to="/about">
+                    <Button
+                      size="lg"
+                      className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 flex items-center"
+                    >
+                      Learn More
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  </Link>
                   <Button
                     variant="outline"
                     size="lg"
-                    className="border-2 border-blue-600 text-blue-600 font-semibold py-3 px-6 rounded-full transition duration-300 ease-in-out transform hover:scale-105 hover:bg-blue-50"
+                    className="border-2 border-blue-600 text-blue-600 font-semibold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-blue-50"
                   >
                     Get Started
                   </Button>
@@ -84,10 +87,10 @@ export default function Home() {
                       transition={{ duration: 0.8, delay: 0.5 + index * 0.2 }}
                       className="flex flex-col items-center"
                     >
-                      <div className="bg-blue-100 p-3 rounded-full">
-                        <item.icon className="h-6 w-6 text-blue-600" />
+                      <div className="bg-blue-100 border border-gray-300 p-3 rounded-full">
+                        <item.icon className="h-6 w-6 text-gray-600" />
                       </div>
-                      <span className="mt-2 text-sm text-gray-600">
+                      <span className="mt-2 text-sm text-gray-800">
                         {item.text}
                       </span>
                     </motion.div>

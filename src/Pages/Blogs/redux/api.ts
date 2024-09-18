@@ -9,10 +9,14 @@ export const Categories = () =>{
 }
 
 // get blog 
-export const getBlogs = () =>{
-  return axiosInstance.get('/blog/')
+export const getBlogs = (value:{category:string}) =>{
+  return axiosInstance.get(`/blog/?categories=${value.category}`)
 }
 
+// get blog detail 
+export const getBlogDetail = (slug:string) =>{
+  return axiosInstance.get(`/blog/${slug}/`)
+}
 
 // create blog
 export const CreateBlog = (body: BlogFormProps) =>{

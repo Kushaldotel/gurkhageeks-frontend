@@ -8,24 +8,21 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import BlogModal from "./modal";
 import Modal from "@/Components/Modal";
-import { useAppDispatch, useAppSelector } from "@/Utils/hooks/appHooks";
+import { useAppDispatch } from "@/Utils/hooks/appHooks";
 import { createBlogPostRequest, getCategoriesRequest } from "./redux/blogSlice";
 import { Link, useNavigate } from "react-router-dom";
-import { profileSelector } from "../Profile/redux/selector";
 import { BlogFormProps } from "./redux/types";
 
 const CreateBlogs: React.FC = () => {
   const dispatch = useAppDispatch();
   const [showModal, setShowModal] = useState<boolean>(false);
   const navigate = useNavigate();
-  const { userDetails } = useAppSelector(profileSelector);
   const initialState = {
     title: "",
     content: "",
     categories: [],
     tags: [],
     thumbnail: null,
-    author: userDetails?.id,
   };
 
   const validationSchema = Yup.object().shape({
@@ -117,12 +114,13 @@ const CreateBlogs: React.FC = () => {
             <CardContent className="mt-4">
               {/* Title Field */}
               <div className="mb-4">
-                <Label htmlFor="title" className="text-xl font-normal">
+                {/* <Label htmlFor="title" className="text-xl font-normal">
                   Title
-                </Label>
+                </Label> */}
                 <input
                   type="text"
                   id="title"
+                  placeholder="Enter your title..."
                   name="title"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -135,7 +133,7 @@ const CreateBlogs: React.FC = () => {
               </div>
 
               {/* Content Field */}
-              <div className="mb-4">
+              <div className="mb-4 border rounded-t-sm">
                 <QuillEditor
                   value={formik.values.content}
                   onChange={(data: string) =>

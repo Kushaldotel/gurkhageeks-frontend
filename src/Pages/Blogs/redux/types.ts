@@ -7,6 +7,13 @@ export interface BlogFormProps{
   author?: number;
 }
 
+export interface BlogAuthorProps{
+  id:number;
+  first_name:string;
+  last_name:string;
+  profile_pic: null;
+
+}
 
 export interface BlogProps{
   id:number;
@@ -15,8 +22,7 @@ export interface BlogProps{
   content:string;
   categories:{name:string}[];
   tags:string;
-  authorInitials:string;
-  authorName:string;
+  author:BlogAuthorProps;
   created_at:string;
   slug:string;
 }
@@ -32,4 +38,8 @@ export interface BlogStateProps{
   loading:boolean;
   blogs: BlogProps[];
   loadingBlogs: boolean;
+  loadingBlogDetail: boolean;
+  blogDetail: BlogProps | null;
+  error:string | null;
 }
+

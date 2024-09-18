@@ -39,6 +39,7 @@ const Login: React.FC = () => {
     dispatch(loginRequest({ credentials: values, navigate, resetForm }));
   };
 
+  
   const handleGoogleSignIn = async () => {
     // Handle Google Sign-In logic here...
   };
@@ -52,7 +53,7 @@ const Login: React.FC = () => {
           </h1>
         </Link>
       </div>
-      <Card className="max-w-[460px] mx-auto w-full">
+      <Card className="max-w-[460px] mx-auto w-full xl:p-4">
         <CardHeader>
           <CardTitle>Login Account</CardTitle>
         </CardHeader>

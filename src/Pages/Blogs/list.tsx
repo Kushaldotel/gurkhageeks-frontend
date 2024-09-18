@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/Components/ui/button";
+// import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
+import { User } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -20,20 +22,29 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/Components/ui/select";
+
 import { useAppDispatch, useAppSelector } from "@/Utils/hooks/appHooks";
 import { blogSelector } from "./redux/selector";
 import { CategoryProps } from "./redux/types";
 
 export default function AllBlogs() {
   const dispatch = useAppDispatch();
+  const [selectedCategory, setSelectedCategory] = useState("all");
   const { categories, blogs } = useAppSelector(blogSelector);
-  const currentLayout = "horizontal";
+  const [currentLayout, setCurrentLayout] = useState<"horizontal" | "card">(
+    "horizontal"
+  );
+
   useEffect(() => {
-    dispatch(getBlogsRequest());
+    dispatch(getBlogsRequest({ category: "" }));
     dispatch(getCategoriesRequest());
   }, [dispatch]);
 
-  const handleCategoryChange = () => {};
+  const handleCategoryChange = (value: string) => {
+    // console.log(value);
+    dispatch(getBlogsRequest({ category: value == "all" ? "" : value }));
+    setSelectedCategory(value);
+  };
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl min-h-screen">
@@ -43,8 +54,8 @@ export default function AllBlogs() {
         </h1>
         <div className="flex space-x-4">
           <Select
-            value={"selectedCategory"}
-            onValueChange={handleCategoryChange}
+            value={selectedCategory}
+            onValueChange={(e) => handleCategoryChange(e)}
           >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Select Category" />
@@ -60,9 +71,9 @@ export default function AllBlogs() {
           </Select>
           <Tabs
             value={currentLayout}
-            // onValueChange={(value) =>
-            //   getCurrentLayout(value as "horizontal" | "card")
-            // }
+            onValueChange={(value) =>
+              setCurrentLayout(value as "horizontal" | "card")
+            }
           >
             <TabsList>
               <TabsTrigger value="horizontal">
@@ -123,11 +134,18 @@ export default function AllBlogs() {
                     />
                     <div className="flex justify-between items-center">
                       <div className="flex items-center space-x-2">
-                        <div className="rounded-full bg-gray-200 text-gray-800 w-8 h-8 flex items-center justify-center text-xs font-medium">
-                          {blog.authorInitials}
+                        <div className="rounded-full  text-gray-800 w-8 h-8 flex items-center justify-center text-xs font-medium">
+                          {/* <Avatar>
+                            <AvatarImage
+                              alt="User Avatar"
+                              className="h-8 w-8"
+                            />
+                            <AvatarFallback>AD</AvatarFallback>{" "}
+                          </Avatar> */}
+                          <User className="w-6 h-6 mr-1" />
                         </div>
-                        <span className="text-sm font-medium">
-                          {blog.authorName}
+                        <span className="text-sm capitalize font-medium">
+                          {blog.author.first_name} {blog.author.last_name}
                         </span>
                       </div>
                       <Button variant="outline" asChild>

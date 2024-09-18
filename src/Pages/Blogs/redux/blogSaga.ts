@@ -6,8 +6,12 @@ import {
   getBlogsSuccess,
   getCategoriesFailure,
   getCategoriesSuccess,
+  getBlogDetailRequest,
+  getBlogDetailSuccess,
+  getBlogDetailFailure
 } from "./blogSlice";
-import { Categories, CreateBlog, getBlogs } from "./api";
+
+import { Categories, CreateBlog, getBlogs,getBlogDetail } from "./api";
 import { AxiosError } from "axios";
 import { showToast } from "@/Global/globalAppSlice";
 import { BlogFormProps } from "./types";
@@ -24,10 +28,27 @@ function* CategoriesSaga(): Generator {
   }
 }
 
-//get all blogs
-function* BlogsSaga():Generator{
+function* BlogDetailSaga(action:{payload:string}):Generator{
   try{
-    const response:any = yield call(getBlogs)
+    const response: any = yield call(getBlogDetail, action.payload)
+    yield put(getBlogDetailSuccess(response.data.data))
+  }catch(error){
+    yield put(getBlogDetailFailure(error))
+  }
+}
+
+
+//get all blogs
+function* BlogsSaga(action:{
+  type:string,
+  payload:{
+    category:string,
+  }
+} ):Generator{
+  try{
+    const {category} = action.payload;
+
+    const response:any = yield call(getBlogs, {category})
     yield put(getBlogsSuccess(response.data.data))
   }catch(error){
     yield put(getBlogsFailure(error))
@@ -84,7 +105,7 @@ function* CreateBlogSaga(action: {
     }
   }
 }
-export { CategoriesSaga, CreateBlogSaga, BlogsSaga }; 
+export { CategoriesSaga, CreateBlogSaga, BlogsSaga, BlogDetailSaga }; 
 
 
 
