@@ -8,15 +8,17 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import BlogModal from "./modal";
 import Modal from "@/Components/Modal";
-import { useAppDispatch } from "@/Utils/hooks/appHooks";
+import { useAppDispatch, useAppSelector } from "@/Utils/hooks/appHooks";
 import { createBlogPostRequest, getCategoriesRequest } from "./redux/blogSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { BlogFormProps } from "./redux/types";
+import { blogSelector } from "./redux/selector";
 
 const CreateBlogs: React.FC = () => {
   const dispatch = useAppDispatch();
   const [showModal, setShowModal] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { loading } = useAppSelector(blogSelector)
   const initialState = {
     title: "",
     content: "",
@@ -100,6 +102,7 @@ const CreateBlogs: React.FC = () => {
                     <AppButton
                       label="Publish"
                       type="submit"
+                      loading={loading}
                       onClick={() => formik.handleSubmit()}
                     />
                   </div>

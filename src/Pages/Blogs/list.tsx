@@ -187,10 +187,10 @@ export default function AllBlogs() {
                   <CardFooter className="flex justify-between items-center">
                     <div className="flex items-center space-x-2">
                       <div className="rounded-full bg-gray-200 text-gray-800 w-8 h-8 flex items-center justify-center text-xs font-medium">
-                        {blog.authorInitials}
+                        <User className="w-6 h-6 mr-1" />
                       </div>
                       <span className="text-sm font-medium">
-                        {blog.authorName}
+                      {blog.author.first_name} {blog.author.last_name}
                       </span>
                     </div>
                     <Button variant="outline" asChild>

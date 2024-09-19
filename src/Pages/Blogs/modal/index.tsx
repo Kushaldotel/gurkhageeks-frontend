@@ -14,8 +14,8 @@ interface BlogModalProps {
 
 const BlogModal: React.FC<BlogModalProps> = ({ formik }) => {
   const { categories: categoryList } = useAppSelector(blogSelector)
-  const categoryOptions = categoryList.map((category: { id: string; name: string }) => ({
-    value: category.id,
+  const categoryOptions = categoryList.map((category: { id: number; name: string }) => ({
+    value: category.id.toString(),
     label: category.name,
   }));
   const {

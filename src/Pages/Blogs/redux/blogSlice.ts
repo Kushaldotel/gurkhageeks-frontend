@@ -12,8 +12,7 @@ const initialState: BlogStateProps = {
   loadingBlogs: false,
   // blogdetail 
   loadingBlogDetail: false,
-  blogDetail: [],
-  error: null,
+  blogDetail: null,
   // blo 
 };
 
@@ -50,13 +49,12 @@ const blogSlice = createSlice({
     getBlogDetailRequest(state,action){
       state.loadingBlogDetail = true;
     },
-    getBlogDetailSuccess(state, action){
+    getBlogDetailSuccess(state, {payload}){
       state.loadingBlogDetail = false;
-      state.blogDetail = action.payload;
+      state.blogDetail = payload;
     },
     getBlogDetailFailure(state, action){
       state.loadingBlogDetail = false;
-      // state.blogDetail = action.payload
     },
 
     // post blog
