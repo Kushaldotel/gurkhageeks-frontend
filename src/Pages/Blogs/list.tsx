@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Button } from "@/Components/ui/button";
 // import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
-import { User } from "lucide-react";
+import { Loader2, User } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -30,7 +30,7 @@ import { CategoryProps } from "./redux/types";
 export default function AllBlogs() {
   const dispatch = useAppDispatch();
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const { categories, blogs } = useAppSelector(blogSelector);
+  const { categories, blogs, loadingBlogs } = useAppSelector(blogSelector);
   const [currentLayout, setCurrentLayout] = useState<"horizontal" | "card">(
     "horizontal"
   );
@@ -45,7 +45,13 @@ export default function AllBlogs() {
     dispatch(getBlogsRequest({ category: value == "all" ? "" : value }));
     setSelectedCategory(value);
   };
-
+  if (loadingBlogs) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader2 className="w-8 h-8 animate-spin" />
+      </div>
+    );
+  }
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl min-h-screen">
       <div className="flex flex-col md:flex-row justify-between items-center mb-8">

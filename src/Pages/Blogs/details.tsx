@@ -5,9 +5,7 @@ import { useParams } from "react-router-dom";
 import DOMPurify from "dompurify";
 import parse from "html-react-parser";
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
-import { Alert, AlertDescription, AlertTitle } from "@/Components/ui/alert";
-import { AlertCircle, Calendar, User, Tag, Loader2 } from "lucide-react";
-import { Badge } from "@/Components/ui/badge";
+import {Calendar, User, Loader2 } from "lucide-react";
 import LatestBlog from "./BlogDetail/LatestBlog";
 import { useAppDispatch, useAppSelector } from "@/Utils/hooks/appHooks";
 import { blogSelector } from "./redux/selector";
@@ -16,34 +14,18 @@ import { getBlogDetailRequest } from "./redux/blogSlice";
 export default function BlogDetail() {
   const { slug } = useParams<{ slug: string }>();
   const dispatch = useAppDispatch();
-  const { blogDetail, loading, error } = useAppSelector(blogSelector);
+  const { blogDetail, loadingBlogDetail } = useAppSelector(blogSelector);
 
   useEffect(() => {
     dispatch(getBlogDetailRequest(slug));
   }, [dispatch, slug]);
 
-  if (loading) {
+  if (loadingBlogDetail) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <Loader2 className="w-8 h-8 animate-spin" />
       </div>
     );
-  }
-
-  if (error) {
-    return (
-      <Alert variant="destructive">
-        <AlertCircle className="h-4 w-4" />
-        <AlertTitle>Error</AlertTitle>
-        <AlertDescription>
-          Failed to load blog post: {error.message}
-        </AlertDescription>
-      </Alert>
-    );
-  }
-
-  if (!blogDetail) {
-    return <div>No blog post found.</div>;
   }
 
   return (
@@ -52,22 +34,22 @@ export default function BlogDetail() {
         <Card className="flex-grow lg:w-2/3">
           <CardHeader>
             <CardTitle className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
-              {blogDetail.title}
+              {blogDetail?.title}
             </CardTitle>
             <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
               <div className="flex items-center">
                 <User className="mr-2 h-4 w-4" />
-                {/* <span>{blogDetail.author.first_name}</span> */}
+                {/* <span>{blogDetail?.author.first_name}</span> */}
               </div>
               <div className="flex items-center">
                 <Calendar className="mr-2 h-4 w-4" />
                 <span>
-                  {new Date(blogDetail.created_at).toLocaleDateString()}
+                  {new Date(blogDetail ? blogDetail?.created_at : '').toLocaleDateString()}
                 </span>
               </div>
               {/* <div className="flex items-center flex-wrap gap-2">
                 <Tag className="h-4 w-4" />
-                {blogDetail.tags.split(",").map((tag, index) => (
+                {blogDetail?.tags.split(",").map((tag, index) => (
                   <Badge key={index} variant="secondary">
                     {tag.trim()}
                   </Badge>
@@ -78,13 +60,13 @@ export default function BlogDetail() {
           <CardContent>
             <div className="relative w-full h-[40vh] mb-8">
               <img
-                src={blogDetail.thumbnail || "/placeholder.svg"}
-                alt={blogDetail.title}
+                src={blogDetail?.thumbnail || "/placeholder.svg"}
+                alt={blogDetail?.title}
                 className="rounded-lg object-cover w-full h-full"
               />
             </div>
             <article className="prose prose-lg max-w-none dark:prose-invert">
-              {parse(DOMPurify.sanitize(blogDetail.content))}
+              {parse(DOMPurify.sanitize(blogDetail ? blogDetail?.content : ''))}
             </article>
           </CardContent>
         </Card>

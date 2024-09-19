@@ -13,9 +13,9 @@ interface BlogModalProps {
 }
 
 const BlogModal: React.FC<BlogModalProps> = ({ formik }) => {
-  const { categories: categoryList } = useAppSelector(blogSelector)
+  const { categories: categoryList } = useAppSelector(blogSelector);
   const categoryOptions = categoryList.map((category: { id: number; name: string }) => ({
-    value: category.id.toString(),
+    value: category.id.toString(),  // ComboBox likely expects value as a string
     label: category.name,
   }));
   const {
@@ -40,7 +40,9 @@ const BlogModal: React.FC<BlogModalProps> = ({ formik }) => {
   }, [thumbnail]);
 
   const handleCategoryChange = (values: string[]) => {
-    setFieldValue("categories", values);
+    // Since ComboBox returns an array, we map to numbers and update categories
+    const categoryArray = values.map(Number);   
+    setFieldValue("categories", categoryArray);
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,6 +78,7 @@ const BlogModal: React.FC<BlogModalProps> = ({ formik }) => {
       setFieldValue("thumbnail", file);
     }
   };
+
   return (
     <section>
       {/* Categories Field */}
@@ -86,11 +89,10 @@ const BlogModal: React.FC<BlogModalProps> = ({ formik }) => {
         <ComboBox
           options={categoryOptions}
           multiple={true}
-          onChange={handleCategoryChange}
-          value={categories}
+          onChange={handleCategoryChange} // Will pass the array of values (strings) to the handler
+          value={categories.map(String)} // Convert the current numeric categories back to strings for display
           name="categories"
         />
-       
       </div>
 
       {/* Thumbnail Field */}

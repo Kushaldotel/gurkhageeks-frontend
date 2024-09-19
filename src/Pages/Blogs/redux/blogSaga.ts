@@ -66,16 +66,27 @@ function* CreateBlogSaga(action: {
   };
 }): Generator {
   try {
-    const { data, setShowModal, resetForm } = action.payload;
+    const { data, setShowModal, resetForm, navigate } = action.payload;
     const formData = new FormData();
+
     Object.entries(data).forEach(([key, value]) => {
-      formData.append(key, value as string);
+      if (Array.isArray(value)) {
+        value.forEach((item,id) => {
+          formData.append(`${key}[${id}]`, item);
+        });
+      } else {
+        formData.append(key, value as string);
+      }
     });
 
     // @ts-ignore
     const response: any = yield call(CreateBlog, formData);
-    resetForm()
+    
+    // Reset the form and close the modal
+    resetForm();
     setShowModal(false);
+    navigate('/blog/list')
+    // Show success toast notification
     yield put(
       showToast({
         type: "success",
@@ -83,9 +94,11 @@ function* CreateBlogSaga(action: {
         message: response?.data?.data?.status?.message || "Post Successfully!",
       })
     );
-    yield put(createBlogPostSuccess())
+    
+    yield put(createBlogPostSuccess());
   } catch (error) {
     yield put(createBlogPostFailure());
+    
     if (error instanceof AxiosError) {
       yield put(
         showToast({
@@ -99,12 +112,13 @@ function* CreateBlogSaga(action: {
         showToast({
           type: "error",
           title: "Error",
-          message: "An unknown error occurred during logout.",
+          message: "An unknown error occurred during the blog post creation.",
         })
       );
     }
   }
 }
+
 export { CategoriesSaga, CreateBlogSaga, BlogsSaga, BlogDetailSaga }; 
 
 

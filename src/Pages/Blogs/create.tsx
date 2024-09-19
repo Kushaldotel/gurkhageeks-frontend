@@ -22,7 +22,7 @@ const CreateBlogs: React.FC = () => {
   const initialState = {
     title: "",
     content: "",
-    categories: [],
+    categories: [] as number [],
     tags: [],
     thumbnail: null,
   };
@@ -35,8 +35,8 @@ const CreateBlogs: React.FC = () => {
       .required("Categories are required"),
     tags: Yup.array().max(5, "You can add up to 5 tags"),
   });
-
   const handleSubmit = (values: BlogFormProps, { resetForm }: any) => {
+
     dispatch(
       createBlogPostRequest({ data: values, navigate, setShowModal, resetForm })
     );
