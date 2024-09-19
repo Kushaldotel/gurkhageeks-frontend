@@ -1,302 +1,218 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import ProfileDropdown from "../../Components/ProfileDropdown";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X, ChevronDown, User } from "lucide-react";
+import { Button } from "@/Components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/Components/ui/dropdown-menu";
+// import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar"
+import { cn } from "@/lib/utils";
+import ProfileDropdown from "@/Components/ProfileDropdown";
 import getCookie from "@/Utils/cookies/getCookie";
+import { useAppDispatch, useAppSelector } from "@/Utils/hooks/appHooks";
+import { getUserDetailRequest } from "@/Pages/Profile/redux/profileSlice";
+import { getRoadmapListRequest } from "@/Pages/Roadmaps/redux/roadmapSlice";
+import { roadmapSelector } from "@/Pages/Roadmaps/redux/selector";
 
 const Navbar: React.FC = () => {
+  const dispatch = useAppDispatch();
   const { pathname } = useLocation();
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
-  const dropdownRef = useRef<HTMLButtonElement | null>(null);
-  const [showDropdown, setShowDropdown] = useState<boolean>(false);
-
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const isAuthenticated = getCookie("accessToken");
-
+  const { list } = useAppSelector(roadmapSelector)
+  
   useEffect(() => {
-    const handleOutsideClick = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsDropdownOpen(false);
-      }
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
     };
-
-    document.addEventListener("click", handleOutsideClick);
-
-    return () => {
-      document.removeEventListener("click", handleOutsideClick);
-    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen((prev) => !prev);
-  };
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  const toggleMenu = () => {
-    setIsMenuOpen((prev) => !prev);
-  };
+  const navItems = [
+    { name: "Home", path: "/" },
+    { name: "Blogs", path: "/blog/list" },
+    {
+      name: "Roadmaps",
+      children: [
+        { name: "Full Stack", path: "/roadmap/fullstack" },
+        { name: "MERN Stack", path: "/roadmap/mernstack" },
+        { name: "AI & ML", path: "/roadmap/ai-ml" },
+        { name: "Front-end Dev", path: "/roadmap/frontend" },
+        { name: "Back-end Dev", path: "/roadmap/backend" },
+        { name: "Cybersecurity", path: "/roadmap/cybersecurity" },
+      ],
+    },
+    { name: "About", path: "/about" },
+    { name: "Contact", path: "/contact" },
+    { name: "Add Blog", path: "/blog/create" },
+  ];
 
-  const profileDropdown = () => {
-    setShowDropdown((prev) => !prev);
-  };
+  // fetch user details
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(getUserDetailRequest());
+    }
+  }, []);
 
-  const closeDropdown = () => {
-    setIsDropdownOpen(false);
-  };
-
+  // fetch roadmap list
+  useEffect(() => {
+    dispatch(getRoadmapListRequest());
+  }, [dispatch]);
   return (
-    <div className="sticky z-50">
-      <header className="text-gray-900 bg-opacity-90 backdrop-blur-2xl h-16 bg-transparent z-50 transition-colors duration-300 mx-auto flex items-center px-8 shadow-sm">
-        <div className="sticky container flex items-center justify-between max-w-7xl mx-auto">
-          <div className="flex space-x-4">
-            <button onClick={toggleMenu} className="md:hidden">
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            </button>
-            <Link to="/" className="flex items-center gap-2 text-primary">
-              <h1 className="font-semibold">GurkhaGeeks ✓</h1>
+    <header
+      className={cn(
+        "sticky top-0 z-50 w-full transition-all duration-300",
+        isScrolled ? "bg-white/80 backdrop-blur-md shadow-sm" : "bg-transparent"
+      )}
+    >
+      <div className="container mx-auto px-4 sm:px-6 xl:px-0 xl:max-w-7xl">
+        <div className="flex h-16 items-center justify-between">
+          <div className="flex items-center">
+            <Link to="/" className="flex items-center space-x-2">
+              <span className="text-2xl font-bold text-primary">
+                GurkhaGeeks
+              </span>
+              <span className="text-2xl text-green-500">✓</span>
             </Link>
           </div>
-          <nav className="hidden md:flex items-center gap-6">
-            <Link
-              to="/"
-              className={
-                pathname === "/"
-                  ? "font-semibold text-sm underline rounded-full"
-                  : "text-sm font-medium"
-              }
-            >
-              Home
-            </Link>
-            <Link
-              to="/blog/list"
-              className={
-                pathname === "/blog/list"
-                  ? "font-semibold text-sm underline rounded-full"
-                  : "text-sm font-medium"
-              }
-            >
-              Blogs
-            </Link>
 
-            <div className="relative group">
-              <button
-                onClick={toggleDropdown}
-                className="text-sm font-medium hover:text-primary"
-                ref={dropdownRef}
-              >
-                Roadmaps ▾
-              </button>
-              {isDropdownOpen && (
-                <div className="absolute mt-6 w-96 border-t-4 border-t-purple-600 bg-gray-50 border border-gray-200 rounded-md shadow-lg z-20 opacity-100 transition-opacity duration-200 ease-in-out">
-                  <div className="flex flex-col p-2">
-                    <div className="grid grid-cols-2 gap-2">
-                      <Link
-                        to="/roadmap/fullstack"
-                        className={
-                          pathname === "/roadmap/fullstack"
-                            ? "px-4 py-2 text-sm font-medium rounded-md underline"
-                            : "text-sm block px-4 py-2 text-gray-700 hover:bg-gray-200 hover:text-primary rounded-md"
-                        }
-                        onClick={closeDropdown}
-                      >
-                        Full Stack
-                      </Link>
-                      <Link
-                        to="/roadmap/mernstack"
-                        className={
-                          pathname === "/roadmap/mernstack"
-                            ? "px-4 py-2 text-sm font-medium rounded-md underline"
-                            : "text-sm block px-4 py-2 text-gray-700 hover:bg-gray-200 hover:text-primary rounded-md"
-                        }
-                        onClick={closeDropdown}
-                      >
-                        MERN Stack
-                      </Link>
-                      <Link
-                        to="/roadmap/ai-ml"
-                        className={
-                          pathname === "/roadmap/ai-ml"
-                            ? "px-4 py-2 text-sm font-medium rounded-md underline"
-                            : "text-sm block px-4 py-2 text-gray-700 hover:bg-gray-200 hover:text-primary rounded-md"
-                        }
-                        onClick={closeDropdown}
-                      >
-                        AI & ML
-                      </Link>
-                      <Link
-                        to="/roadmap/frontend"
-                        className={
-                          pathname === "/roadmap/frontend"
-                            ? "px-4 py-2 text-sm font-medium rounded-md underline"
-                            : "text-sm block px-4 py-2 text-gray-700 hover:bg-gray-200 hover:text-primary rounded-md"
-                        }
-                        onClick={closeDropdown}
-                      >
-                        Front-end Dev
-                      </Link>
-                      <Link
-                        to="/roadmap/backend"
-                        className={
-                          pathname === "/roadmap/backend"
-                            ? "px-4 py-2 text-sm font-medium rounded-md underline"
-                            : "text-sm block px-4 py-2 text-gray-700 hover:bg-gray-200 hover:text-primary rounded-md"
-                        }
-                        onClick={closeDropdown}
-                      >
-                        Back-end Dev
-                      </Link>
-                      <Link
-                        to="/roadmap/cybersecurity"
-                        className={
-                          pathname === "/roadmap/cybersecurity"
-                            ? "px-4 py-2 text-sm font-medium rounded-md underline"
-                            : "text-sm block px-4 py-2 text-gray-700 hover:bg-gray-200 hover:text-primary rounded-md"
-                        }
-                        onClick={closeDropdown}
-                      >
-                        Cybersecurity
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-            <Link
-              to="/about"
-              className={
-                pathname === "/about"
-                  ? "font-semibold text-sm underline rounded-full"
-                  : "text-sm font-medium"
-              }
-            >
-              About
-            </Link>
-            <Link
-              to="/contact"
-              className={
-                pathname === "/contact"
-                  ? "font-semibold text-sm underline rounded-full"
-                  : "text-sm font-medium"
-              }
-            >
-              Contact
-            </Link>
-            <Link
-              to="/blog/create"
-              className={
-                pathname === "/blog/create"
-                  ? "font-semibold text-sm underline rounded-full"
-                  : "text-sm font-medium"
-              }
-            >
-              Add Blog
-            </Link>
+          <nav className="hidden md:flex items-center space-x-1 lg:space-x-2 xl:space-x-4">
+            {navItems.map((item) =>
+              item.children ? (
+                <DropdownMenu key={item.name}>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="h-8 px-2 lg:px-3">
+                      {item.name} <ChevronDown className="ml-1 h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48">
+                    {item.children.map((child) => (
+                      <DropdownMenuItem key={child.name} asChild>
+                        <Link
+                          to={child.path}
+                          className={cn(
+                            "block px-4 py-2 text-sm",
+                            pathname === child.path
+                              ? "bg-primary/10 text-primary"
+                              : "text-gray-700 hover:bg-gray-100"
+                          )}
+                        >
+                          {child.name}
+                        </Link>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <Link
+                  key={item.name}
+                  to={item.path}
+                  className={cn(
+                    "text-sm font-medium transition-colors hover:text-primary px-2 lg:px-3 py-2 rounded-md",
+                    pathname === item.path
+                      ? "bg-primary/10 text-primary"
+                      : "text-muted-foreground hover:bg-gray-100"
+                  )}
+                >
+                  {item.name}
+                </Link>
+              )
+            )}
           </nav>
 
-          {/* For Mobile Version */}
-          {isMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-              className="fixed p-4 top-12 left-0 right-0 w-96 bg-white shadow-md md:hidden"
-              style={{ width: "100vw", maxWidth: "100%", left: 0 }}
-            >
-              <nav className="flex flex-col p-4">
-                <Link to="/" className="py-2">
-                  Home
-                </Link>
-                <Link to="/blog/list" className="py-2">
-                  Blogs
-                </Link>
-                <button onClick={toggleDropdown} className="py-2 text-left">
-                  Roadmaps ▾
-                </button>
-                {isDropdownOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="pl-4 overflow-hidden"
-                  >
-                    <Link to="/roadmap/fullstack" className="block py-2">
-                      Full Stack
-                    </Link>
-                    <Link to="/roadmap/mernstack" className="block py-2">
-                      MERN Stack
-                    </Link>
-                    <Link to="/roadmap/ai-ml" className="block py-2">
-                      AI & ML
-                    </Link>
-                    <Link to="/roadmap/frontend" className="block py-2">
-                      Front-end Dev
-                    </Link>
-                    <Link to="/roadmap/backend" className="block py-2">
-                      Back-end Dev
-                    </Link>
-                    <Link to="/roadmap/cybersecurity" className="block py-2">
-                      Cybersecurity
-                    </Link>
-                  </motion.div>
-                )}
-                <Link to="/about" className="py-2">
-                  About
-                </Link>
-                <Link to="/contact" className="py-2">
-                  Contact
-                </Link>
-                <Link to="/blog/create" className="py-2">
-                  Add Blog
-                </Link>
-              </nav>
-            </motion.div>
-          )}
-
-          <div className="relative">
-            {!isAuthenticated ? (
-              <Link to="/login">
-                <button className="rounded-md py-1.5 px-4 text-sm bg-gray-800 text-gray-50 font-light">
-                  Login
-                </button>
-              </Link>
+          <div className="flex items-center space-x-4">
+            {isAuthenticated ? (
+              <ProfileDropdown />
             ) : (
-              <div className="relative">
-                <div
-                  onClick={profileDropdown}
-                  className="cursor-pointer flex items-center space-x-2"
-                >
-                  <img
-                    src="/img/icons.png"
-                    alt="Profile"
-                    className="h-8 w-8 rounded-full"
-                  />
-                </div>
-                {showDropdown && (
-                  <ProfileDropdown toggleDropdown={profileDropdown} />
-                )}
-              </div>
+              <Link to="/login">
+                <Button variant="default" size="sm">
+                  Login
+                </Button>
+              </Link>
             )}
+            <Button
+              variant="ghost"
+              size="sm"
+              className="md:hidden"
+              onClick={toggleMenu}
+            >
+              {isMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </Button>
           </div>
         </div>
-      </header>
-    </div>
+      </div>
+
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="md:hidden absolute top-16 left-0 right-0 bg-white shadow-lg"
+          >
+            <div className="px-2 pt-2 pb-3 space-y-1">
+              {navItems.map((item) =>
+                item.children ? (
+                  <div key={item.name} className="space-y-1">
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start text-left"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.name}
+                    </Button>
+                    <div className="pl-4 space-y-1">
+                      {item.children.map((child) => (
+                        <Link
+                          key={child.name}
+                          to={child.path}
+                          className={cn(
+                            "block px-3 py-2 rounded-md text-base font-medium",
+                            pathname === child.path
+                              ? "bg-primary/10 text-primary"
+                              : "text-gray-700 hover:bg-gray-100"
+                          )}
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          {child.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <Link
+                    key={item.name}
+                    to={item.path}
+                    className={cn(
+                      "block px-3 py-2 rounded-md text-base font-medium",
+                      pathname === item.path
+                        ? "bg-primary/10 text-primary"
+                        : "text-gray-700 hover:bg-gray-100"
+                    )}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                )
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
   );
 };
 
