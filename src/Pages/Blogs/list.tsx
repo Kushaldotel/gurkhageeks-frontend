@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Button } from "@/Components/ui/button";
-// import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
-import { Loader2, User } from "lucide-react";
+import { User, UserCheck, icons , UserX, UserRound } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -26,6 +25,7 @@ import {
 import { useAppDispatch, useAppSelector } from "@/Utils/hooks/appHooks";
 import { blogSelector } from "./redux/selector";
 import { CategoryProps } from "./redux/types";
+import BlogSkeleton from "@/Components/Skeleton/blog";
 
 export default function AllBlogs() {
   const dispatch = useAppDispatch();
@@ -46,11 +46,7 @@ export default function AllBlogs() {
     setSelectedCategory(value);
   };
   if (loadingBlogs) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Loader2 className="w-8 h-8 animate-spin" />
-      </div>
-    );
+    return <BlogSkeleton />;
   }
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl min-h-screen">
@@ -148,7 +144,7 @@ export default function AllBlogs() {
                             />
                             <AvatarFallback>AD</AvatarFallback>{" "}
                           </Avatar> */}
-                          <User className="w-6 h-6 mr-1" />
+                          <UserRound className="w-6 h-6 mr-1" />
                         </div>
                         <span className="text-sm capitalize font-medium">
                           {blog.author.first_name} {blog.author.last_name}
@@ -196,7 +192,7 @@ export default function AllBlogs() {
                         <User className="w-6 h-6 mr-1" />
                       </div>
                       <span className="text-sm font-medium">
-                      {blog.author.first_name} {blog.author.last_name}
+                        {blog.author.first_name} {blog.author.last_name}
                       </span>
                     </div>
                     <Button variant="outline" asChild>

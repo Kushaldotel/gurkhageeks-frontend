@@ -8,10 +8,12 @@ import {
   getCategoriesSuccess,
   getBlogDetailRequest,
   getBlogDetailSuccess,
-  getBlogDetailFailure
+  getBlogDetailFailure,
+  getLatestBlogSuccess,
+  getLatestBlogFailure
 } from "./blogSlice";
 
-import { Categories, CreateBlog, getBlogs,getBlogDetail } from "./api";
+import { Categories, CreateBlog, getBlogs,getBlogDetail, LatestBlog } from "./api";
 import { AxiosError } from "axios";
 import { showToast } from "@/Global/globalAppSlice";
 import { BlogFormProps } from "./types";
@@ -28,6 +30,8 @@ function* CategoriesSaga(): Generator {
   }
 }
 
+//To get all blog detail
+
 function* BlogDetailSaga(action:{payload:string}):Generator{
   try{
     const response: any = yield call(getBlogDetail, action.payload)
@@ -37,6 +41,15 @@ function* BlogDetailSaga(action:{payload:string}):Generator{
   }
 }
 
+ // To get all lastest blog
+function* LatestBlogSaga():Generator{
+  try{
+    const response: any = yield call(LatestBlog);
+    yield put(getLatestBlogSuccess(response.data.data))
+  }catch(error){
+    yield put(getLatestBlogFailure(error));
+  }
+}
 
 //get all blogs
 function* BlogsSaga(action:{
@@ -119,7 +132,7 @@ function* CreateBlogSaga(action: {
   }
 }
 
-export { CategoriesSaga, CreateBlogSaga, BlogsSaga, BlogDetailSaga }; 
+export { CategoriesSaga, CreateBlogSaga, BlogsSaga, BlogDetailSaga, LatestBlogSaga  }; 
 
 
 

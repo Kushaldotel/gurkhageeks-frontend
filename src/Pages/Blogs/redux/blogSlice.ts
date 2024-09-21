@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { BlogStateProps } from "./types";
 
 const initialState: BlogStateProps = {
+  error:null,
   // blog categories
   categories: [],
   loadingCategories: false,
@@ -13,7 +14,9 @@ const initialState: BlogStateProps = {
   // blogdetail 
   loadingBlogDetail: false,
   blogDetail: null,
-  // blo 
+  // latest blog
+  loadingLatestBlog: false,
+  latestBlog:[],
 };
 
 const blogSlice = createSlice({
@@ -49,12 +52,26 @@ const blogSlice = createSlice({
     getBlogDetailRequest(state,action){
       state.loadingBlogDetail = true;
     },
-    getBlogDetailSuccess(state, {payload}){
+    getBlogDetailSuccess(state, action){
       state.loadingBlogDetail = false;
-      state.blogDetail = payload;
+      state.blogDetail = action.payload;
     },
     getBlogDetailFailure(state, action){
       state.loadingBlogDetail = false;
+    },
+
+    // latest blog 
+    getLatestBlogRequest(state){
+      state.loadingLatestBlog = true;
+    },
+    getLatestBlogSuccess(state, action){
+      state.loadingLatestBlog = false;
+      state.latestBlog = action.payload;
+      // state.error = null;
+    },
+    getLatestBlogFailure(state, action){
+      state.loadingLatestBlog = false;
+      // state.error = action.payload;
     },
 
     // post blog
@@ -67,6 +84,7 @@ const blogSlice = createSlice({
     createBlogPostFailure: (state) => {
       state.loading = false;
     },
+
 
     // update blog
 
@@ -89,6 +107,10 @@ export const {
   getBlogDetailRequest,
   getBlogDetailSuccess,
 
+  //get latest blog
+  getLatestBlogFailure,
+  getLatestBlogRequest,
+  getLatestBlogSuccess,
 
   // get blogs
   getBlogsRequest,

@@ -24,6 +24,11 @@ export const CreateBlog = (body: BlogFormProps) =>{
 }
 
 
+// get latest blog 
+export const LatestBlog = () =>{
+  return axiosInstance.get('/blog/recentposts/')
+}
+
 // edit blog
 
 // delete blog

@@ -32,6 +32,7 @@ export interface CategoryProps {
 }
 
 export interface BlogStateProps {
+  error: string | null;
   // blog categories
   categories: CategoryProps[];
   loadingCategories: boolean;
@@ -43,4 +44,7 @@ export interface BlogStateProps {
   // get blog details
   loadingBlogDetail: boolean;
   blogDetail: BlogProps | null;
+  //get latest blog
+  loadingLatestBlog:boolean;
+  latestBlog:BlogProps[];
 }

@@ -5,11 +5,13 @@ import { useParams } from "react-router-dom";
 import DOMPurify from "dompurify";
 import parse from "html-react-parser";
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
-import {Calendar, User, Loader2 } from "lucide-react";
+import { Calendar, User, Loader2 } from "lucide-react";
 import LatestBlog from "./BlogDetail/LatestBlog";
 import { useAppDispatch, useAppSelector } from "@/Utils/hooks/appHooks";
 import { blogSelector } from "./redux/selector";
 import { getBlogDetailRequest } from "./redux/blogSlice";
+import BlogDetailSkeleton from "@/Components/Skeleton/blogDetail";
+import BlogComment from "../Blogs/BlogComment/index";
 
 export default function BlogDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -21,11 +23,7 @@ export default function BlogDetail() {
   }, [dispatch, slug]);
 
   if (loadingBlogDetail) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Loader2 className="w-8 h-8 animate-spin" />
-      </div>
-    );
+    return <BlogDetailSkeleton />;
   }
 
   return (
@@ -44,7 +42,9 @@ export default function BlogDetail() {
               <div className="flex items-center">
                 <Calendar className="mr-2 h-4 w-4" />
                 <span>
-                  {new Date(blogDetail ? blogDetail?.created_at : '').toLocaleDateString()}
+                  {new Date(
+                    blogDetail ? blogDetail?.created_at : ""
+                  ).toLocaleDateString()}
                 </span>
               </div>
               {/* <div className="flex items-center flex-wrap gap-2">
@@ -66,7 +66,7 @@ export default function BlogDetail() {
               />
             </div>
             <article className="prose prose-lg max-w-none dark:prose-invert">
-              {parse(DOMPurify.sanitize(blogDetail ? blogDetail?.content : ''))}
+              {parse(DOMPurify.sanitize(blogDetail ? blogDetail?.content : ""))}
             </article>
           </CardContent>
         </Card>
@@ -75,14 +75,15 @@ export default function BlogDetail() {
         </div>
       </div>
       <section className="mt-8">
-        <Card>
+        {/* <Card>
           <CardHeader>
             <CardTitle>Comments</CardTitle>
           </CardHeader>
           <CardContent>
             <p>Comments will be displayed here.</p>
           </CardContent>
-        </Card>
+        </Card> */}
+        <BlogComment/>
       </section>
     </div>
   );
