@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from "@/Utils/hooks/appHooks";
 import { blogSelector } from "./redux/selector";
 import { getBlogDetailRequest } from "./redux/blogSlice";
 import BlogDetailSkeleton from "@/Components/Skeleton/blogDetail";
-import BlogComment from "../Blogs/BlogComment/index";
+import BlogComment from "../Comment/index";
 
 export default function BlogDetail() {
   const { slug } = useParams<{ slug: string }>();

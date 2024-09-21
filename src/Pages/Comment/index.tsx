@@ -1,5 +1,3 @@
-"use client"
-
 import { useState } from "react"
 import { MessageCircle, ThumbsUp, ThumbsDown, Share2, Send, Image as ImageIcon, AtSign, Smile } from "lucide-react"
 import { Button } from "@/Components/ui/button"
@@ -60,7 +58,7 @@ export default function LightThemeCommentUI() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto p-4 bg-white text-gray-800 rounded-lg shadow-lg">
+    <div className="max-w-7xl border mx-auto p-4 bg-white text-gray-800 rounded-lg shadow-lg">
       <div className="flex flex-col md:flex-row gap-4">
         <div className="w-full md:w-2/3">
           <div className="flex items-center space-x-4 mb-6">
