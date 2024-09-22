@@ -4,6 +4,7 @@ import {
   createCommentFailure,
   createCommentSuccess,
   getCommentFailure,
+  getCommentRequest,
   getCommentSuccess,
 } from "./commentSlice";
 import { showToast } from "@/Global/globalAppSlice";
@@ -41,6 +42,7 @@ function* createCommentSaga(action: {
     const response = yield call(createComments, values);
     yield put(createCommentSuccess());
     resetForm();
+    yield put(getCommentRequest({ id: values.id}))
     yield put(
       showToast({
         type: "success",

@@ -20,6 +20,7 @@ import { useAppDispatch, useAppSelector } from "@/Utils/hooks/appHooks";
 import { createCommentRequest } from "./redux/commentSlice";
 import { commentSelector } from "./redux/selector";
 import { CommentProps } from "./redux/types";
+import { profileSelector } from "../Profile/redux/selector";
 
 export default function Comment({
   id,
@@ -31,7 +32,6 @@ export default function Comment({
   const [isExpanded, setIsExpanded] = useState(false);
   const dispatch = useAppDispatch();
   const { loading } = useAppSelector(commentSelector);
-  console.log(comments, "comments");
   const initialState = {
     content: "",
   };
