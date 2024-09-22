@@ -15,6 +15,7 @@ export interface CommentState{
     newComment:string;
     loading:boolean;
     error:string | null;
+    blogPostId: number | null;
 }
 
 

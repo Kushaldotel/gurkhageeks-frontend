@@ -1,11 +1,13 @@
 import { axiosInstance } from "@/Utils/axiosInstance"
 
+
+// Fetch comments 
 export const fetchCommentApi = (id:number) =>{
     return axiosInstance.get(`/blog/comments/${id}/`)
-  }
+}
 
-//Fetch comments 
-export const addCommentApi = () =>{
-    return axiosInstance.post('/blog/', body)
-  }
+// Add comments
+export const addCommentApi = (id:number) =>{
+    return axiosInstance.post(`/blog/comments/${id}`)
+}
   

@@ -1,12 +1,23 @@
 import { call, put } from "redux-saga/effects";
-import { fetchCommentFailure, fetchCommentSuccess } from "./commentSlice";
-import { commentApi } from "./api";
+import { addCommentFailure, addCommentSuccess, getCommentFailure, getCommentSuccess} from "./commentSlice";
+import { addCommentApi, fetchCommentApi } from "./api";
 
-function* fetchCommentSaga(){
+function* fetchCommentsSaga(){
     try{
         const comments:Comment[] = yield call(fetchCommentApi)
-        yield put(fetchCommentSuccess(comments))
+        yield put(getCommentSuccess(comments))
     }catch(error){
-        yield put(fetchCommentFailure(error.message))
+        yield put(getCommentFailure(error.message))
     }
 }
+
+
+function* addCommentSaga(){
+    try{
+        const response:{data:Comment} = yield call (addCommentApi, action.payload.id, action.payload.comment);
+        yield put(addCommentSuccess(response.data))
+    }catch(error){
+        yield put (addCommentFailure(error.message))
+    }
+}
+
