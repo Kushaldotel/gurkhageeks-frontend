@@ -1,21 +1,16 @@
-export type Comment = {
-    id:number;
-    author:string;
-    avatar:string;
-    content:string;
-    likes:number;
-    dislike:number;
-    timestamp:string;
+export interface CommentProps {
+  id: number;
+  content: string;
+  created_at: string;
+  parent: any;
+  replies: CommentProps[];
 }
 
-
-export interface CommentState{
-    comments:Comment[];
-    isExpanded:boolean;
-    newComment:string;
-    loading:boolean;
-    error:string | null;
-    blogPostId: number | null;
+export interface CommentState {
+  // get comments
+  loadingComments: boolean;
+  comments: Comment[];
+  isExpanded: boolean;
+  loading: boolean;
+  blogPostId: number | null;
 }
-
-

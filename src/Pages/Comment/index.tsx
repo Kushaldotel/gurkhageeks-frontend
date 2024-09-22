@@ -13,57 +13,58 @@ import { Button } from "@/Components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
 import { Textarea } from "@/Components/ui/textarea";
 import { ScrollArea } from "@/Components/ui/scroll-area";
+import * as Yup from "yup";
+import { Form, Formik } from "formik";
+import AppButton from "@/Components/Button";
+import { useAppDispatch, useAppSelector } from "@/Utils/hooks/appHooks";
+import { createCommentRequest } from "./redux/commentSlice";
+import { commentSelector } from "./redux/selector";
+import { CommentProps } from "./redux/types";
 
-type Comment = {
+export default function Comment({
+  id,
+  comments,
+}: {
   id: number;
-  author: string;
-  avatar: string;
-  content: string;
-  likes: number;
-  dislikes: number;
-  timestamp: string;
-};
-
-export default function Comment() {
+  comments: any;
+}) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [newComment, setNewComment] = useState("");
-  const [comments, setComments] = useState<Comment[]>([
-    {
-      id: 1,
-      author: "Alice Johnson",
-      avatar: "/placeholder.svg?height=40&width=40",
-      content: "This is a great post! I love the insights you've shared.",
-      likes: 15,
-      dislikes: 2,
-      timestamp: "2 hours ago",
-    },
-    {
-      id: 2,
-      author: "Bob Smith",
-      avatar: "/placeholder.svg?height=40&width=40",
-      content: "I have a different perspective on this. Here's what I think...",
-      likes: 8,
-      dislikes: 1,
-      timestamp: "1 hour ago",
-    },
-  ]);
+  const dispatch = useAppDispatch();
+  const { loading } = useAppSelector(commentSelector);
+  console.log(comments, "comments");
+  const initialState = {
+    content: "",
+  };
+
+  const validationSchema = Yup.object().shape({
+    content: Yup.string().required("Please enter a comment"),
+  });
+  // const [comments, setComments] = useState<Comment[]>([
+  //   {
+  //     id: 1,
+  //     author: "Alice Johnson",
+  //     avatar: "/placeholder.svg?height=40&width=40",
+  //     content: "This is a great post! I love the insights you've shared.",
+  //     likes: 15,
+  //     dislikes: 2,
+  //     timestamp: "2 hours ago",
+  //   },
+  //   {
+  //     id: 2,
+  //     author: "Bob Smith",
+  //     avatar: "/placeholder.svg?height=40&width=40",
+  //     content: "I have a different perspective on this. Here's what I think...",
+  //     likes: 8,
+  //     dislikes: 1,
+  //     timestamp: "1 hour ago",
+  //   },
+  // ]);
 
   const toggleExpand = () => setIsExpanded(!isExpanded);
 
-  const handleSubmit = () => {
-    if (newComment.trim()) {
-      const newCommentObj: Comment = {
-        id: comments.length + 1,
-        author: "Current User",
-        avatar: "/placeholder.svg?height=40&width=40",
-        content: newComment,
-        likes: 0,
-        dislikes: 0,
-        timestamp: "Just now",
-      };
-      setComments([newCommentObj, ...comments]);
-      setNewComment("");
-    }
+  const handleSubmit = (values: { content: string }, { resetForm }: any) => {
+    const newValue = { ...values, id };
+    dispatch(createCommentRequest({ values: newValue, resetForm }));
   };
 
   return (
@@ -96,74 +97,88 @@ export default function Comment() {
           </div>
 
           {isExpanded && (
-            <div className="bg-gray-50 rounded-lg p-4 mb-6 transition-all duration-300 ease-in-out">
-              <div className="flex items-start space-x-4">
-                <Avatar className="w-10 h-10">
-                  <AvatarImage
-                    src="/placeholder.svg?height=40&width=40"
-                    alt="User"
-                  />
-                  <AvatarFallback>U</AvatarFallback>
-                </Avatar>
-                <Textarea
-                  placeholder="Share your thoughts..."
-                  value={newComment}
-                  onChange={(e) => setNewComment(e.target.value)}
-                  className="flex-grow bg-white text-gray-800 border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md resize-none"
-                  rows={3}
-                />
-              </div>
-              <div className="flex justify-between mt-4">
-                <div className="flex space-x-2">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-gray-600 hover:text-gray-800 hover:bg-gray-200"
-                  >
-                    <ImageIcon className="h-5 w-5" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-gray-600 hover:text-gray-800 hover:bg-gray-200"
-                  >
-                    <AtSign className="h-5 w-5" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-gray-600 hover:text-gray-800 hover:bg-gray-200"
-                  >
-                    <Smile className="h-5 w-5" />
-                  </Button>
-                </div>
-                <Button
-                  className="bg-blue-600 hover:bg-blue-700 text-white"
-                  onClick={handleSubmit}
-                  disabled={!newComment.trim()}
-                >
-                  <Send className="h-4 w-4 mr-2" />
-                  <span>Post</span>
-                </Button>
-              </div>
-            </div>
+            <Formik
+              initialValues={initialState}
+              validationSchema={validationSchema}
+              onSubmit={handleSubmit}
+              enableReinitialize={true}
+            >
+              {({ values, setFieldValue }) => {
+                return (
+                  <Form>
+                    <div className="bg-gray-50 rounded-lg p-4 mb-6 transition-all duration-300 ease-in-out">
+                      <div className="flex items-start space-x-4">
+                        <Avatar className="w-10 h-10">
+                          <AvatarImage
+                            src="/placeholder.svg?height=40&width=40"
+                            alt="User"
+                          />
+                          <AvatarFallback>U</AvatarFallback>
+                        </Avatar>
+                        <Textarea
+                          placeholder="Share your thoughts..."
+                          value={values.content}
+                          onChange={(e) =>
+                            setFieldValue("content", e.target.value)
+                          }
+                          className="flex-grow bg-white text-gray-800 border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md resize-none"
+                          rows={3}
+                        />
+                      </div>
+                      <div className="flex justify-between mt-4">
+                        <div className="flex space-x-2">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="text-gray-600 hover:text-gray-800 hover:bg-gray-200"
+                          >
+                            <ImageIcon className="h-5 w-5" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="text-gray-600 hover:text-gray-800 hover:bg-gray-200"
+                          >
+                            <AtSign className="h-5 w-5" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="text-gray-600 hover:text-gray-800 hover:bg-gray-200"
+                          >
+                            <Smile className="h-5 w-5" />
+                          </Button>
+                        </div>
+                        <AppButton
+                          type="submit"
+                          label="Post"
+                          loading={loading}
+                          disabled={!values.content.trim()}
+                          iconStart={<Send className="h-4 w-4 mr-2" />}
+                        />
+                      </div>
+                    </div>
+                  </Form>
+                );
+              }}
+            </Formik>
           )}
 
           <ScrollArea className="h-[calc(100vh-300px)] pr-4">
-            {comments.map((comment) => (
+            {comments?.map((comment: CommentProps) => (
               <div key={comment.id} className="bg-gray-50 rounded-lg p-4 mb-4">
                 <div className="flex items-start space-x-4">
                   <Avatar className="w-10 h-10">
-                    <AvatarImage src={comment.avatar} alt={comment.author} />
-                    <AvatarFallback>{comment.author[0]}</AvatarFallback>
+                    {/* <AvatarImage src={comment.avatar} alt={comment.author} /> */}
+                    {/* <AvatarFallback>{comment.author[0]}</AvatarFallback> */}
                   </Avatar>
                   <div className="flex-grow">
                     <div className="flex items-center justify-between">
                       <h3 className="font-semibold text-gray-800">
-                        {comment.author}
+                        {/* {comment.author} */}
                       </h3>
                       <span className="text-sm text-gray-500">
-                        {comment.timestamp}
+                        {comment.created_at}
                       </span>
                     </div>
                     <p className="mt-1 text-gray-600">{comment.content}</p>
@@ -174,7 +189,7 @@ export default function Comment() {
                         className="text-gray-600 hover:text-gray-800 hover:bg-gray-200"
                       >
                         <ThumbsUp className="h-4 w-4 mr-1" />
-                        <span>{comment.likes}</span>
+                        {/* <span>{comment.likes}</span> */}
                       </Button>
                       <Button
                         variant="ghost"
@@ -182,7 +197,7 @@ export default function Comment() {
                         className="text-gray-600 hover:text-gray-800 hover:bg-gray-200"
                       >
                         <ThumbsDown className="h-4 w-4 mr-1" />
-                        <span>{comment.dislikes}</span>
+                        {/* <span>{comment.dislikes}</span> */}
                       </Button>
                       <Button
                         variant="ghost"
@@ -204,19 +219,19 @@ export default function Comment() {
             Trending Comments
           </h2>
           <ScrollArea className="h-[calc(100vh-200px)]">
-            {comments.slice(0, 5).map((comment) => (
+            {comments.slice(0, 5).map((comment: CommentProps) => (
               <div
                 key={comment.id}
                 className="mb-4 pb-4 border-b border-gray-200 last:border-b-0"
               >
                 <div className="flex items-start space-x-3">
                   <Avatar className="w-8 h-8">
-                    <AvatarImage src={comment.avatar} alt={comment.author} />
-                    <AvatarFallback>{comment.author[0]}</AvatarFallback>
+                    {/* <AvatarImage src={comment.avatar} alt={comment.author} /> */}
+                    {/* <AvatarFallback>{comment.author[0]}</AvatarFallback> */}
                   </Avatar>
                   <div>
                     <h4 className="font-semibold text-gray-800">
-                      {comment.author}
+                      {/* {comment.author} */}
                     </h4>
                     <p className="text-sm text-gray-600 mt-1">
                       {comment.content.slice(0, 50)}...

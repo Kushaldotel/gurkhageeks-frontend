@@ -17,7 +17,8 @@ interface ButtonProps {
   iconStart?: React.ReactNode;
   iconEnd?: React.ReactNode;
   className?: string;
-  onClick?: ()=>void;
+  disabled?: boolean;
+  onClick?: () => void;
 }
 const AppButton: React.FC<ButtonProps> = ({
   type = "button",
@@ -26,6 +27,7 @@ const AppButton: React.FC<ButtonProps> = ({
   loading = false,
   label = "",
   className = "",
+  disabled = false,
   onClick,
 }) => {
   return (
@@ -34,7 +36,7 @@ const AppButton: React.FC<ButtonProps> = ({
       variant={variant}
       size={size}
       className={className}
-      disabled={loading}
+      disabled={loading ? loading : disabled}
       type={type}
     >
       {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}

@@ -1,71 +1,62 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {CommentState} from "./types"
+import { createSlice } from "@reduxjs/toolkit";
+import { CommentState } from "./types";
 
-const initialState:CommentState={
-    blogPostId: null,
-    comments: [],
-    isExpanded: false,
-    newComment: '',
-    loading: false,
-    error: null,
-}
+const initialState: CommentState = {
+  blogPostId: null,
+  // get comment
+  loadingComments: false,
+  comments: [],
+  isExpanded: false,
+  loading: false, // this tracks the create comment loading progress
+};
 
 const commentSlice = createSlice({
-    name:'comments',
-    initialState,
-    reducers:{
-        setBlogPostId:(state, action:PayloadAction<number>)=>{
-            state.blogPostId = action.payload;
-        },
-        toggleExpand:(state)=>{
-            state.isExpanded = !state.isExpanded;
-        },
-        setNewComment:(state, action)=>{
-            state.newComment = action.payload;
-        },
-        getCommentStart:(state, action: PayloadAction<number>)=>{
-            state.loading = true;
-            state.error = null;
-        },
-        getCommentSuccess:(state, action:PayloadAction<Comment[]>)=>{
-            state.comments = action.payload;
-            state.loading = false;
-        },
-        getCommentFailure:(state, action:PayloadAction<string>)=>{
-            state.error = action.payload;
-            state.loading = false;
-        },
-        addCommentStart:(state, aciton:PayloadAction<any>)=>{
-            state.loading = true;
-            state.error = null;
-        },
-        addCommentSuccess:(state, action:PayloadAction<Comment>)=>{
-            state.comments.unshift(action.payload);
-            state.newComment = '';
-            state.loading = false;
-        }, 
-        addCommentFailure:(state, action:PayloadAction<string>)=>{
-            state.loading = false;
-            state.error = action.payload;
-        },
-    }
-})
+  name: "comments",
+  initialState,
+  reducers: {
+    setBlogPostId: (state, { payload }) => {
+      state.blogPostId = payload;
+    },
+    toggleExpand: (state) => {
+      state.isExpanded = !state.isExpanded;
+    },
+    // get comments
+    getCommentRequest: (state, action) => {
+      state.loadingComments = true;
+    },
+    getCommentSuccess: (state, { payload }) => {
+      state.loadingComments = false;
+      state.comments = payload
+    },
+    getCommentFailure: (state) => {
+      state.loadingComments = false;
+    },
 
+    // create comments
+    createCommentRequest: (state, action) => {
+      state.loading = true;
+    },
+    createCommentSuccess: (state) => {
+      state.loading = false;
+    },
+    createCommentFailure: (state) => {
+      state.loading = false;
+    },
+  },
+});
 
 export const {
-    // set the blog post id 
-    setBlogPostId,
-    
-    toggleExpand, 
-    setNewComment,
-    //Add comments
-    addCommentStart,
-    addCommentSuccess,
-    addCommentFailure,
-    //Get comments 
-    getCommentStart,
-    getCommentSuccess,
-    getCommentFailure,
- } = commentSlice.actions;
+  // set the blog post id
+  setBlogPostId,
+  toggleExpand,
+  //Add comments
+  createCommentRequest,
+  createCommentSuccess,
+  createCommentFailure,
+  //Get comments
+  getCommentRequest,
+  getCommentSuccess,
+  getCommentFailure,
+} = commentSlice.actions;
 
- export default commentSlice.reducer;
+export default commentSlice.reducer;

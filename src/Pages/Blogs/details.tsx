@@ -12,20 +12,27 @@ import { blogSelector } from "./redux/selector";
 import { getBlogDetailRequest } from "./redux/blogSlice";
 import BlogDetailSkeleton from "@/Components/Skeleton/blogDetail";
 import BlogComment from "../Comment/index";
+import { getCommentRequest } from "../Comment/redux/commentSlice";
+import { commentSelector } from "../Comment/redux/selector";
 
 export default function BlogDetail() {
   const { slug } = useParams<{ slug: string }>();
   const dispatch = useAppDispatch();
   const { blogDetail, loadingBlogDetail } = useAppSelector(blogSelector);
-
+  const { comments } = useAppSelector(commentSelector)
+  
   useEffect(() => {
     dispatch(getBlogDetailRequest(slug));
   }, [dispatch, slug]);
 
+  useEffect(() => {
+    if(!blogDetail?.id) return
+    dispatch(getCommentRequest({ id: blogDetail?.id }));
+  }, [blogDetail?.id]);
+  
   if (loadingBlogDetail) {
     return <BlogDetailSkeleton />;
   }
-
   return (
     <div className="container mx-auto px-4 lg:px-0 py-8">
       <div className="flex flex-col lg:flex-row gap-8">
@@ -83,7 +90,7 @@ export default function BlogDetail() {
             <p>Comments will be displayed here.</p>
           </CardContent>
         </Card> */}
-        <BlogComment/>
+        {blogDetail && <BlogComment id={blogDetail.id} comments={comments} />}
       </section>
     </div>
   );
