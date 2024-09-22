@@ -21,3 +21,5 @@ function* addCommentSaga(){
     }
 }
 
+
+export {fetchCommentsSaga, addCommentSaga};
