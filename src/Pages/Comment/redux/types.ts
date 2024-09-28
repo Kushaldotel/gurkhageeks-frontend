@@ -7,10 +7,19 @@ export interface CommentProps {
 }
 
 export interface CommentState {
+  // likes
+  likes: LikesProps | null;
+  likeLoading: boolean;
   // get comments
   loadingComments: boolean;
   comments: Comment[];
   isExpanded: boolean;
   loading: boolean;
   blogPostId: number | null;
+}
+
+
+export interface LikesProps{
+  total_like: number;
+  total_dislike: number;
 }

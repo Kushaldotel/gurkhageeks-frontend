@@ -1,15 +1,18 @@
 import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import PageNotFound from "../Pages/PageNotFound/index.tsx";
+import Profile from "../Pages/Profile/index.tsx";
+
 
 const HomePage = lazy(() => import("../Pages/Homepage/index.tsx"));
-const BlogList = lazy(() => import("../Pages/Blogs/list.tsx"));
-const BlogDetail = lazy(() => import("../Pages/Blogs/details.tsx"));
-const LatestBlog = lazy(() => import("../Pages/Blogs/latest.tsx"));
+const BlogList = lazy(() => import("../Pages/Blogs/BlogList/index.tsx"));
+const BlogDetail = lazy(() => import("../Pages/Blogs/BlogDetail/index.tsx"));
+const LatestBlog = lazy(
+  () => import("../Pages/Blogs/LatestBlogInsight/index.tsx")
+);
 const AboutPage = lazy(() => import("../Pages/About"));
 
 const ContactPage = lazy(() => import("../Pages/Contact/index.tsx"));
-
 // roadmaps
 const AIMLPage = lazy(() => import("../Pages/Roadmaps/AIML/index.tsx"));
 const BackendPage = lazy(() => import("../Pages/Roadmaps/Backend"));
@@ -50,8 +53,9 @@ const PublicLayout = () => {
         {/* Contact us */}
         <Route path="/contact" element={<ContactPage />} />
 
-
         {/* Projects */}
+
+        <Route path="/profile" element={<Profile />} />
 
         {/* 404 Page Not Found */}
         <Route path="*" element={<PageNotFound />} />

@@ -1,14 +1,17 @@
 import { call, put } from "redux-saga/effects";
-import { createComments, getComments } from "./api";
+import { addLikes, createComments, getComments } from "./api";
 import {
   createCommentFailure,
   createCommentSuccess,
   getCommentFailure,
   getCommentRequest,
   getCommentSuccess,
+  postLikeFailure,
+  postLikeSuccess,
 } from "./commentSlice";
 import { showToast } from "@/Global/globalAppSlice";
 import { AxiosError } from "axios";
+import { PayloadAction } from "@reduxjs/toolkit";
 
 function* getCommentSaga(action: {
   type: string;
@@ -72,4 +75,29 @@ function* createCommentSaga(action: {
   }
 }
 
-export { getCommentSaga, createCommentSaga };
+
+// Sagas for like
+function* postLikeSaga(action:{
+  type:string,
+  payload:{
+    id:number,
+    setIsLiked:any
+  }
+}){
+  try{
+    console.log(action.payload)
+    const {id,setIsLiked} = action.payload;
+    // console.log("ID is",  id)
+    //@ts-ignore
+    const response = yield call(addLikes, id )
+    setIsLiked(true)
+    yield put(showToast({type:'success', title:'success', message:response.message}))
+    yield put(postLikeSuccess(response.data.data))
+
+  }catch(error){
+    yield put(showToast({type:'failure', title:'failure', message:"Error posting Like!"}))
+    yield put(postLikeFailure())
+  }
+}
+
+export { getCommentSaga, createCommentSaga, postLikeSaga };

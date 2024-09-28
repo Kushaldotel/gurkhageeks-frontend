@@ -12,8 +12,10 @@ import EmailVerification from "./Pages/Auth/Verification";
 import getCookie from "./Utils/cookies/getCookie";
 import { persistor, store } from "./store/store";
 import VerificationPage from "./Pages/Auth/Verification/verification";
-import CreateBlogs from "./Pages/Blogs/create";
-import Profile from "./Pages/Profile/index"
+import CreateBlogs from "./Pages/Blogs/AddBlog/index";
+import CreateProject from "./Pages/Projects/AddProject /index"
+import Profile from "./Pages/Profile";
+// import Profile from "./Pages/Profile/index"
 function App() {
   const location = useLocation();
   const restrictLayout =
@@ -21,7 +23,8 @@ function App() {
     location.pathname === "/login" ||
     location.pathname.includes("/auth") ||
     location.pathname === "/blog/create" ||
-    location.pathname == "/profile";
+    location.pathname === "/project/create"
+    // location.pathname == "/profile";
   const isAuthenticated = getCookie("accessToken");
   return (
     <Provider store={store}>
@@ -41,7 +44,11 @@ function App() {
           <Route path="/blog/create" element={<CreateBlogs />} />
 
           {/* Profile */}
-          <Route path="/profile" element={<Profile />} />
+          {/* <Route path="/profile" element={<Profile />} /> */}
+
+          {/* Projects  */}
+          <Route path ="/project/create" element ={<CreateProject/>}/>
+          
         </Routes>
 
         {!restrictLayout && (

@@ -79,6 +79,16 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
             <span>Profile</span>
           </Link>
         </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link
+            to="/project/create"
+            className="flex items-center"
+            onClick={toggleDropdown}
+          >
+            <User className="mr-2 h-4 w-4" />
+            <span>Add Project</span>
+          </Link>
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onSelect={(event) => {

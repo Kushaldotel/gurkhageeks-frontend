@@ -10,3 +10,9 @@ export const createComments = (body: { id: number; content: string }) => {
   const { id } = body;
   return axiosInstance.post(`/blog/posts/${id}/comments/`, body);
 };
+
+// add like 
+export const addLikes = (id:number,)=>{
+  return axiosInstance.post(`/blog/postlike/${id}/`, {id})
+}
+

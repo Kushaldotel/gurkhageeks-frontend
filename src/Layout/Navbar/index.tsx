@@ -24,8 +24,8 @@ const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const isAuthenticated = getCookie("accessToken");
-  const { list } = useAppSelector(roadmapSelector)
-  
+  const { list } = useAppSelector(roadmapSelector);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -41,14 +41,7 @@ const Navbar: React.FC = () => {
     { name: "Blogs", path: "/blog/list" },
     {
       name: "Roadmaps",
-      children: [
-        { name: "Full Stack", path: "/roadmap/fullstack" },
-        { name: "MERN Stack", path: "/roadmap/mernstack" },
-        { name: "AI & ML", path: "/roadmap/ai-ml" },
-        { name: "Front-end Dev", path: "/roadmap/frontend" },
-        { name: "Back-end Dev", path: "/roadmap/backend" },
-        { name: "Cybersecurity", path: "/roadmap/cybersecurity" },
-      ],
+      path: "/blog/roadmaps",
     },
     { name: "About", path: "/about" },
     { name: "Contact", path: "/contact" },
@@ -85,47 +78,20 @@ const Navbar: React.FC = () => {
           </div>
 
           <nav className="hidden md:flex items-center space-x-1 lg:space-x-2 xl:space-x-4">
-            {navItems.map((item) =>
-              item.children ? (
-                <DropdownMenu key={item.name}>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="h-8 px-2 lg:px-3">
-                      {item.name} <ChevronDown className="ml-1 h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-48">
-                    {item.children.map((child) => (
-                      <DropdownMenuItem key={child.name} asChild>
-                        <Link
-                          to={child.path}
-                          className={cn(
-                            "block px-4 py-2 text-sm",
-                            pathname === child.path
-                              ? "bg-primary/10 text-primary"
-                              : "text-gray-700 hover:bg-gray-100"
-                          )}
-                        >
-                          {child.name}
-                        </Link>
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              ) : (
-                <Link
-                  key={item.name}
-                  to={item.path}
-                  className={cn(
-                    "text-sm font-medium transition-colors hover:text-primary px-2 lg:px-3 py-2 rounded-md",
-                    pathname === item.path
-                      ? "bg-primary/10 text-primary"
-                      : "text-muted-foreground hover:bg-gray-100"
-                  )}
-                >
-                  {item.name}
-                </Link>
-              )
-            )}
+            {navItems.map((item) => (
+              <Link
+                key={item.name}
+                to={item.path}
+                className={cn(
+                  "text-sm font-semibold text-gray-950 transition-colors hover:text-primary px-2 lg:px-3 py-2 rounded-md",
+                  pathname === item.path
+                    ? "bg-primary/10 "
+                    : " hover:bg-gray-100"
+                )}
+              >
+                {item.name}
+              </Link>
+            ))}
           </nav>
 
           <div className="flex items-center space-x-4">

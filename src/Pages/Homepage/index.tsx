@@ -1,6 +1,6 @@
 import AllArticles from "../Articles/list";
 import ArticlesType from "../Articles/ArticleType";
-import LatestBlog from "../Blogs/latest";
+import LatestBlog from "../Blogs/LatestBlogInsight/index";
 import React from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Code, Book, Zap } from "lucide-react";

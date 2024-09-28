@@ -13,9 +13,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
 import { Badge } from "@/Components/ui/badge";
 import { motion, AnimatePresence } from "framer-motion";
 import { useDispatch } from "react-redux";
-import { getLatestBlogRequest } from "./redux/blogSlice";
+import { getLatestBlogRequest } from "../redux/blogSlice";
 import { useAppSelector } from "@/Utils/hooks/appHooks";
-import { blogSelector } from "./redux/selector";
+import { blogSelector } from "../redux/selector";
 import LoadingSkeleton from "@/Components/Skeleton/latestBlog";
 
 const LatestBlog = () => {
@@ -107,8 +107,8 @@ const LatestBlog = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <Link to={`/BlogDetail/${article.id}`}>
-                  <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 h-full flex flex-col group">
+                <Link to={`/blog/details/${article.slug}`}>
+                  <Card className="overflow-hidden hover:shadow-md   transition-all duration-300 h-full flex flex-col group">
                     <div className="aspect-video relative overflow-hidden">
                       <img
                         src={article.thumbnail || "/img/bg.jpg"}

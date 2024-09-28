@@ -1,8 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { CommentState } from "./types";
 
 const initialState: CommentState = {
   blogPostId: null,
+  //post like
+  likes: null,
+  likeLoading: false,
   // get comment
   loadingComments: false,
   comments: [],
@@ -42,6 +45,18 @@ const commentSlice = createSlice({
     createCommentFailure: (state) => {
       state.loading = false;
     },
+
+    // add likes 
+    postLikeRequest:(state, action) =>{
+      state.likeLoading = true;
+    }, 
+    postLikeSuccess:(state, {payload})=>{
+      state.likeLoading= false;
+      state.likes = payload;
+    },
+    postLikeFailure:(state) =>{
+      state.likeLoading = false;
+    }
   },
 });
 
@@ -57,6 +72,11 @@ export const {
   getCommentRequest,
   getCommentSuccess,
   getCommentFailure,
+
+  // post like 
+  postLikeFailure,
+  postLikeRequest,
+  postLikeSuccess,
 } = commentSlice.actions;
 
 export default commentSlice.reducer;

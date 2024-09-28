@@ -34,24 +34,11 @@ export default function BlogDetailSkeleton() {
           </CardContent>
         </Card>
         <div className="lg:w-1/3 lg:max-w-sm w-full">
-          <Card>
-            <CardHeader>
-              <CardTitle>Latest Blogs</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {[1, 2, 3, 4, 5].map((_, index) => (
-                  <div key={index} className="flex items-center space-x-4">
-                    <Skeleton className="h-18 w-18 rounded" />
-                    <div className="space-y-2">
-                      <Skeleton className="h-8 w-[200px]" />
-                      <Skeleton className="h-8 w-[160px]" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+        <div className="space-y-4">
+            {[...Array(5)].map((_, index) => (
+              <Skeleton key={index} className="h-24 w-full" />
+            ))}
+          </div>
         </div>
       </div>
       <section className="mt-8">

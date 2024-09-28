@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Button } from "@/Components/ui/button";
-// import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
-import { User } from "lucide-react";
+import { User, UserCheck, icons , UserX, UserRound } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -26,11 +25,12 @@ import {
 import { useAppDispatch, useAppSelector } from "@/Utils/hooks/appHooks";
 import { blogSelector } from "../redux/selector";
 import { CategoryProps } from "../redux/types";
+import BlogSkeleton from "@/Components/Skeleton/blog";
 
 export default function AllBlogs() {
   const dispatch = useAppDispatch();
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const { categories, blogs } = useAppSelector(blogSelector);
+  const { categories, blogs, loadingBlogs } = useAppSelector(blogSelector);
   const [currentLayout, setCurrentLayout] = useState<"horizontal" | "card">(
     "horizontal"
   );
@@ -45,7 +45,9 @@ export default function AllBlogs() {
     dispatch(getBlogsRequest({ category: value == "all" ? "" : value }));
     setSelectedCategory(value);
   };
-
+  if (loadingBlogs) {
+    return <BlogSkeleton />;
+  }
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl min-h-screen">
       <div className="flex flex-col md:flex-row justify-between items-center mb-8">
@@ -142,7 +144,7 @@ export default function AllBlogs() {
                             />
                             <AvatarFallback>AD</AvatarFallback>{" "}
                           </Avatar> */}
-                          <User className="w-6 h-6 mr-1" />
+                          <UserRound className="w-6 h-6 mr-1" />
                         </div>
                         <span className="text-sm capitalize font-medium">
                           {blog.author.first_name} {blog.author.last_name}
@@ -187,10 +189,10 @@ export default function AllBlogs() {
                   <CardFooter className="flex justify-between items-center">
                     <div className="flex items-center space-x-2">
                       <div className="rounded-full bg-gray-200 text-gray-800 w-8 h-8 flex items-center justify-center text-xs font-medium">
-                        {blog.authorInitials}
+                        <User className="w-6 h-6 mr-1" />
                       </div>
                       <span className="text-sm font-medium">
-                        {blog.authorName}
+                        {blog.author.first_name} {blog.author.last_name}
                       </span>
                     </div>
                     <Button variant="outline" asChild>
