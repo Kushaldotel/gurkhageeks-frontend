@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
 import { Button } from "@/Components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
@@ -12,10 +12,8 @@ import {
   Linkedin,
   Twitter,
 } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "@/Utils/hooks/appHooks";
+import { useAppSelector } from "@/Utils/hooks/appHooks";
 import { profileSelector } from "./redux/selector";
-import { getUserDetailRequest } from "./redux/profileSlice";
 const developerData = {
   name: "Sarah Johnson",
   handle: "@sarahjdev",
@@ -110,12 +108,8 @@ const blogPosts = [
 
 export default function DeveloperProfile() {
   const [activeTab, setActiveTab] = useState("projects");
-  const dispatch = useAppDispatch();
   const { userDetails } = useAppSelector(profileSelector);
 
-  useEffect(() => {
-    dispatch(getUserDetailRequest());
-  });
   const formatNumber = (num: number) => {
     return num >= 1000 ? `${(num / 1000).toFixed(1)}k` : num;
   };
