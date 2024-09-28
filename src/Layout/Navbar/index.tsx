@@ -130,50 +130,21 @@ const Navbar: React.FC = () => {
             className="md:hidden absolute top-16 left-0 right-0 bg-white shadow-lg"
           >
             <div className="px-2 pt-2 pb-3 space-y-1">
-              {navItems.map((item) =>
-                item.children ? (
-                  <div key={item.name} className="space-y-1">
-                    <Button
-                      variant="ghost"
-                      className="w-full justify-start text-left"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {item.name}
-                    </Button>
-                    <div className="pl-4 space-y-1">
-                      {item.children.map((child) => (
-                        <Link
-                          key={child.name}
-                          to={child.path}
-                          className={cn(
-                            "block px-3 py-2 rounded-md text-base font-medium",
-                            pathname === child.path
-                              ? "bg-primary/10 text-primary"
-                              : "text-gray-700 hover:bg-gray-100"
-                          )}
-                          onClick={() => setIsMenuOpen(false)}
-                        >
-                          {child.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                ) : (
-                  <Link
-                    key={item.name}
-                    to={item.path}
-                    className={cn(
-                      "block px-3 py-2 rounded-md text-base font-medium",
-                      pathname === item.path
-                        ? "bg-primary/10 text-primary"
-                        : "text-gray-700 hover:bg-gray-100"
-                    )}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.name}
-                  </Link>
-                )
-              )}
+              {navItems.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.path}
+                  className={cn(
+                    "block px-3 py-2 rounded-md text-base font-medium",
+                    pathname === item.path
+                      ? "bg-primary/10 text-primary"
+                      : "text-gray-700 hover:bg-gray-100"
+                  )}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              ))}
             </div>
           </motion.div>
         )}
